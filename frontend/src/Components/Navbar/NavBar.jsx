@@ -66,7 +66,10 @@ const NavBar = () => {
                 <CategoryMenu
                     handleCategoryChange={handleCategoryChange}
                     handleSubCategoryChange={handleSubCategoryChange}
-                    handleSousCategoryChange={handleSousCategoryChange} />
+                    handleSousCategoryChange={handleSousCategoryChange}
+                    user={user}
+                    role={role}
+                />
 
                 <div className='items-center  hidden lg:flex'>
                     {role != 'client' && (<HeaderAction />)}
