@@ -97,11 +97,10 @@ class ClientController extends Controller
     }
 
 
-    public function getAnnonces()
+    public function getAnnoncesa()
     {
         try {
-            $annonces = Annonce::whereNotNull('accepted_at')
-                ->with('user', 'sub_Category')
+            $annonces = Annonce::with('user', 'sub_Category')
                 ->paginate(6);
 
             $formattedAnnonces = $annonces->map(function ($annonce) {
@@ -123,6 +122,47 @@ class ClientController extends Controller
             });
 
             return response()->json(['data' => $formattedAnnonces]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    
+    public function getAnnonces()
+    {
+        try {
+            $userId = auth()->id();
+            $annonces = Annonce::with(['user', 'sub_Category'])->paginate(6);
+
+            // Check if the user has favorited any annonces
+            $favoritedAnnonceIds = $userId ? Favoris::where('user_id', $userId)->pluck('annonce_id')->toArray() : [];
+
+            $formattedAnnonces = $annonces->getCollection()->map(function ($annonce) use ($favoritedAnnonceIds) {
+                return [
+                    'id' => $annonce->id,
+                    'title' => $annonce->title,
+                    'description' => $annonce->description,
+                    'location' => $annonce->location,
+                    'sub_category_id' => $annonce->sub_category_id,
+                    'sous_category_id' => $annonce->sous_category_id,
+                    'images' => json_decode($annonce->image),
+                    'price' => $annonce->price,
+                    'sub_name' => $annonce->sub_Category->name,
+                    'firstName' => $annonce->user->firstName,
+                    'lastName' => $annonce->user->lastName,
+                    'phone' => $annonce->user->phone,
+                    'created_at' => $annonce->created_at,
+                    'isFavorited' => in_array($annonce->id, $favoritedAnnonceIds), // Check if this annonce is favorited
+                ];
+            });
+
+            return response()->json([
+                'data' => $formattedAnnonces,
+                'current_page' => $annonces->currentPage(),
+                'last_page' => $annonces->lastPage(),
+                'per_page' => $annonces->perPage(),
+                'total' => $annonces->total(),
+            ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
         }
@@ -263,7 +303,6 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 'success',
                 'annonces' => $formattedAnnonces,
-                'category' => $request->all(),
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while fetching annonces.'], 500);

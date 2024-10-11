@@ -19,17 +19,9 @@ const AllAnnounces = () => {
         try {
             const token = localStorage.getItem('token');
 
-            if (!token) {
-                console.error('JWT token not found in local storage');
-                return;
-            }
-
-            const response = await axios.get(`http://127.0.0.1:8000/api/getAllAcceptedAnnonces`, {
-                params: {
-                    page: page
-                },
+            const response = await axios.get(`http://127.0.0.1:8000/api/${token ? 'getAnnonces' : 'getAllAcceptedAnnoncesHomePage'}`, {
+                params: { page },
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 }
             });
@@ -38,7 +30,7 @@ const AllAnnounces = () => {
                 setAnnonces(response.data.data);
                 setTotalPages(response.data.last_page);
             } else {
-                console.error('Failed to fetch annonces:', response.data.message || 'Unknown error');
+                console.error('Failed to fetch annonces:', response.statusText);
             }
         } catch (error) {
             console.error('Error fetching annonces:', error);
