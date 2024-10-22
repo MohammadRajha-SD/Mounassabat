@@ -54,6 +54,7 @@ const AnnounceForm = () => {
                 const sub_category_id = localStorage.getItem('sub_category_id');
                 const sous_category_id = localStorage.getItem('sous_category_id');
                 const price = localStorage.getItem('price');
+                const annonce_type = localStorage.getItem('annonce_type');
 
                 const formData = new FormData();
                 formData.append('title', title);
@@ -62,7 +63,7 @@ const AnnounceForm = () => {
                 formData.append('sub_category_id', sub_category_id);
                 formData.append('sous_category_id', sous_category_id);
                 formData.append('price', price);
-
+                formData.append('annonce_type', annonce_type);
                 images.forEach((image) => {
                     formData.append('image[]', image.file);
                 });

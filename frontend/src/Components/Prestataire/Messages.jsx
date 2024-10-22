@@ -1,11 +1,10 @@
 import React from 'react';
-import Footer from "../Footer.jsx";
-import HeaderMessages from './HeaderMessages.jsx';
+import HeaderAnnounces from './HeaderAnnounces.jsx';
 
 const Messages = () => {
     return (
         <div>
-            <HeaderMessages />
+            <HeaderAnnounces actived='Messages' />
 
             <div className="container px-3 w-full md:w-[75%] lg:w-[60%] mx-auto ">
                 <div className="py-16">
@@ -26,8 +25,6 @@ const Messages = () => {
                     </div>
                 </div>
             </div>
-            
-            <Footer />
         </div>
     );
 };

@@ -39,5 +39,6 @@ class Annonce extends Model
         'user_id',
         'sub_category_id',
         'sous_category_id',
+        'type'
     ];
 }

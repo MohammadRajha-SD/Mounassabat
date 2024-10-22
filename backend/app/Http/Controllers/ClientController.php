@@ -96,38 +96,6 @@ class ClientController extends Controller
         return response()->json(['favorited' => $favoris]);
     }
 
-
-    public function getAnnoncesa()
-    {
-        try {
-            $annonces = Annonce::with('user', 'sub_Category')
-                ->paginate(6);
-
-            $formattedAnnonces = $annonces->map(function ($annonce) {
-                return [
-                    'id' => $annonce->id,
-                    'title' => $annonce->title,
-                    'description' => $annonce->description,
-                    'location' => $annonce->location,
-                    'sub_category_id' => $annonce->sub_category_id,
-                    'sous_category_id' => $annonce->sous_category_id,
-                    'images' => json_decode($annonce->image),
-                    'price' => $annonce->price,
-                    'sub_name' => $annonce->sub_Category->name,
-                    'firstName' => $annonce->user->firstName,
-                    'lastName' => $annonce->user->lastName,
-                    'phone' => $annonce->user->phone,
-                    'created_at' => $annonce->created_at,
-                ];
-            });
-
-            return response()->json(['data' => $formattedAnnonces]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
-        }
-    }
-
-    
     public function getAnnonces()
     {
         try {
@@ -147,6 +115,7 @@ class ClientController extends Controller
                     'sous_category_id' => $annonce->sous_category_id,
                     'images' => json_decode($annonce->image),
                     'price' => $annonce->price,
+                    'type' => $annonce->type,
                     'sub_name' => $annonce->sub_Category->name,
                     'firstName' => $annonce->user->firstName,
                     'lastName' => $annonce->user->lastName,
@@ -168,11 +137,16 @@ class ClientController extends Controller
         }
     }
 
-    public function getAllAcceptedAnnonces()
+    public function getAllAcceptedAnnoncesOLD(Request $request)
     {
         try {
             $userId = auth()->id();
+            $type = $request->type;
+
             $annonces = Annonce::whereNotNull('accepted_at')
+                ->when($type, function ($query) use ($type) {
+                    return $query->where('type', $type);
+                })
                 ->with(['user', 'sub_Category'])
                 ->paginate(6);
 
@@ -189,6 +163,7 @@ class ClientController extends Controller
                     'sous_category_id' => $annonce->sous_category_id,
                     'images' => json_decode($annonce->image),
                     'price' => $annonce->price,
+                    'type' => $annonce->type,
                     'sub_name' => $annonce->sub_Category->name,
                     'firstName' => $annonce->user->firstName,
                     'lastName' => $annonce->user->lastName,
@@ -209,7 +184,87 @@ class ClientController extends Controller
             return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
         }
     }
+    public function getAllAcceptedAnnonces()
+    {
+        try {
+            $userId = auth()->id();
 
+            $annoncesMarriage = Annonce::query()
+                ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
+                ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
+                ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
+                ->where('categories.name', 'marriage')
+                ->whereNotNull('annonces.accepted_at')
+                ->where('annonces.type', 'normal')->paginate(6);
+
+            $annoncesBabyshower = Annonce::query()
+                ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
+                ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
+                ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
+                ->where('categories.name', 'babyshower')
+                ->whereNotNull('annonces.accepted_at')
+                ->where('annonces.type', 'normal')->paginate(6);
+
+            $annoncesAnniversaire = Annonce::query()
+                ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
+                ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
+                ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
+                ->where('categories.name', 'anniversaire')
+                ->whereNotNull('annonces.accepted_at')
+                ->where('annonces.type', 'normal')->paginate(6);
+
+            $annoncesNormal = Annonce::whereNotNull('accepted_at')
+                ->where('type', 'normal')
+                ->with(['user', 'sub_Category'])
+                ->paginate(6);
+
+            $annoncesVip = Annonce::whereNotNull('accepted_at')
+                ->where('type', 'vip')
+                ->with(['user', 'sub_Category'])
+                ->paginate(6);
+
+            $favoritedAnnonceIds = $userId ? Favoris::where('user_id', $userId)->pluck('annonce_id')->toArray() : [];
+
+            $allFormatedAnnoncesNormal = $this->formatAnnonces($annoncesNormal, $favoritedAnnonceIds);
+            $allFormatedAnnoncesVIP = $this->formatAnnonces($annoncesVip, $favoritedAnnonceIds);
+            $allFormatedAnnoncesMarriage = $this->formatAnnonces($annoncesMarriage, $favoritedAnnonceIds);
+            $allFormatedAnnoncesBabyshower = $this->formatAnnonces($annoncesBabyshower, $favoritedAnnonceIds);
+            $allFormatedAnnoncesAnniversaire = $this->formatAnnonces($annoncesAnniversaire, $favoritedAnnonceIds);
+            
+            return response()->json([
+                'normal' => $allFormatedAnnoncesNormal,
+                'vip' => $allFormatedAnnoncesVIP,
+                'marriage' => $allFormatedAnnoncesMarriage,
+                'babyshower' => $allFormatedAnnoncesBabyshower,
+                'anniversaire' => $allFormatedAnnoncesAnniversaire,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    private function formatAnnonces($annonces, $favoritedAnnonceIds)
+    {
+        return $annonces->getCollection()->map(function ($annonce) use ($favoritedAnnonceIds) {
+            return [
+                'id' => $annonce->id,
+                'title' => $annonce->title,
+                'description' => $annonce->description,
+                'location' => $annonce->location,
+                'sub_category_id' => $annonce->sub_category_id,
+                'sous_category_id' => $annonce->sous_category_id,
+                'images' => json_decode($annonce->image),
+                'price' => $annonce->price,
+                'type' => $annonce->type,
+                'sub_name' => $annonce->sub_Category->name,
+                'firstName' => $annonce->user->firstName,
+                'lastName' => $annonce->user->lastName,
+                'phone' => $annonce->user->phone,
+                'created_at' => $annonce->created_at,
+                'isFavorited' => in_array($annonce->id, $favoritedAnnonceIds),
+            ];
+        });
+    }
 
     public function getAllDetails()
     {
@@ -224,6 +279,7 @@ class ClientController extends Controller
 
             $formattedAnnonce = [
                 'id' => $annonce->id,
+                'user_id' => $annonce->user_id,
                 'title' => $annonce->title,
                 'description' => $annonce->description,
                 'location' => $annonce->location,
@@ -293,6 +349,7 @@ class ClientController extends Controller
                     'title' => $annonce->title,
                     'description' => $annonce->description,
                     'price' => $annonce->price,
+                    'type' => $annonce->type,
                     'location' => $annonce->location,
                     'sub_category' => $annonce->sub_category->name,
                     'isFavorited' => in_array($annonce->id, $favoritedAnnonceIds),

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Footer from '../Footer.jsx';
 import HeaderAnnounces from './HeaderAnnounces.jsx';
 import axios from 'axios';
+import Carousel from '../Carousel/Index.jsx';
 
 const Annonces = () => {
     const [annonces, setAnnonces] = useState([]);
@@ -45,23 +46,9 @@ const Annonces = () => {
         setCurrentSlides(initialSlides);
     }, [annonces]);
 
-    const goToPreviousSlide = (index) => {
-        if (annonces[index].image.length > 0) {
-            const prevSlide = (currentSlides[index] - 1 + annonces[index].image.length) % annonces[index].image.length;
-            setCurrentSlides(prevSlides => [...prevSlides.slice(0, index), prevSlide, ...prevSlides.slice(index + 1)]);
-        }
-    };
-
-    const goToNextSlide = (index) => {
-        if (annonces[index].image.length > 0) {
-            const nextSlide = (currentSlides[index] + 1) % annonces[index].image.length;
-            setCurrentSlides(prevSlides => [...prevSlides.slice(0, index), nextSlide, ...prevSlides.slice(index + 1)]);
-        }
-    };
-
     return (
         <div>
-            <HeaderAnnounces annc_length={annonces.length} />
+            <HeaderAnnounces actived='Mes Annonces' />
 
             <div className="container mx-auto px-4 sm:px-8">
                 {annonces.length > 0 ? (
@@ -69,74 +56,7 @@ const Annonces = () => {
                         {annonces.map((annonce, index) => (
                             <div key={annonce.id} className="card relative bg-white shadow-lg rounded-lg overflow-hidden">
                                 {/* Carousel */}
-                                <div className="relative">
-                                    <div id={`carousel-${index}`} className="relative rounded-lg overflow-hidden" data-carousel="static">
-                                        <div className="w-full h-[250px]">
-                                            {annonce.image.length > 0 && (
-                                                <img
-                                                    src={`http://127.0.0.1:8000/${annonce.image[currentSlides[index]]}`}
-                                                    className="w-full h-full object-cover"
-                                                    alt={`Slide ${currentSlides[index]}`}
-                                                />
-                                            )}
-                                        </div>
-
-                                        {/* Carousel Controls */}
-                                        {annonce.image.length > 1 && (
-                                            <>
-                                                {/* Indicators */}
-                                                <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-2 z-30">
-                                                    {annonce.image.map((_, slideIndex) => (
-                                                        <button
-                                                            key={slideIndex}
-                                                            type="button"
-                                                            className={`w-3 h-3 rounded-full transition ${slideIndex === currentSlides[index] ? 'bg-yellow-600' : 'bg-gray-300'
-                                                                }`}
-                                                            onClick={() =>
-                                                                setCurrentSlides((prevSlides) => [
-                                                                    ...prevSlides.slice(0, index),
-                                                                    slideIndex,
-                                                                    ...prevSlides.slice(index + 1),
-                                                                ])
-                                                            }
-                                                        />
-                                                    ))}
-                                                </div>
-
-                                                {/* Previous/Next Buttons */}
-                                                <button
-                                                    type="button"
-                                                    className="absolute top-1/2 left-3 transform -translate-y-1/2 z-40 p-2 bg-yellow-600 rounded-full hover:bg-yellow-400 focus:outline-none transition"
-                                                    onClick={() => goToPreviousSlide(index)}
-                                                >
-                                                    <svg
-                                                        className="w-5 h-5 text-white"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                                                    </svg>
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="absolute top-1/2 right-3 transform -translate-y-1/2 z-40 p-2 bg-yellow-600 rounded-full hover:bg-yellow-400 focus:outline-none transition"
-                                                    onClick={() => goToNextSlide(index)}
-                                                >
-                                                    <svg
-                                                        className="w-5 h-5 text-white"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </button>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-
+                                <Carousel images={annonce.image} isVip={annonce.type === 'vip'} />
                                 {/* Card content */}
                                 <div className="p-5">
                                     <h2 className="text-xl font-semibold text-gray-800 mb-2">{annonce.title}</h2>

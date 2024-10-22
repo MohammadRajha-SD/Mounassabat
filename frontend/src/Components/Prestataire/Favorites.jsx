@@ -1,12 +1,10 @@
 import React from 'react';
-import Footer from "../Footer.jsx";
-import { Link } from "react-router-dom";
-import HeaderMessages from './HeaderMessages.jsx';
+import HeaderAnnounces from './HeaderAnnounces.jsx';
 
 const Favorites = () => {
     return (
         <div>
-            <HeaderMessages activeLink="Favorites" />
+            <HeaderAnnounces actived='Favorites' />
 
             <div className="container px-3 w-full md:w-[75%] lg:w-[60%] mx-auto ">
                 <div className="py-16">

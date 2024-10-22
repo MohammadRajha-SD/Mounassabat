@@ -9,6 +9,26 @@ use Illuminate\Support\Facades\Auth;
 
 class PrestataireController extends Controller
 {
+
+    public function show()
+    {
+        return response()->json(Auth::user());
+    }
+
+    public function update(Request $request)
+    {
+        $validatedData = $request->validate([
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'phone' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+        $user->update($validatedData);
+
+        return response()->json(['message' => 'Profile updated successfully'], 200);
+    }
     public function getMyAnnonces()
     {
 
@@ -24,6 +44,7 @@ class PrestataireController extends Controller
                 'sous_category_id' => $annonce->sous_category_id,
                 'image' => json_decode($annonce->image),
                 'price' => $annonce->price,
+                'type' => $annonce->type,
                 'accepted_at' => $annonce->accepted_at,
                 'sub_name' => $annonce->sub_Category->name,
             ];
@@ -33,6 +54,32 @@ class PrestataireController extends Controller
             'annonces' => $formattedAnnonces
         ]);
     }
+    public function checkIsAbleToAddAnnonce()
+    {
+        $user = auth()->user();
+        $annonces = $user->annonces()
+            ->where('type', 'normal')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $canAdd = false;
+
+        if ($annonces->count() < 5) {
+            $canAdd = true;
+        } elseif ($annonces->count() == 5) {
+            $lastAnnonce = $annonces->first();
+
+            if ($lastAnnonce->created_at->lt(now()->subMonth())) {
+                $canAdd = true;
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'canAdd' => $canAdd,
+        ]);
+    }
+
+
     public function createAnnonce(Request $request)
     {
         $user_id = Auth::guard('api')->user()->id;
@@ -47,6 +94,7 @@ class PrestataireController extends Controller
                 'image' => 'nullable',
                 'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'price' => 'required|integer',
+                'annonce_type' => 'required|in:normal,vip',
             ]);
 
             $pictureUrls = [];
@@ -75,6 +123,7 @@ class PrestataireController extends Controller
                 'image' => $pictureUrlsJson,
                 'user_id' => $user_id,
                 'price' => $request->price,
+                'type' => $request->annonce_type,
             ]);
 
             return response()->json([

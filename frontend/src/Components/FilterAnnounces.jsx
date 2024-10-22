@@ -92,7 +92,7 @@ const FilterAnnounces = () => {
                                 className="card relative bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer"
                                 onClick={() => handleDetailsClick(annonce.id)}
                             >
-                                <Carousel images={annonce.images} />
+                                        <Carousel images={annonce.images} isVip={annonce.type === 'vip'} />
 
                                 {/* Card content */}
                                 <div className="p-5">

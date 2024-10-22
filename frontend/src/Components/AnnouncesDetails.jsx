@@ -3,11 +3,12 @@ import Footer from "./Footer.jsx";
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import NavBar from "./Navbar/NavBar";
+import { Link } from 'react-router-dom';
 
 const AnnouncesDetails = () => {
     const { id } = useParams();
     const [annonce, setAnnonce] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(0); 
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const fetchAnnonceDetails = async () => {
@@ -28,7 +29,7 @@ const AnnouncesDetails = () => {
                 }
 
                 const data = await response.json();
-                setAnnonce(data.annonce); 
+                setAnnonce(data.annonce);
             } catch (error) {
                 console.error('Error fetching announcement details:', error);
             }
@@ -114,7 +115,17 @@ const AnnouncesDetails = () => {
                         )}
                     </div>
                     <div className="w-full md:w-1/2">
-                        <h1 className="text-black font-serif text-3xl py-2">{annonce.title}</h1>
+                        <div className='flex items-center justify-between'>
+                            <h1 className="text-black font-serif text-3xl py-2">{annonce.title}</h1>
+                            
+                            <Link
+                                to={`/messages/${annonce.user_id}`}
+                                className="bg-indigo-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg"
+                                aria-label={`Send a message to user ${annonce.user_id}`}
+                            >
+                                Send Message
+                            </Link>
+                        </div>
                         <div className="py-6">
                             <h1 className="text-black font-serif text-2xl italic py-2">Description</h1>
                             <p className="text-gray-500 text-sm">{annonce.description}</p>
@@ -136,7 +147,7 @@ const AnnouncesDetails = () => {
             </div>
 
             <Footer />
-        </div>
+        </div >
     );
 };
 

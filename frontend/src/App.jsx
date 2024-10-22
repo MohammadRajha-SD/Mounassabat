@@ -23,11 +23,13 @@ import Reclamations from './Components/Admin/Reclamations.jsx';
 import AnnounceForm from "./Components/Prestataire/AnnounceForm.jsx";
 import AnnounceForm2 from "./Components/Prestataire/AnnounceForm2.jsx";
 import AnnounceForm3 from "./Components/Prestataire/AnnounceForm3.jsx";
+import Parametres from './Components/Prestataire/Parametres.jsx';
 import AnnouncesDetails from './Components/AnnouncesDetails.jsx';
 import FilterAnnounces from "./Components/FilterAnnounces.jsx";
 import { AnnonceProvider } from './Components/AnnonceContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Chat from './Components/Chat/Index.jsx';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Messages from './Components/Prestataire/Messages.jsx';
@@ -83,6 +85,11 @@ function App() {
                 <Route path="Favorites" element={
                     <PrivateRoute roles={['prestataire']}>
                         <Favorites />
+                    </PrivateRoute>
+                } />
+                <Route path="Parametres" element={
+                    <PrivateRoute roles={['prestataire']}>
+                        <Parametres />
                     </PrivateRoute>
                 } />
 
@@ -163,12 +170,18 @@ function App() {
                         <AnnouncesDetails />
                     </PrivateRoute>
                 } />
-                
+
                 <Route path="FiltredAnnounces" element={
                     <PrivateRoute roles={['client']}>
                         <FilterAnnounces />
                     </PrivateRoute>
                 } />
+                <Route path="Chat" element={
+                    <PrivateRoute roles={['client', 'prestataire']}>
+                        <Chat />
+                    </PrivateRoute>
+                } />
+
             </Routes>
         </AnnonceProvider>
     );

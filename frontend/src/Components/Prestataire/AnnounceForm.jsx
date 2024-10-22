@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import Header from './Header.jsx';
 import RightSide from './RightSide.jsx';
-
+import axios from 'axios'
 const AnnounceForm = () => {
+    const [selectedTypeAnnonce, setSelectedTypeAnnonce] = useState(null);
+    const [canAdd, setCanAdd] = useState(false);
+
     const [showCategories, setShowCategories] = useState(false);
     const [showCities, setShowCities] = useState(false);
     const [subValue, setsubValue] = useState('');
@@ -31,6 +34,44 @@ const AnnounceForm = () => {
     const [isDropdownEvenementProfessionnel, setIsDropdownEvenementProfessionnel] = useState(false);
     const [isDropdownSeminaire, setIsDropdownSeminaire] = useState(false);
 
+    useEffect(() => {
+        fetchAllAnnonces();
+    }, []);
+
+
+    const fetchAllAnnonces = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('JWT token not found in local storage');
+                return;
+            }
+
+            const response = await axios.get('http://127.0.0.1:8000/api/checkIsAbleToAddAnnonce', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            setCanAdd(response.data.canAdd);
+
+            if (canAdd) {
+                setSelectedTypeAnnonce('normal')
+            } else {
+                setSelectedTypeAnnonce('vip')
+            }
+            console.log(response.data);
+        } catch (error) {
+            if (error.response) {
+                console.error('Failed to fetch annonces:', error.response.statusText, error.response.data);
+            } else if (error.request) {
+                console.error('No response received from server:', error.request);
+            } else {
+                console.error('Error:', error.message);
+            }
+        }
+    };
     const toggleDropdownAniversaire = () => {
         setIsDropdownAniversaire(!isDropdownAniversaire);
     };
@@ -84,6 +125,9 @@ const AnnounceForm = () => {
         setsubValue(subValue);
 
     };
+    const handleChangeTypeAnnonce = (event) => {
+        setSelectedTypeAnnonce(event.target.value);
+    };
 
     const handleSous = (event) => {
         const selectedCat = event.target.textContent;
@@ -107,6 +151,7 @@ const AnnounceForm = () => {
             localStorage.setItem("sub_category_id", subValue);
             localStorage.setItem("sous_category_id", sousValue);
             localStorage.setItem("category", selectedCat);
+            localStorage.setItem("annonce_type", selectedTypeAnnonce);
             navigate('/AnnounceForm2');
         }
     };
@@ -144,9 +189,11 @@ const AnnounceForm = () => {
         localStorage.removeItem("sub_category_id");
         localStorage.removeItem("location");
         localStorage.removeItem("category");
+
         setFilteredCities(
             cities.filter(city => city.asciiname.toLowerCase().includes(searchQuery.toLowerCase()))
         );
+
     }, [searchQuery, cities]);
 
     const handleCitySelection = (cityName) => {
@@ -242,6 +289,42 @@ const AnnounceForm = () => {
                                             </div>
                                         </div>
                                     )}</div>
+                                <div className="flex items-center space-x-4 my-5">
+                                    <h2 className="text-lg font-medium">Sélectionnez un type d'annonce :</h2>
+
+                                    <div className="flex items-center">
+                                        <input
+                                            type="radio"
+                                            id="normal"
+                                            name="normal"
+                                            value="normal"
+                                            checked={selectedTypeAnnonce === "normal"}
+                                            onChange={handleChangeTypeAnnonce}
+                                            disabled={!canAdd}
+                                            className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                        />
+                                        <label htmlFor="normal" className="ml-2 text-sm font-medium text-gray-700">
+                                            Normal Announce
+                                        </label>
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <input
+                                            type="radio"
+                                            id="vip"
+                                            name="vip"
+                                            value="vip"
+                                            checked={selectedTypeAnnonce === "vip"}
+                                            onChange={handleChangeTypeAnnonce}
+                                            className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                        />
+                                        <label htmlFor="vip" className="ml-2 text-sm font-medium text-gray-700">
+                                            VIP Announce
+                                        </label>
+                                    </div>
+
+
+                                </div>
                             </form>
                         </section>
                     </div>
@@ -252,6 +335,7 @@ const AnnounceForm = () => {
                 <div className="fixed right-0 bottom-0 z-10 bg-white w-screen flex justify-end items-center py-2 shadow-md">
                     <button onClick={handleContinueClick} className='bg-yellow-600 text-white p-2 mx-2 rounded-lg' type='submit' to='/src/Components/AnnounceForm2.jsx'>CONTINUER</button>
                 </div>
+
             </div>
 
             {/* Show Cities Start */}

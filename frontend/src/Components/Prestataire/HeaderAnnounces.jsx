@@ -4,8 +4,8 @@ import '../Navbar/NavBar.css';
 import { useState } from "react";
 import Logout from "../Navbar/Logout";
 
-const HeaderAnnounces = ({ annc_length }) => {
-    const [active, setActive] = useState('Mes Annonces');
+const HeaderAnnounces = ({actived = 'Mes Annonces'}) => {
+    const [active, setActive] = useState(actived);
 
     const LinkComponent = ({ name, to }) => {
         return (
@@ -32,7 +32,8 @@ const HeaderAnnounces = ({ annc_length }) => {
             <div className="hidden md:flex items-center ">
                 <LinkComponent name={'Mes Annonces'} to={'/Annonces'} />
                 <LinkComponent name={'Messages'} to={'/Messages'} />
-                <LinkComponent name={'Paramètres'} to={'#'} />
+                <LinkComponent name={'Favorites'} to={'/Favorites'} />
+                <LinkComponent name={'Paramètres'} to={'/Parametres'} />
             </div>
 
             <input id="menu-toggle" className="flex md:hidden" type="checkbox" />
@@ -44,42 +45,31 @@ const HeaderAnnounces = ({ annc_length }) => {
                 <div className="dropdown " >
                     <LinkComponentMobile name={'Mes Annonces'} to={'/Annonces'} />
                     <LinkComponentMobile name={'Messages'} to={'/Messages'} />
-                    <LinkComponentMobile name={'Paramètres'} to={'#'} />
+                    <LinkComponentMobile name={'Favorites'} to={'/Favorites'} />
+                    <LinkComponentMobile name={'Paramètres'} to={'/Parametres'} />
 
-                    {annc_length >= 5 ? (
-                        <Link to={'/'} className="flex items-center justify-between text-white bg-yellow-600 p-2 m-2 md:px-8 rounded-md font-serif font-medium">
-                            Améliorer à Premium
-                        </Link>
-                    ) : (
-                        <Link to={'/AnnounceForm'} className="flex items-center justify-between text-white bg-yellow-600 p-2 m-2 md:px-8 rounded-md font-serif font-medium">
-                            Publier votre annonce
-                            <svg className="w-5 h-5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-                            </svg>
-                        </Link>
-                    )}
+                    <Link to={'/AnnounceForm'} className="flex items-center justify-between text-white bg-yellow-600 p-2 m-2 md:px-8 rounded-md font-serif font-medium">
+                        Publier votre annonce
+                        <svg className="w-5 h-5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </Link>
                 </div>
             </ul>
 
 
             <div className="hidden md:flex">
-                {annc_length >= 5 ? (
-                    <Link to={'/'} className="flex items-center justify-between text-white bg-yellow-600 p-2 m-2 md:px-8 rounded-md font-serif font-medium">
-                        Améliorer à Premium
+                <div className="flex items-center">
+                    <Link to={'/AnnounceForm'} className="flex items-center justify-between text-white bg-yellow-600 p-2     rounded-md font-serif font-medium">
+                        Publier votre annonce
+                        <svg className="w-5 h-5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
                     </Link>
-                ) : (
-                    <div className="flex items-center">
-                        <Link to={'/AnnounceForm'} className="flex items-center justify-between text-white bg-yellow-600 p-2 m-2 md:px-8 rounded-md font-serif font-medium">
-                            Publier votre annonce
-                            <svg className="w-5 h-5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-                            </svg>
-                        </Link>
-                        <Logout />
-                    </div>
-                )}
-            </div>
 
+                    <Logout />
+                </div>
+            </div>
         </header>
 
     );

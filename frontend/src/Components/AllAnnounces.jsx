@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Carousel from './Carousel/Index.jsx'
 import { Link } from 'react-router-dom';
+
 const AllAnnounces = () => {
     const [annonces, setAnnonces] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -106,7 +107,8 @@ const AllAnnounces = () => {
                         {annonces.map((annonce, index) => (
                             <Link to={`/annonce/${annonce.id}`} key={index} className="card relative bg-white shadow-lg rounded-lg overflow-hidden">
                                 {/* Carousal START */}
-                                <Carousel images={annonce.images} />
+                                <Carousel images={annonce.images} isVip={annonce.type === 'vip'} />
+
                                 {/* Carousal END */}
 
                                 {/* Card content */}

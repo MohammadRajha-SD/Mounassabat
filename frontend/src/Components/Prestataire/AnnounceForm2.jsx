@@ -26,7 +26,8 @@ const AnnounceForm = () => {
 
             localStorage.setItem("title", title);
             localStorage.setItem("price", price);
-            localStorage.setItem("description", description);// Make sure to set it to false if the conditions are met immediately     
+            localStorage.setItem("description", description);
+            
             navigate('/AnnounceForm3');
         }
     };
