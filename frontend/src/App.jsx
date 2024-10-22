@@ -178,7 +178,7 @@ function App() {
                 } />
                 <Route path="Chat" element={
                     <PrivateRoute roles={['client', 'prestataire']}>
-                        <Chat user={{id:1,}} />
+                        <Chat />
                     </PrivateRoute>
                 } />
 

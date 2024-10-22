@@ -35,8 +35,11 @@ Route::get('/getAllAcceptedAnnoncesHomePage', [ClientController::class, 'getAllA
 Route::middleware('guest')->group(function () {
     Route::post('/auth/google-login', [AuthController::class, 'googleLogin']);
 });
+use App\Http\Controllers\MessageController;
+
 
 Route::middleware('auth:api')->group(function () {
+    Route::post('/send-message', [MessageController::class, 'send']);
     Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
     Route::post('/reclamation', [ClientController::class, 'reclamation']);
     Route::get('/getAllAcceptedAnnonces', [ClientController::class, 'getAllAcceptedAnnonces']);

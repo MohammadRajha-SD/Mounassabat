@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Pusher from 'pusher-js';
 import axios from 'axios';
 
-const Chat = () => {
+const App = () => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
@@ -12,7 +12,7 @@ const Chat = () => {
         });
 
         const channel = pusher.subscribe('chat');
-
+        
         channel.bind('App\\Events\\MessageSent', function (data) {
             setMessages((prevMessages) => [...prevMessages, data.message]);
         });
@@ -24,9 +24,8 @@ const Chat = () => {
     }, []);
 
     const sendMessage = async () => {
-        const token = localStorage.getItem('token');
         if (message) {
-            await axios.post('http://localhost:8000/api/send-message', { message }, { headers: { Authorization: `Bearer ${token}` } });
+            await axios.post('http://localhost:8000/api/send-message', { message });
             setMessage('');
         }
     };
@@ -50,4 +49,4 @@ const Chat = () => {
     );
 };
 
-export default Chat;
+export default App;
