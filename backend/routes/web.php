@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\MessageSent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    event(new MessageSent('hello world'));
+    dd('sent');
     return view('welcome');
 });

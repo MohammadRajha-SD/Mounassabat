@@ -6,7 +6,6 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PrestataireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,11 +37,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth:api')->group(function () {
-    // Route::post('/messages', [ChatController::class, 'store']);
-    // Route::get('/messages/{user}', [ChatController::class, 'fetchMessages']);
-    Route::get('/messages/{receiverId}', [MessageController::class, 'index']); // Fetch chat history
-    Route::post('/messages', [MessageController::class, 'store']); // Send a message
-    
     Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
     Route::post('/reclamation', [ClientController::class, 'reclamation']);
     Route::get('/getAllAcceptedAnnonces', [ClientController::class, 'getAllAcceptedAnnonces']);
