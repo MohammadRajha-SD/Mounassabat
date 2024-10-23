@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\StripePaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,8 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware('auth:api')->group(function () {
+    // Route::post('/pay-by-creditcard', [StripePaymentController::class, 'createPaymentIntent']);
+    Route::post('/pay-by-creditcard', [StripePaymentController::class, 'createPaymentIntent']);
     Route::get('/myConversations', [ChatController::class, 'getMyConversations']);
     Route::get('/conversations/{userId}', [ChatController::class, 'getOrCreateConversation']);
     Route::post('/messages', [ChatController::class, 'storeMessage']);

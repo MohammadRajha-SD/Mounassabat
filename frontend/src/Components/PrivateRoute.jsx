@@ -31,7 +31,7 @@ const PrivateRoute = ({ children, roles }) => {
                 if (response.status === 200 && valid) {
                     setIsValidToken(true);
                 } else {
-                    setIsValidToken(false);
+                    setIsValidToken(false); 
                     toast.error(message || 'Votre session a expiré. Veuillez vous reconnecter.');
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');

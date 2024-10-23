@@ -33,6 +33,7 @@ import Chat from './Components/Chat/Index.jsx';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Messages from './Components/Prestataire/Messages.jsx';
+import StripeContainer from './Components/CreditCard/StripeContainer.jsx';
 
 function App() {
     return (
@@ -179,6 +180,12 @@ function App() {
                 <Route path="Chat" element={
                     <PrivateRoute roles={['client', 'prestataire']}>
                         <Chat />
+                    </PrivateRoute>
+                } />
+
+                <Route path="PayByCreditCard" element={
+                    <PrivateRoute roles={['prestataire']}>
+                        <StripeContainer />
                     </PrivateRoute>
                 } />
             </Routes>
