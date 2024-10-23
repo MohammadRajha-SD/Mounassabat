@@ -97,8 +97,9 @@ const Chat = () => {
                 {selectedConversation !== null ? (
                     <ChatContainer>
                         <ConversationHeader>
-                            <Avatar name={selectedConversation.receiver.firstName} src="https://chatscope.io/storybook/react/assets/zoe-E7ZdmXF0.svg" />
-                            <ConversationHeader.Content userName={selectedConversation.receiver.firstName} />
+                            <ConversationHeader.Back onClick={() => window.location.href = '/'} />
+                            <Avatar name={selectedConversation.receiver.id === user.id ? selectedConversation.sender.firstName : selectedConversation.receiver.firstName} src="https://chatscope.io/storybook/react/assets/zoe-E7ZdmXF0.svg" />
+                            <ConversationHeader.Content userName={selectedConversation.receiver.id === user.id ? selectedConversation.sender.firstName : selectedConversation.receiver.firstName} />
                         </ConversationHeader>
 
                         <MessageList>
