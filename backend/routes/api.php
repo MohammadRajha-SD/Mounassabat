@@ -6,6 +6,9 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PrestataireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,11 +38,16 @@ Route::get('/getAllAcceptedAnnoncesHomePage', [ClientController::class, 'getAllA
 Route::middleware('guest')->group(function () {
     Route::post('/auth/google-login', [AuthController::class, 'googleLogin']);
 });
-use App\Http\Controllers\MessageController;
 
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('/send-message', [MessageController::class, 'send']);
+    Route::get('/myConversations', [ChatController::class, 'getMyConversations']);
+    Route::get('/conversations/{userId}', [ChatController::class, 'getOrCreateConversation']);
+    Route::post('/messages', [ChatController::class, 'storeMessage']);
+    Route::get('/messages/{conversationId}', [ChatController::class, 'getMessages']);
+    Route::post('/new-conversation', [ChatController::class, 'storeConversation']);
+    Route::post('/send-message', [ChatController::class, 'send']);
+
     Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
     Route::post('/reclamation', [ClientController::class, 'reclamation']);
     Route::get('/getAllAcceptedAnnonces', [ClientController::class, 'getAllAcceptedAnnonces']);

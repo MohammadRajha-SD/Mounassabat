@@ -15,7 +15,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -23,7 +23,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return [];        
+        return [];
     }
 
     public function admin()
@@ -31,7 +31,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Admin::class);
     }
 
-    public function client() 
+    public function client()
     {
         return $this->hasOne(Client::class);
     }
@@ -88,5 +88,10 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    
+
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
 }

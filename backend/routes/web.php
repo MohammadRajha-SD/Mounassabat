@@ -15,13 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // event(new MessageSent('hello world'));
-    // dd('sent');
     return view('welcome');
-});
-
-Route::post('/send-message', function (\Illuminate\Http\Request $request) {
-    $message = $request->input('message');
-    event(new MessageSent($message));
-    return response()->json(['status' => 'Message sent!']);
 });

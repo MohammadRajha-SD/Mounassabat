@@ -181,7 +181,6 @@ function App() {
                         <Chat />
                     </PrivateRoute>
                 } />
-
             </Routes>
         </AnnonceProvider>
     );

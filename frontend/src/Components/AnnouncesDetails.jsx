@@ -3,7 +3,8 @@ import Footer from "./Footer.jsx";
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import NavBar from "./Navbar/NavBar";
-import { Link } from 'react-router-dom';
+import Loader from './Loader/Index.jsx';
+import axios from 'axios';
 
 const AnnouncesDetails = () => {
     const { id } = useParams();
@@ -50,8 +51,28 @@ const AnnouncesDetails = () => {
         }
     };
 
+    const handleNewConversation = async (id) => {
+        const token = localStorage.getItem('token');
+
+        const payload = { user_id: id };
+
+        try {
+            const response = await axios.post(
+                'http://localhost:8000/api/new-conversation',
+                payload,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            window.location.href = '/Chat';
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    }
+
     if (!annonce) {
-        return <div>Error fetching announcement details</div>;
+        return <div className="flex items-center justify-center h-screen">
+            <Loader />
+        </div>;
     }
 
     return (
@@ -117,14 +138,13 @@ const AnnouncesDetails = () => {
                     <div className="w-full md:w-1/2">
                         <div className='flex items-center justify-between'>
                             <h1 className="text-black font-serif text-3xl py-2">{annonce.title}</h1>
-                            
-                            <Link
-                                to={`/messages/${annonce.user_id}`}
+
+                            <button
+                                onClick={() => handleNewConversation(annonce.user_id)}
                                 className="bg-indigo-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg"
-                                aria-label={`Send a message to user ${annonce.user_id}`}
                             >
                                 Send Message
-                            </Link>
+                            </button>
                         </div>
                         <div className="py-6">
                             <h1 className="text-black font-serif text-2xl italic py-2">Description</h1>

@@ -12,11 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // $this->call([
+        //     CategoriesTableSeeder::class,
+        //     SubCategoriesTableSeeder::class,
+        //     SousCategoriesTableSeeder::class,
+        // ]);
         $this->call([
-            CategoriesTableSeeder::class,
-            SubCategoriesTableSeeder::class,
-            SousCategoriesTableSeeder::class,
+            ConversationSeeder::class,
+            // MessageSeeder::class,
         ]);
-
     }
 }
