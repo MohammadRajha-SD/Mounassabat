@@ -12,7 +12,7 @@ return [
         'app_id'        => '',
     ],
     'payment_action' => 'Sale',
-    'currency'       => env('PAYPAL_CURRENCY', 'MAD'),
+    'currency'       => env('PAYPAL_CURRENCY', 'USD'),
     'notify_url'     => '',
     'locale'         => '',
     'validate_ssl'   => true,

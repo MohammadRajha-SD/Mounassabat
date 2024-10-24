@@ -6,6 +6,7 @@ import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { toast } from 'react-toastify';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 const AnnounceForm = () => {
     const [images, setImages] = useState([]);
@@ -18,9 +19,9 @@ const AnnounceForm = () => {
     const navigate = useNavigate();
 
     const options = [
-        { days: 3, price: 49, label: '3 days - 49 DH' },
-        { days: 14, price: 109, label: '14 days - 109 DH' },
-        { days: 30, price: 299, label: '30 days - 299 DH' },
+        { days: 3, price: 5, label: '3 days - 5$' },
+        { days: 14, price: 10.90, label: '14 days - 10.90$' },
+        { days: 30, price: 29.90, label: '30 days - 29.90$' },
     ];
 
     const handleSelectChange = (e) => {
@@ -136,6 +137,7 @@ const AnnounceForm = () => {
             }
         }
     };
+
     // functions 
     const handleFileChange = (event) => {
         const fileList = event.target.files;
@@ -255,9 +257,10 @@ const AnnounceForm = () => {
                     });
 
                     if (paymentError) {
-                        toast.error('Payment failed');
+                        toast.error('Payment failed. Please try again.');
                     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
                         createAnnonce(paymentMethod);
+
                         toast.success('Payment successful!');
 
                         setTimeout(() => {
@@ -265,33 +268,17 @@ const AnnounceForm = () => {
                         }, 1000);
                     }
                 } catch (error) {
-                    console.log(error);
                     toast.error('Something went wrong');
                 }
-            } else {
-                // Handle PayPal payment
-                try {
-                    const token = localStorage.getItem('token');
-                    const { data } = await axios.post('http://127.0.0.1:8000/api/create-paypal-checkout-session', { amount: 1000 }, { headers: { Authorization: `Bearer ${token}` } });
-                    const { id } = data;
-
-                    const result = await stripe.redirectToCheckout({ sessionId: id });
-
-                    if (result.error) {
-                        console.error(result.error);
-                        alert('Redirect to PayPal failed');
-                    }
-                } catch (error) {
-                    console.error('Error creating PayPal session:', error);
-                    alert('Something went wrong with PayPal');
-                }
             }
+
             setIsLoading(false);
         };
 
         return (
             <form onSubmit={handleSubmit}>
                 <h2 className="mb-4 mt-2">Select Payment Method</h2>
+
                 <div className="mb-4">
                     <label>
                         <input
@@ -321,18 +308,76 @@ const AnnounceForm = () => {
                 )}
 
                 {paymentMethod === 'paypal' && (
-                    <CardElement
-                        disabled={isLoading}
-                        className="border p-2 rounded-md mb-4" />
+                    <PayPalScriptProvider options={{ "client-id": "AYXjOmFXvDTfxT7SXSVfnb2YNglIjPUXmfndHC5soxBuDxrp16nM26d2MvhDJOMcnSCRTU-RfGK2xJPr" }}>
+                        <PayPalButtons
+                            createOrder={async (data, actions) => {
+                                try {
+                                    const response = await axios.post(
+                                        'http://127.0.0.1:8000/api/paypal/payment',
+                                        { price: selectedOption.price },
+                                        { headers: { Authorization: `Bearer ${token}` } }
+                                    );
+
+                                    if (response.data.status === 'success' && response.data.approval_url) {
+                                        return response.data.id;
+                                    } else {
+                                        toast.error('Order creation failed. Please try again.');
+                                    }
+                                } catch (error) {
+                                    console.error('Error creating order:', error);
+                                    toast.error('Error creating order. Please try again.');
+                                    throw error;
+                                }
+                            }}
+
+                            onApprove={async (data, actions) => {
+                                try {
+                                    const response = await axios.get(
+                                        `http://127.0.0.1:8000/api/paypal/success`,
+                                        {
+                                            params: { token: data.orderID },
+                                            headers: { Authorization: `Bearer ${token}` },
+                                        }
+                                    );
+
+                                    if (response.data.status === 'success') {
+                                        createAnnonce(paymentMethod);
+
+                                        toast.success('Payment successful!');
+
+                                        setTimeout(() => {
+                                            window.location.href = '/Annonces';
+                                        }, 1000);
+
+                                    } else {
+                                        toast.error('Payment failed. Please try again.');
+                                    }
+                                } catch (error) {
+                                    toast.error('Something went wrong');
+                                }
+                            }}
+
+
+                            onCancel={() => {
+                                toast.warning('Transaction cancelled');
+                            }}
+
+                            onError={(err) => {
+                                toast.warning('An error occurred during the transaction.');
+                            }}
+                        />
+                    </PayPalScriptProvider>
                 )}
 
-                <button
-                    type="submit"
-                    disabled={isLoading || !selectedOption?.days}
-                    className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
-                >
-                    {isLoading ? 'Processing...' : paymentMethod === 'card' ? 'Pay with Credit Card' : 'Pay with PayPal'}
-                </button>
+                {paymentMethod === 'card' && (
+                    <button
+                        type="submit"
+                        disabled={isLoading || !selectedOption?.days}
+                        className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                    >
+                        {isLoading ? 'Processing...' : paymentMethod === 'card' ? 'Pay with Credit Card' : 'Pay with PayPal'}
+                    </button>
+                )}
             </form>
         );
     };

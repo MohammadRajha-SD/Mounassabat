@@ -38,7 +38,7 @@ class StripePaymentController extends Controller
             // Create a PaymentIntent with customer details
             $paymentIntent = PaymentIntent::create([
                 'amount' => $request->amount * 100,
-                'currency' => 'mad',
+                'currency' => 'USD',
                 'payment_method_types' => ['card'],
                 'metadata' => [
                     'customer_name' => auth()->user()->firstName,

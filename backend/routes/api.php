@@ -41,9 +41,6 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware('auth:api')->group(function () {
-    // Route::post('/paypal/create-payment', [PayPalController::class, 'createPayment']);
-    // Route::post('/paypal/capture-payment', [PayPalController::class, 'capturePayment']);
-
     Route::post('/paypal/payment', [PaypalController::class, 'payment']);
     Route::get('/paypal/success', [PaypalController::class, 'success'])->name('paypal.success');
     Route::get('/paypal/cancel', [PaypalController::class, 'cancel'])->name('paypal.cancel');

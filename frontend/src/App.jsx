@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import Home from "./Components/Home.jsx";
 import AllAnnounces from "./Components/AllAnnounces.jsx";
 import QuiSommesNous from "./Components/QuiSommesNous/Index.jsx";
@@ -35,51 +35,51 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
-
-
-
 function App() {
-    const token = localStorage.getItem('token');
+    const [token, setToken] = useState(false);
     const [isValidToken, setIsValidToken] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
-    // useEffect(() => {
-    //     const verifyToken = async () => {
-    //         if (!token) {
-    //             setIsLoading(false);
-    //             setIsValidToken(false);
-    //             return;
-    //         }
+    useEffect(() => {
+        const savedToken = localStorage.getItem('token');
+        setToken(savedToken);
 
-    //         try {
-    //             const response = await axios.get('http://127.0.0.1:8000/api/verify-token', {
-    //                 headers: {
-    //                     Authorization: `Bearer ${token}`
-    //                 }
-    //             });
+        const verifyToken = async () => {
+            if (!token) {
+                setIsLoading(false);
+                setIsValidToken(false);
+                return;
+            }
 
-    //             const { valid, message } = response.data;
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/verify-token', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
 
-    //             if (response.status === 200 && valid) {
-    //                 setIsValidToken(true);
-    //             } else {
-    //                 setIsValidToken(false);
-    //                 toast.error(message || 'Votre session a expiré. Veuillez vous reconnecter.');
-    //                 localStorage.removeItem('token');
-    //                 localStorage.removeItem('user');
-    //             }
-    //         } catch (error) {
-    //             setIsValidToken(false);
-    //             toast.error('Votre session a expiré.');
-    //             localStorage.removeItem('token');
-    //             localStorage.removeItem('user');
-    //         }
+                const { valid, message } = response.data;
 
-    //         setIsLoading(false);
-    //     };
+                if (response.status === 200 && valid) {
+                    setIsValidToken(true);
+                } else {
+                    setIsValidToken(false);
+                    toast.error(message || 'Votre session a expiré. Veuillez vous reconnecter.');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                }
+            } catch (error) {
+                setIsValidToken(false);
+                toast.error('Votre session a expiré.');
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+            }
 
-    //     verifyToken();
-    // }, [token]);
+            setIsLoading(false);
+        };
+
+        verifyToken();
+    }, [token]);
 
 
     return (

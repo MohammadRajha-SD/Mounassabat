@@ -28,7 +28,7 @@ class PaypalController extends Controller
             "purchase_units" => [
                 [
                     "amount" => [
-                        "currency_code" => "MAD",
+                        "currency_code" => "USD",
                         "value" => $request->price,
                     ]
                 ]
