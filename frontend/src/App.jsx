@@ -1,6 +1,4 @@
-import './App.css';
-// import { Routes, Route } from "react-router-dom";
-import React from "react";
+import React, { useEffect,useState } from "react";
 import Home from "./Components/Home.jsx";
 import AllAnnounces from "./Components/AllAnnounces.jsx";
 import QuiSommesNous from "./Components/QuiSommesNous/Index.jsx";
@@ -27,15 +25,63 @@ import Parametres from './Components/Prestataire/Parametres.jsx';
 import AnnouncesDetails from './Components/AnnouncesDetails.jsx';
 import FilterAnnounces from "./Components/FilterAnnounces.jsx";
 import { AnnonceProvider } from './Components/AnnonceContext';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Chat from './Components/Chat/Index.jsx';
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Messages from './Components/Prestataire/Messages.jsx';
 import StripeContainer from './Components/CreditCard/StripeContainer.jsx';
+import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
+
+
+
 
 function App() {
+    const token = localStorage.getItem('token');
+    const [isValidToken, setIsValidToken] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // useEffect(() => {
+    //     const verifyToken = async () => {
+    //         if (!token) {
+    //             setIsLoading(false);
+    //             setIsValidToken(false);
+    //             return;
+    //         }
+
+    //         try {
+    //             const response = await axios.get('http://127.0.0.1:8000/api/verify-token', {
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`
+    //                 }
+    //             });
+
+    //             const { valid, message } = response.data;
+
+    //             if (response.status === 200 && valid) {
+    //                 setIsValidToken(true);
+    //             } else {
+    //                 setIsValidToken(false);
+    //                 toast.error(message || 'Votre session a expiré. Veuillez vous reconnecter.');
+    //                 localStorage.removeItem('token');
+    //                 localStorage.removeItem('user');
+    //             }
+    //         } catch (error) {
+    //             setIsValidToken(false);
+    //             toast.error('Votre session a expiré.');
+    //             localStorage.removeItem('token');
+    //             localStorage.removeItem('user');
+    //         }
+
+    //         setIsLoading(false);
+    //     };
+
+    //     verifyToken();
+    // }, [token]);
+
+
     return (
         <AnnonceProvider>
             <ToastContainer />

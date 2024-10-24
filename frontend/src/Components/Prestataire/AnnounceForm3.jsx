@@ -1,43 +1,84 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header3 from './Header3.jsx';
 import RightSide from './RightSide.jsx';
 import axios from 'axios';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { toast } from 'react-toastify';
 
 const AnnounceForm = () => {
     const [images, setImages] = useState([]);
     const [formIncomplete, setFormIncomplete] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+    const [visiblePaymentForm, setVisiblePaymentForm] = useState(null);
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [token, setToken] = useState(null);
     const navigate = useNavigate();
 
-    const handleFileChange = (event) => {
-        const fileList = event.target.files;
-        const totalImages = images.length + fileList.length;
+    const options = [
+        { days: 3, price: 49, label: '3 days - 49 DH' },
+        { days: 14, price: 109, label: '14 days - 109 DH' },
+        { days: 30, price: 299, label: '30 days - 299 DH' },
+    ];
 
-        if (totalImages > 5) {
-            setFormIncomplete(true);
-            setTimeout(() => {
-                setFormIncomplete(false);
-            }, 3000);
-            return;
+    const handleSelectChange = (e) => {
+        const selectedDays = parseInt(e.target.value);
+        const selected = options.find((option) => option.days === selectedDays);
+        setSelectedOption(selected);
+    };
+
+    // get annonce type
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+        const annonceType = localStorage.getItem('annonce_type');
+
+        if (annonceType === 'vip') {
+            setVisiblePaymentForm(true);
+        } else {
+            setVisiblePaymentForm(false);
         }
+    }, []);
 
-        const imageArray = Array.from(fileList).map((file) => ({
-            url: URL.createObjectURL(file),
-            file: file,
-        }));
-        setImages((prevImages) => [...prevImages, ...imageArray]);
+    // Create annonce function
+    const createAnnonce = async (payment_method) => {
+        try {
+            const formData = new FormData();
+
+            formData.append('title', localStorage.getItem('title'));
+            formData.append('description', localStorage.getItem('description'));
+            formData.append('location', localStorage.getItem('location'));
+            formData.append('sub_category_id', localStorage.getItem('sub_category_id'));
+            formData.append('sous_category_id', localStorage.getItem('sous_category_id'));
+            formData.append('price', localStorage.getItem('price'));
+            formData.append('annonce_type', localStorage.getItem('annonce_type'));
+            formData.append('payment_method', payment_method);
+            formData.append('annonce_duration', selectedOption.days);
+            formData.append('amount', selectedOption.price);
+
+            images.forEach((image) => { formData.append('image[]', image.file); });
+
+            const response = await axios.post(
+                'http://127.0.0.1:8000/api/annonce/create',
+                formData,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+
+            setSuccessMessage('Annonce created successfully!');
+
+            setTimeout(() => { navigate('/Annonces'); }, 3000);
+        } catch (error) {
+            console.error('Error creating annonce:', error);
+        }
     };
 
-    const handleDelete = (index, event) => {
-        event.preventDefault();
-        setImages((prevImages) => {
-            const newImages = [...prevImages];
-            newImages.splice(index, 1);
-            return newImages;
-        });
-    };
-
+    // handle continue button
     const handleContinueClick = async () => {
         if (images.length === 0) {
             setFormIncomplete(true);
@@ -95,6 +136,208 @@ const AnnounceForm = () => {
             }
         }
     };
+    // functions 
+    const handleFileChange = (event) => {
+        const fileList = event.target.files;
+        const totalImages = images.length + fileList.length;
+
+        if (totalImages > 5) {
+            setFormIncomplete(true);
+            setTimeout(() => {
+                setFormIncomplete(false);
+            }, 3000);
+            return;
+        }
+
+        const imageArray = Array.from(fileList).map((file) => ({
+            url: URL.createObjectURL(file),
+            file: file,
+        }));
+        setImages((prevImages) => [...prevImages, ...imageArray]);
+    };
+
+    const handleDelete = (index, event) => {
+        event.preventDefault();
+        setImages((prevImages) => {
+            const newImages = [...prevImages];
+            newImages.splice(index, 1);
+            return newImages;
+        });
+    };
+
+    const openModalWithCheck = () => {
+        if (images.length === 0) {
+            setFormIncomplete(true);
+            setTimeout(() => {
+                setFormIncomplete(false);
+            }, 3000);
+        } else {
+            setModalOpen(true)
+        }
+    }
+
+    const Modal = ({ isOpen, onClose }) => {
+        if (!isOpen) return null;
+
+        return (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full my-5">
+                    <div className='flex justify-between items-center'>
+                        <h2 className="text-lg font-semibold">Payment Confirmation</h2>
+                        <h1 className='text-red-500 cursor-pointer font-bold' onClick={() => setModalOpen(false)}>X</h1>
+                    </div>
+
+                    <div className="max-w-md mx-auto my-5">
+                        <label htmlFor="announcement-select" className="block text-sm font-medium text-gray-700 mb-2">
+                            Choose Announcement Duration:
+                        </label>
+                        <select
+                            id="announcement-select"
+                            value={selectedOption?.days}
+                            onChange={handleSelectChange}
+                            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                            <option value="">Select an option</option>
+                            {options.map((option) => (
+                                <option key={option.days} value={option.days}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <Elements stripe={stripePromise}>
+                        <PaymentForm />
+                    </Elements>
+                </div>
+            </div >
+        );
+    };
+
+    // STRIPE START
+    const stripePromise = loadStripe('pk_test_51OdOFNKPwcneq4cfGY5dJmtpoZCmPivYiWVOcfKiWGEv6dsh8x2kSl0STrr9giYpVeXZbU0DxHJA99yArGXN7yvF00y0YQCe17');
+
+    const PaymentForm = () => {
+        const stripe = useStripe();
+        const elements = useElements();
+        const [isLoading, setIsLoading] = useState(false);
+        const [paymentMethod, setPaymentMethod] = useState('card');
+
+        const handleSubmit = async (event) => {
+            event.preventDefault();
+            setIsLoading(true);
+
+            if (paymentMethod === 'card') {
+                try {
+                    const token = localStorage.getItem('token');
+                    const { data } = await axios.post('http://127.0.0.1:8000/api/pay-by-creditcard', {
+                        amount: selectedOption.price,
+                        payment_method: 'card'
+                    }, { headers: { Authorization: `Bearer ${token}` } });
+
+                    const { clientSecret, name, email } = data;
+
+                    if (!stripe || !elements) {
+                        toast.error('Stripe not Loaded');
+                        return;
+                    }
+
+                    const cardElement = elements.getElement(CardElement);
+
+                    const { error: paymentError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+                        payment_method: {
+                            card: cardElement,
+                            billing_details: {
+                                name: name,
+                                email: email,
+                            },
+                        },
+                    });
+
+                    if (paymentError) {
+                        toast.error('Payment failed');
+                    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+                        createAnnonce(paymentMethod);
+                        toast.success('Payment successful!');
+
+                        setTimeout(() => {
+                            window.location.href = '/Annonces';
+                        }, 1000);
+                    }
+                } catch (error) {
+                    console.log(error);
+                    toast.error('Something went wrong');
+                }
+            } else {
+                // Handle PayPal payment
+                try {
+                    const token = localStorage.getItem('token');
+                    const { data } = await axios.post('http://127.0.0.1:8000/api/create-paypal-checkout-session', { amount: 1000 }, { headers: { Authorization: `Bearer ${token}` } });
+                    const { id } = data;
+
+                    const result = await stripe.redirectToCheckout({ sessionId: id });
+
+                    if (result.error) {
+                        console.error(result.error);
+                        alert('Redirect to PayPal failed');
+                    }
+                } catch (error) {
+                    console.error('Error creating PayPal session:', error);
+                    alert('Something went wrong with PayPal');
+                }
+            }
+            setIsLoading(false);
+        };
+
+        return (
+            <form onSubmit={handleSubmit}>
+                <h2 className="mb-4 mt-2">Select Payment Method</h2>
+                <div className="mb-4">
+                    <label>
+                        <input
+                            type="radio"
+                            value="card"
+                            checked={paymentMethod === 'card'}
+                            onChange={() => setPaymentMethod('card')}
+                        />
+                        <span className='pl-1'>Credit Card</span>
+                    </label>
+                    <label className="ml-4">
+                        <input
+                            type="radio"
+                            value="paypal"
+                            checked={paymentMethod === 'paypal'}
+                            onChange={() => setPaymentMethod('paypal')}
+                        />
+
+                        <span className='pl-1'>PayPal</span>
+                    </label>
+                </div>
+
+                {paymentMethod === 'card' && (
+                    <CardElement
+                        disabled={isLoading}
+                        className="border p-2 rounded-md mb-4" />
+                )}
+
+                {paymentMethod === 'paypal' && (
+                    <CardElement
+                        disabled={isLoading}
+                        className="border p-2 rounded-md mb-4" />
+                )}
+
+                <button
+                    type="submit"
+                    disabled={isLoading || !selectedOption?.days}
+                    className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                >
+                    {isLoading ? 'Processing...' : paymentMethod === 'card' ? 'Pay with Credit Card' : 'Pay with PayPal'}
+                </button>
+            </form>
+        );
+    };
+
+    // STRIPE END
 
     return (
         <>
@@ -172,9 +415,20 @@ const AnnounceForm = () => {
                     <RightSide title="Comment joindre la photo et la vidéo sur mon annonce." content={"Fournir de bonnes photos du produit est également important, cela peut aider à donner à l'acheteur potentiel une idée claire de l'état et de l'apparence du produit."} />
                 </div>
             </div>
+
             <div className="fixed right-0 bottom-0 z-10 bg-white w-screen flex justify-end items-center py-2 shadow-md">
-                <button onClick={handleContinueClick} className='bg-yellow-600 text-white p-2 mx-2 rounded-lg' type='submit' >CONTINUER</button>
-            </div>
+                {visiblePaymentForm ? (
+                    <>
+                        <button className='bg-blue-400 text-white px-3 py-2 font-serif mx-2 rounded-lg' type='button' onClick={() => openModalWithCheck()}>
+                            Pay Now
+                        </button>
+
+                        <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+                    </>
+                ) : <>
+                    <button onClick={handleContinueClick} className='bg-yellow-600 text-white p-2 mx-2 rounded-lg' type='submit' >CONTINUER</button>
+                </>}
+            </div >
         </>
     );
 };

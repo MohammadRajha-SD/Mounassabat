@@ -31,7 +31,7 @@ const HeaderAnnounces = ({actived = 'Mes Annonces'}) => {
 
             <div className="hidden md:flex items-center ">
                 <LinkComponent name={'Mes Annonces'} to={'/Annonces'} />
-                <LinkComponent name={'Messages'} to={'/Messages'} />
+                <LinkComponent name={'Messages'} to={'/Chat'} />
                 <LinkComponent name={'Favorites'} to={'/Favorites'} />
                 <LinkComponent name={'Paramètres'} to={'/Parametres'} />
             </div>

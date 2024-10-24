@@ -88,7 +88,7 @@ const Chat = () => {
                     <ConversationList>
                         {conversations.map(conv => (
                             <Conversation key={conv.id} name={conv.receiver.id === user.id ? conv.sender.firstName : conv.receiver.firstName} lastSenderName={conv?.last_message_sender?.id === user.id ? 'You' : conv.last_message_sender?.firstName} info={conv?.latest_message} onClick={() => handleSelectedConversation(conv)}>
-                                <Avatar name={conv.receiver.firstName} src="https://chatscope.io/storybook/react/assets/zoe-E7ZdmXF0.svg" />
+                                <Avatar name={conv.receiver.firstName} src="/images/user-profile.png" />
                             </Conversation>
                         ))}
                     </ConversationList>
@@ -98,7 +98,7 @@ const Chat = () => {
                     <ChatContainer>
                         <ConversationHeader>
                             <ConversationHeader.Back onClick={() => window.location.href = '/'} />
-                            <Avatar name={selectedConversation.receiver.id === user.id ? selectedConversation.sender.firstName : selectedConversation.receiver.firstName} src="https://chatscope.io/storybook/react/assets/zoe-E7ZdmXF0.svg" />
+                            <Avatar name={selectedConversation.receiver.id === user.id ? selectedConversation.sender.firstName : selectedConversation.receiver.firstName} src={"/images/user-profile.png"} />
                             <ConversationHeader.Content userName={selectedConversation.receiver.id === user.id ? selectedConversation.sender.firstName : selectedConversation.receiver.firstName} />
                         </ConversationHeader>
 
@@ -112,7 +112,7 @@ const Chat = () => {
                                         direction: msg.sender_id === user.id ? 'outgoing' : 'incoming',
                                         position: 'single',
                                     }}>
-                                        <Avatar name={msg.sender?.firstName} src="https://chatscope.io/storybook/react/assets/zoe-E7ZdmXF0.svg" />
+                                        <Avatar name={msg.sender?.firstName} src="/images/user-profile.png" />
                                     </Message>
                                 ))
                             ) : (

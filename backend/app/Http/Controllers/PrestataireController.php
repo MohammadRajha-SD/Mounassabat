@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Annonce;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -125,6 +126,16 @@ class PrestataireController extends Controller
                 'price' => $request->price,
                 'type' => $request->annonce_type,
             ]);
+
+            if ($request->annonce_type === 'vip') {
+                Payment::create([
+                    'annonce_id' => $annonce->id,
+                    'status' => 'completed',
+                    'payment_method' => $request->payment_method,
+                    'annonce_duration' => $request->annonce_duration,
+                    'amount' => $request->amount,
+                ]);
+            }
 
             return response()->json([
                 "status" => "success",

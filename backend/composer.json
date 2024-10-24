@@ -18,6 +18,7 @@
         "laravel/tinker": "^2.8",
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.0",
+        "srmklive/paypal": "^3.0",
         "stripe/stripe-php": "^16.1",
         "tymon/jwt-auth": "^2.1"
     },

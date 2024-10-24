@@ -6,10 +6,9 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PrestataireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\PayPalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +41,14 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware('auth:api')->group(function () {
-    // Route::post('/pay-by-creditcard', [StripePaymentController::class, 'createPaymentIntent']);
-    Route::post('/pay-by-creditcard', [StripePaymentController::class, 'createPaymentIntent']);
+    // Route::post('/paypal/create-payment', [PayPalController::class, 'createPayment']);
+    // Route::post('/paypal/capture-payment', [PayPalController::class, 'capturePayment']);
+
+    Route::post('/paypal/payment', [PaypalController::class, 'payment']);
+    Route::get('/paypal/success', [PaypalController::class, 'success'])->name('paypal.success');
+    Route::get('/paypal/cancel', [PaypalController::class, 'cancel'])->name('paypal.cancel');
+
+    Route::post('/pay-by-creditcard', [StripePaymentController::class, 'store']);
     Route::get('/myConversations', [ChatController::class, 'getMyConversations']);
     Route::get('/conversations/{userId}', [ChatController::class, 'getOrCreateConversation']);
     Route::post('/messages', [ChatController::class, 'storeMessage']);

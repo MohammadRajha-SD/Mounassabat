@@ -1,68 +1,73 @@
-// PaymentForm.js
-import React, { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import React, { useEffect, useState } from 'react';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import axios from 'axios';
 
-const stripePromise = loadStripe('pk_test_51OdOFNKPwcneq4cfGY5dJmtpoZCmPivYiWVOcfKiWGEv6dsh8x2kSl0STrr9giYpVeXZbU0DxHJA99yArGXN7yvF00y0YQCe17');
+const PayPalButton = () => {
+  const [token, setToken] = useState(null);
 
-const PaymentForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const token = localStorage.getItem('token');
-      const { data } = await axios.post('http://127.0.0.1:8000/api/pay-by-creditcard', { amount: 1000 }, { headers: { Authorization: `Bearer ${token}` } });
-      const { clientSecret } = data;
-
-      if (!stripe || !elements) {
-        alert('Stripe not loaded');
-        return;
-      }
-
-      const cardElement = elements.getElement(CardElement);
-
-      const { error: paymentError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: cardElement },
-      });
-
-      if (paymentError) {
-        console.error(paymentError);
-        alert('Payment failed');
-      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-        alert('Payment successful!');
-      }
-    } catch (error) {
-      console.error('Error processing payment:', error);
-      alert('Something went wrong');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  useEffect(() => {
+    const savedToken = localStorage.getItem('token');
+    setToken(savedToken);
+  }, []);
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 max-w-md mx-auto bg-white rounded shadow-md">
-      <CardElement className="border p-2 rounded-md mb-4" />
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
-      >
-        {isLoading ? 'Processing...' : 'Pay $10.00'}
-      </button>
-    </form>
+    <PayPalScriptProvider options={{ "client-id": "AYXjOmFXvDTfxT7SXSVfnb2YNglIjPUXmfndHC5soxBuDxrp16nM26d2MvhDJOMcnSCRTU-RfGK2xJPr" }}>
+      <PayPalButtons
+        createOrder={async (data, actions) => {
+          try {
+            const response = await axios.post(
+              'http://127.0.0.1:8000/api/paypal/payment',
+              { price: 100 },
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            if (response.data.status === 'success' && response.data.approval_url) {
+              return response.data.id;
+            } else {
+              alert('Order creation failed. Please try again.');
+            }
+          } catch (error) {
+            console.error('Error creating order:', error);
+            alert('Error creating order. Please try again.');
+            throw error;
+          }
+        }}
+
+
+        onApprove={async (data, actions) => {
+          try {
+            const response = await axios.get(
+              `http://127.0.0.1:8000/api/paypal/success`,
+              {
+                params: { token: data.orderID }, // Pass token as query param
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
+
+            console.log('Payment Success:', response.data);
+            if (response.data.status === 'success') {
+              alert('Payment completed successfully!');
+            } else {
+              alert('Payment failed. Please try again.');
+            }
+          } catch (error) {
+            console.error('Error capturing order:', error);
+            alert('Error capturing the order.');
+          }
+        }}
+
+
+        onCancel={() => {
+          alert('Transaction cancelled');
+        }}
+
+        onError={(err) => {
+          console.error('PayPal error:', err);
+          alert('An error occurred during the transaction.');
+        }}
+      />
+    </PayPalScriptProvider>
   );
 };
 
-const StripeContainer = () => (
-  <Elements stripe={stripePromise}>
-    <PaymentForm />
-  </Elements>
-);
-
-export default StripeContainer;
+export default PayPalButton;
