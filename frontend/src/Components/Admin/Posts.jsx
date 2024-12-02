@@ -23,7 +23,7 @@ const Posts = () => {
             }
 
             // Make the API call using axios
-            const response = await axios.get(`http://127.0.0.1:8000/api/getAllAnnonces?page=${page}`, {
+            const response = await axios.get(`https://mounassabat.ma/api/getAllAnnonces?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -53,7 +53,7 @@ const Posts = () => {
                 return;
             }
 
-            const response = await axios.delete(`http://127.0.0.1:8000/api/deleteAnnonces/${id}`, {
+            const response = await axios.delete(`https://mounassabat.ma/api/deleteAnnonces/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -81,7 +81,7 @@ const Posts = () => {
                 return;
             }
 
-            const response = await axios.post(`http://127.0.0.1:8000/api/acceptAnnonce/${id}`, {}, {
+            const response = await axios.post(`https://mounassabat.ma/api/acceptAnnonce/${id}`, {}, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`

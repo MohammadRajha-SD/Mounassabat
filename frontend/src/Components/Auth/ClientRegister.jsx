@@ -72,7 +72,7 @@ const ClientRegister = () => {
     setLoading(true);
     try {
       // Use axios to send a POST request to the Laravel backend
-      const response = await axios.post('http://127.0.0.1:8000/api/register', formData);
+      const response = await axios.post('https://mounassabat.ma/api/register', formData);
 
       if (response.status === 201 || response.status === 200) {
         navigate('/login');

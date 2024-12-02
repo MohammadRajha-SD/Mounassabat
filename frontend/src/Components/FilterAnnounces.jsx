@@ -39,7 +39,7 @@ const FilterAnnounces = () => {
                 return;
             }
 
-            const response = await axios.post('http://127.0.0.1:8000/api/favoris',
+            const response = await axios.post('https://mounassabat.ma/api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {

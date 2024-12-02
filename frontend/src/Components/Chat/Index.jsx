@@ -29,7 +29,7 @@ const Chat = () => {
 
         setUser(user);
 
-        axios.get(`http://localhost:8000/api/myConversations`, { headers: { Authorization: `Bearer ${token}` } })
+        axios.get(`https://mounassabat.ma/api/myConversations`, { headers: { Authorization: `Bearer ${token}` } })
             .then(response => {
                 setConversations(response.data);
                 // console.log(response.data);
@@ -72,7 +72,7 @@ const Chat = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:8000/api/send-message',
+                'https://mounassabat.ma/api/send-message',
                 payload,
                 { headers: { Authorization: `Bearer ${token}` } }
             );

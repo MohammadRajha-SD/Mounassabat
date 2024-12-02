@@ -20,7 +20,7 @@ const Prestataires = () => {
                 return;
             }
 
-            const response = await axios.get('http://127.0.0.1:8000/api/getAllPrestataires', {
+            const response = await axios.get('https://mounassabat.ma/api/getAllPrestataires', {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`

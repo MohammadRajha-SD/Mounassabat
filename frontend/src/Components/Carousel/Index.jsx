@@ -18,7 +18,7 @@ const Carousel = ({ images, isVip = false, width = '320px', height = '250px' }) 
                 <div className="w-full h-full">
                     {images.length > 0 && (
                         <img
-                            src={`http://127.0.0.1:8000/${images[currentSlide]}`}
+                            src={`https://mounassabat.ma/${images[currentSlide]}`}
                             className="w-full h-full object-cover"
                             alt={`Slide ${currentSlide}`}
                         />

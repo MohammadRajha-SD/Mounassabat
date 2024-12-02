@@ -20,7 +20,7 @@ const AllAnnounces = () => {
         try {
             const token = localStorage.getItem('token');
 
-            const response = await axios.get(`http://127.0.0.1:8000/api/${token ? 'getAnnonces' : 'getAllAcceptedAnnoncesHomePage'}`, {
+            const response = await axios.get(`https://mounassabat.ma/api/${token ? 'getAnnonces' : 'getAllAcceptedAnnoncesHomePage'}`, {
                 params: { page },
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -62,7 +62,7 @@ const AllAnnounces = () => {
                 return;
             }
 
-            const response = await axios.post('http://127.0.0.1:8000/api/favoris',
+            const response = await axios.post('https://mounassabat.ma/api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {

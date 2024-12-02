@@ -20,7 +20,7 @@ const Annonces = () => {
                 return;
             }
 
-            const response = await axios.get('http://127.0.0.1:8000/api/getMyAnnonces', {
+            const response = await axios.get('https://mounassabat.ma/api/getMyAnnonces', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
