@@ -7,7 +7,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { toast } from 'react-toastify';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-
+import Loader from '../Loader/Index.jsx';
 const AnnounceForm = () => {
     const [images, setImages] = useState([]);
     const [formIncomplete, setFormIncomplete] = useState(false);
@@ -16,6 +16,8 @@ const AnnounceForm = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     const [token, setToken] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    
     const navigate = useNavigate();
 
     const options = [
@@ -106,12 +108,13 @@ const AnnounceForm = () => {
                 formData.append('sous_category_id', sous_category_id);
                 formData.append('price', price);
                 formData.append('annonce_type', annonce_type);
+
                 images.forEach((image) => {
                     formData.append('image[]', image.file);
                 });
 
-                console.log(formData)
                 if (token) {
+                    setIsLoading(true);
                     axios.post('https://mounassabat.ma/api/annonce/create', formData, {
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -122,14 +125,17 @@ const AnnounceForm = () => {
                             setSuccessMessage('Annonce created successfully!');
                             setTimeout(() => {
                                 navigate('/Annonces');
-                            }, 3000);
+                                setIsLoading(false);
+                            }, 2000);
                         })
                         .catch(error => {
                             console.error('Error:', error);
+                            setIsLoading(false);
                         });
 
                 } else {
                     console.error('No token found');
+                    setIsLoading(false);
                 }
 
             } catch (error) {
@@ -386,6 +392,7 @@ const AnnounceForm = () => {
 
     return (
         <>
+            {isLoading&& (<Loader />)}
             <div className='min-h-screen  bg-gray-100 '>
                 <Header3 />
                 <div className="flex flex-col md:flex-row pt-32 pb-20 md:py-20  gap-5 mx-2  lg:mx-10">
