@@ -286,18 +286,6 @@ const Home = () => {
                 <div>
                     <NavBar />
 
-                    {/* <img src={backgroundImage} style={{
-                        backgroundImage: `url(${backgroundImage})`,
-                        backgroundSize: 'cover',
-                        backgroundRepeat: 'no-repeat',
-                        height: '100vh',
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        zIndex: -1
-                    }} /> */}
-
                     {/* Text Image */}
                     <div className="px-4 md:px-8 mt-2">
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
@@ -367,15 +355,17 @@ const Home = () => {
                     {/* 5 Cards */}
                     <div className="flex items-center flex-wrap justify-center gap-6 py-10">
                         {[
-                            { src: marriage, title: 'Mariage' },
-                            { src: anniversaire, title: 'Anniversaire' },
-                            { src: feteDeNaissance, title: 'FÃªte de naissance' },
-                            { src: babyShower, title: 'BabyShower' },
-                            { src: conference, title: 'ConfÃ©rence' }
+                            { to: 'Marriage', src: marriage, title: 'Mariage' },
+                            { to: 'Anniversaire', src: anniversaire, title: 'Anniversaire' },
+                            { to: 'Fete+De+Naissance', src: feteDeNaissance, title: 'FÃªte de naissance' },
+                            { to: 'BabyShower', src: babyShower, title: 'BabyShower' },
+                            { to: 'Conférence', src: conference, title: 'ConfÃ©rence' }
                         ].map(item => (
                             <div key={item.title} className="w-48 flex flex-col items-center border-2 border-gray-300 py-4 px-5 rounded-lg hover:bg-yellow-600 hover:text-white transition duration-300 cursor-pointer">
-                                <img className="w-12 h-12 mb-3" src={item.src} alt={item.title} />
-                                <h1 className="text-lg font-serif font-medium">{item.title}</h1>
+                                <Link to={'/FiltredAnnounces?category=' + item.to}>
+                                    <img className="w-12 h-12 mb-3" src={item.src} alt={item.title} />
+                                    <h1 className="text-lg font-serif font-medium">{item.title}</h1>
+                                </Link>
                             </div>
                         ))}
                     </div>
