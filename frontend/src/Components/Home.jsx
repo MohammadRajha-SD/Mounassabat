@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import backgroundImage from "../assets/image3.jpg";
+// import backgroundImage from "../assets/image3.jpg";
 import marriage from "../assets/marriage.png";
 import anniversaire from "../assets/icons8-birthday-80.png";
 import feteDeNaissance from "../assets/icons8-schedule-48.png";
@@ -15,6 +15,7 @@ import axios from 'axios';
 import { gapi } from 'gapi-script'
 import Loader from './Loader/Index.jsx';
 import AnnouncementSection from './AnnouncementSection';
+import { Link } from "react-router-dom";
 
 const Home = () => {
     const [showCities, setShowCities] = useState(false);
@@ -162,6 +163,7 @@ const Home = () => {
                 setMarriageAnnonces(response.data.marriage);
                 setBabyshowerAnnonces(response.data.babyshower);
                 setAnniversaireAnnonces(response.data.anniversaire);
+                console.log(response.data.normal);
             } else {
                 console.error('Failed to fetch annonces:', response.statusText);
             }
@@ -193,7 +195,7 @@ const Home = () => {
     const handleDetailsClick = (id) => {
         navigate(`/AnnouncesDetails/${id}`);
     };
-   
+
     const handleFavoritsClick = async (annonceId) => {
         try {
             const token = localStorage.getItem('token');
@@ -284,7 +286,7 @@ const Home = () => {
                 <div>
                     <NavBar />
 
-                    <img src={backgroundImage} style={{
+                    {/* <img src={backgroundImage} style={{
                         backgroundImage: `url(${backgroundImage})`,
                         backgroundSize: 'cover',
                         backgroundRepeat: 'no-repeat',
@@ -294,21 +296,21 @@ const Home = () => {
                         left: 0,
                         width: '100%',
                         zIndex: -1
-                    }} />
+                    }} /> */}
 
                     {/* Text Image */}
                     <div className="px-4 md:px-8 mt-2">
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
-                            Un Clic, <span className="text-yellow-600">vos</span>
+                            Un Clic, <span style={{ color: '#e6cf8c' }}>vos</span>
                         </h1>
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
-                            <span className="text-yellow-600">événements</span> bien
+                            <span style={{ color: '#e6cf8c' }}>Ã©vÃ©nements</span> bien
                         </h1>
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
                             yedik
                         </h1>
                         <p className="py-5 text-gray-600 text-lg md:text-xl font-serif font-medium">
-                            Découvrons les meilleurs Prestataires des événements
+                            DÃ©couvrons les meilleurs Prestataires des Ã©vÃ©nements
                         </p>
                     </div>
 
@@ -328,7 +330,7 @@ const Home = () => {
                                     <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 9a3 3 0 011-2m0 12h4m0-3c0-4.1 4-4.9 4-9a6 6 0 10-12 0c0 4 4 5 4 9h4z"></path></svg>
                                 </span>
                                 <select className="w-full py-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent" onChange={handleCategoryChange} value={selectedCategory} >
-                                    <option value={''} selected>Tous les catégories</option>
+                                    <option value={''} selected>Tous les catÃ©gories</option>
                                     {categories.length > 0 && (
                                         <>
                                             {categories.map((category) => (
@@ -367,9 +369,9 @@ const Home = () => {
                         {[
                             { src: marriage, title: 'Mariage' },
                             { src: anniversaire, title: 'Anniversaire' },
-                            { src: feteDeNaissance, title: 'Fête de naissance' },
+                            { src: feteDeNaissance, title: 'FÃªte de naissance' },
                             { src: babyShower, title: 'BabyShower' },
-                            { src: conference, title: 'Conférence' }
+                            { src: conference, title: 'ConfÃ©rence' }
                         ].map(item => (
                             <div key={item.title} className="w-48 flex flex-col items-center border-2 border-gray-300 py-4 px-5 rounded-lg hover:bg-yellow-600 hover:text-white transition duration-300 cursor-pointer">
                                 <img className="w-12 h-12 mb-3" src={item.src} alt={item.title} />
@@ -378,115 +380,30 @@ const Home = () => {
                         ))}
                     </div>
 
-                    {/* Header of 3 Cards */}
-                    <div className="text-center py-14">
-                        <h1 className="text-5xl font-medium font-serif mb-6">
-                            Vous êtes Prestataire <span className="text-yellow-600">des événements</span> ?
-                        </h1>
-                        <p className="text-gray-500 font-serif font-medium text-lg">
-                            C'est avec plaisir que nous accueillons tous les prestataires d'événements !
-                            Publiez vos annonces et partagez votre talent avec notre communauté passionnée.
-                        </p>
-                    </div>
-
-                    {/* 3 Cards */}
-                    <div className="flex flex-col md:flex-row justify-center align-items text-center gap-5 my-16 mx-3">
-                        <div className="flex flex-col text-center items-center w-full md:w-[37%] h-auto">
-                            <img className="h-24 w-24 bg-yellow-600 rounded-full px-2 py-2" src={register} alt="" />
-                            <h1 className="text-center text-2xl font-serif font-medium py-5">S'inscrire</h1>
-                            <p className="text-gray-500 font-serif font-medium text-lg">En vous inscrivant sur notre plateforme, vous pouvez tout de suite profiter d'un tableau de bord rempli d'outils pratiques pour mieux gérer vos clients. C'est vraiment utile pour vous simplifier la vie !</p>
-                        </div>
-
-                        <div className="flex flex-col text-center items-center w-full md:w-[36%] h-auto">
-                            <img className="h-24 w-24 bg-yellow-600 rounded-full px-2 py-2" src={annonce} alt="" />
-                            <h1 className="text-center text-2xl font-serif font-medium py-5">Publier votre annonce</h1>
-                            <p className="text-gray-500 font-serif font-medium text-lg">Quand vous publiez votre annonce avec des images sur notre site, vous avez de fortes chances de rencontrer de nouveaux clients. C'est une belle opportunité pour élargir votre clientéle !</p>
-                        </div>
-
-                        <div className="flex flex-col text-center items-center w-full md:w-[35%] h-auto">
-                            <img className="h-24 w-24 bg-yellow-600 rounded-full px-2 py-2" src={cup} alt="" />
-                            <h1 className="text-center text-2xl font-serif font-medium py-5">Découvrir des nouveaux clients</h1>
-                            <p className="text-gray-500 font-serif font-medium text-lg">Explorez et connectez vous avec une clientéle désireuse d'organiser des événements exceptionnels !</p>
-                        </div>
-                    </div>
-
                     {/* Main 5 Sections */}
                     <div className="container  px-3  mx-auto">
-                        <h1 className="text-center font-serif text-white font-semibold text-md bg-zinc-400 px-6 py-4  rounded-md">Découvrez les nouveautés</h1>
+                        <h1 className="text-center font-serif text-white font-semibold text-md bg-zinc-400 px-6 py-4  rounded-md">DÃ©couvrez les nouveautÃ©s</h1>
 
                         <AnnouncementSection title="Annonces VIP" annonces={vipAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
-                        <AnnouncementSection title="Annonces Normales" annonces={normalAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
+                        {/* <AnnouncementSection title="Annonces Normales" annonces={normalAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} /> */}
                         <AnnouncementSection title="Annonces Mariage" annonces={marriageAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
                         <AnnouncementSection title="Annonces Baby Shower" annonces={babyshowerAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
                         <AnnouncementSection title="Annonces Anniversaire" annonces={anniversaireAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
                     </div>
-
-                    {/* Categories Preview Cards */}
-                    <div className="mt-20 px-2">
-                        <h1 className="text-center font-serif text-white font-semibold text-md bg-zinc-400 px-6 py-4  rounded-md">Mounassabat.ma. un clic, vos événements bine yedik</h1>
-                        <h1 className="text-4xl text-black font-serif font-medium py-4 text-center">
-                            Découvrons les meilleurs Prestataires d'événements
-                        </h1>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 py-10">
-                            {categoriesAnnoncesCounted.map((category, index) => (
-                                <div key={index} className="flex flex-col border-2 border-gray-400 rounded-md">
-                                    {/* Card Header */}
-                                    <div className="flex flex-col justify-center items-center py-3 border-b-2">
-                                        <img className="w-12 h-12" src={imageMap[category.id]} alt="" />
-                                        <h1 className="font-serif font-medium py-1">{category.name}</h1>
-                                    </div>
-
-                                    {/* Card Body (grows to fill space) */}
-                                    <div className="flex-grow py-3">
-                                        {category.sub__category.map((subCategory, subIndex) => (
-                                            <div key={subIndex}>
-                                                <div className="flex justify-between items-center gap-8 p-4">
-                                                    {/* Subcategory Name */}
-                                                    <h1 className="text-gray-500 font-serif font-medium">{subCategory.name}</h1>
-
-                                                    {/* Subcategory Annonces Count */}
-                                                    <h1 className="text-white bg-yellow-600 px-2 py-1 text-sm rounded-full">
-                                                        {subCategory.annonces_count ?? 0}
-                                                    </h1>
-                                                </div>
-
-                                                {/* Add dashed border between subcategories except the last one */}
-                                                {subIndex < category.sub__category.length - 1 && (
-                                                    <div className="w-full border border-dashed border-gray-500"></div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    {/* Card Footer */}
-                                    <div className="w-full h-[1px] bg-gray-400"></div>
-                                    <div className="flex justify-between bg-gray-400 px-5 items-center py-2 rounded-b">
-                                        <button className="font-medium font-serif text-lg">Voir tous</button>
-                                        <svg className="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            ))}
-
-                        </div>
-                    </div>
-
 
                     <div className="py-10 px-2">
                         <h1 className="text-3xl md:text-4xl lg:text-6xl font-medium font-serif text-center">
                             LES PRESTATAIRES
                         </h1>
                         <p className="py-6 md:py-8 text-gray-500 text-base md:text-lg lg:text-lg font-serif font-medium text-center">
-                            Découvrons les meilleurs Prestataires des événements
+                            DÃ©couvrons les meilleurs Prestataires des Ã©vÃ©nements
                         </p>
 
                         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-8 mt-8">
-                            <button className="bg-black text-base md:text-xl px-6 md:px-12 py-2 md:py-3 rounded-sm font-serif font-medium text-white">
+                            <Link to={'/AllAnnounces'} className="bg-black text-base md:text-xl px-6 md:px-12 py-2 md:py-3 rounded-sm font-serif font-medium text-white">
                                 Rechercher
-                            </button>
-                            <button className="flex justify-center items-center gap-2 md:gap-4 bg-yellow-600 text-base md:text-xl px-6 md:px-8 py-2 md:py-3 rounded-sm font-serif font-medium text-white">
+                            </Link>
+                            <Link to={'/AnnounceForm'} className="flex justify-center items-center gap-2 md:gap-4 bg-yellow-600 text-base md:text-xl px-6 md:px-8 py-2 md:py-3 rounded-sm font-serif font-medium text-white">
                                 Publier Votre Annonce
                                 <svg className="w-5 md:w-6 h-5 md:h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -494,7 +411,7 @@ const Home = () => {
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
                                 </svg>
-                            </button>
+                            </Link>
                         </div>
                     </div>
 

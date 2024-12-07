@@ -3,6 +3,8 @@ import Logo from '../Navbar/Logo';
 import '../Navbar/NavBar.css';
 import { useState } from "react";
 import Logout from "../Navbar/Logout";
+import SupportIcon from '../../assets/support-icon.png';
+import Traduction from '../../assets/traduction.png';
 
 const HeaderAnnounces = ({actived = 'Mes Annonces'}) => {
     const [active, setActive] = useState(actived);
@@ -60,6 +62,12 @@ const HeaderAnnounces = ({actived = 'Mes Annonces'}) => {
 
             <div className="hidden md:flex">
                 <div className="flex items-center">
+                    <Link to={'/support-us'}>
+                        <img className="h-10 w-10 mr-2 rounded-full" src={SupportIcon} alt="" />
+                    </Link>
+                    
+                    <img className="h-10 w-10 rounded-full" src={Traduction} alt="" />
+
                     <Link to={'/AnnounceForm'} className="flex items-center justify-between text-white bg-yellow-600 p-2     rounded-md font-serif font-medium">
                         Publier votre annonce
                         <svg className="w-5 h-5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

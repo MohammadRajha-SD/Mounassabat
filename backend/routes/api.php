@@ -34,6 +34,7 @@ Route::get('getAnnonceDetails/{id}', [ClientController::class, 'getAnnonceDetail
 Route::get('/getAllCategories', [ClientController::class, 'getAllCategories']);
 Route::get('/categoriesWithAnnoncesCounted', [ClientController::class, 'getCategoriesWithAnnonces']);
 Route::get('/getAllAcceptedAnnoncesHomePage', [ClientController::class, 'getAllAcceptedAnnonces']);
+Route::get('/getAllAnnoncesNoLogin', [ClientController::class, 'getAllAnnoncesNoLogin']);
 
 Route::middleware('guest')->group(function () {
     Route::post('/auth/google-login', [AuthController::class, 'googleLogin']);

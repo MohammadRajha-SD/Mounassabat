@@ -5,7 +5,9 @@ import Logo from './Logo.jsx';
 import { useNavigate } from 'react-router-dom';
 import Logout from './Logout.jsx';
 import Login from './Login.jsx';
-
+import SupportIcon from '../../assets/support-icon.png';
+import Traduction from '../../assets/traduction.png';
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
     const [category, setCategory] = useState('');
@@ -72,10 +74,17 @@ const NavBar = () => {
                 />
 
                 <div className='items-center  hidden lg:flex'>
-                    {role != 'client' && (<HeaderAction />)}
+                    <Link to={'/support-us'}>
+                        <img className="h-10 w-10 mr-2 rounded-full" src={SupportIcon} alt="" />
+                    </Link>
+                    <img className="h-10 w-10 rounded-full" src={Traduction} alt="" />
 
                     {user && (<Logout />)}
                     {!user && (<Login />)}
+
+                    {/* {role != 'client' && (<HeaderAction />)} */}
+                   <HeaderAction role={role} />
+
                 </div>
             </header>
 

@@ -20,19 +20,38 @@ const AllAnnounces = () => {
         try {
             const token = localStorage.getItem('token');
 
-            const response = await axios.get(`https://mounassabat.ma/api/${token ? 'getAnnonces' : 'getAllAcceptedAnnoncesHomePage'}`, {
-                params: { page },
-                headers: {
-                    Authorization: `Bearer ${token}`
+            if (token) {
+                const response = await axios.get('https://mounassabat.ma/api/getAnnonces', {
+                    params: { page },
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (response.status === 200) {
+                    setAnnonces(response.data.data);
+                    setTotalPages(response.data.last_page);
+                } else {
+                    console.error('Failed to fetch annonces:', response.statusText);
                 }
-            });
-
-            if (response.status === 200) {
-                setAnnonces(response.data.data);
-                setTotalPages(response.data.last_page);
             } else {
-                console.error('Failed to fetch annonces:', response.statusText);
+                const response = await axios.get(`https://mounassabat.ma/api/getAllAnnoncesNoLogin`, {
+                    params: { page },
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (response.status === 200) {
+                    setAnnonces(response.data.data);
+                    setTotalPages(response.data.last_page);
+                } else {
+                    console.error('Failed to fetch annonces:', response.statusText);
+                }
             }
+
+
+
+
+
         } catch (error) {
             console.error('Error fetching annonces:', error);
         }
@@ -102,7 +121,7 @@ const AllAnnounces = () => {
             </div>
             <div className="container px-3 mx-auto py-20">
                 {/* Announces Start */}
-                {annonces.length > 0 ? (
+                {annonces && annonces.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                         {annonces.map((annonce, index) => (
                             <Link to={`/annonce/${annonce.id}`} key={index} className="card relative bg-white shadow-lg rounded-lg overflow-hidden">
@@ -218,7 +237,7 @@ const AllAnnounces = () => {
                 {/* Announces END */}
 
                 {/* PAGINATION START */}
-                {annonces.length > 0 && totalPages > 1 && (
+                {annonces && annonces.length > 0 && totalPages > 1 && (
                     <div className="flex justify-between items-center mt-5">
                         <button
                             onClick={handlePrevPage}

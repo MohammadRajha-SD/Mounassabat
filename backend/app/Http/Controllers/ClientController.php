@@ -137,53 +137,6 @@ class ClientController extends Controller
         }
     }
 
-    public function getAllAcceptedAnnoncesOLD(Request $request)
-    {
-        try {
-            $userId = auth()->id();
-            $type = $request->type;
-
-            $annonces = Annonce::whereNotNull('accepted_at')
-                ->when($type, function ($query) use ($type) {
-                    return $query->where('type', $type);
-                })
-                ->with(['user', 'sub_Category'])
-                ->paginate(6);
-
-            // Check if the user has favorited any annonces
-            $favoritedAnnonceIds = $userId ? Favoris::where('user_id', $userId)->pluck('annonce_id')->toArray() : [];
-
-            $formattedAnnonces = $annonces->getCollection()->map(function ($annonce) use ($favoritedAnnonceIds) {
-                return [
-                    'id' => $annonce->id,
-                    'title' => $annonce->title,
-                    'description' => $annonce->description,
-                    'location' => $annonce->location,
-                    'sub_category_id' => $annonce->sub_category_id,
-                    'sous_category_id' => $annonce->sous_category_id,
-                    'images' => json_decode($annonce->image),
-                    'price' => $annonce->price,
-                    'type' => $annonce->type,
-                    'sub_name' => $annonce->sub_Category->name,
-                    'firstName' => $annonce->user->firstName,
-                    'lastName' => $annonce->user->lastName,
-                    'phone' => $annonce->user->phone,
-                    'created_at' => $annonce->created_at,
-                    'isFavorited' => in_array($annonce->id, $favoritedAnnonceIds), // Check if this annonce is favorited
-                ];
-            });
-
-            return response()->json([
-                'data' => $formattedAnnonces,
-                'current_page' => $annonces->currentPage(),
-                'last_page' => $annonces->lastPage(),
-                'per_page' => $annonces->perPage(),
-                'total' => $annonces->total(),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
-        }
-    }
     public function getAllAcceptedAnnonces()
     {
         try {
@@ -195,7 +148,7 @@ class ClientController extends Controller
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
                 ->where('categories.name', 'marriage')
                 ->whereNotNull('annonces.accepted_at')
-                ->where('annonces.type', 'normal')->paginate(6);
+                ->where('annonces.type', 'normal')->paginate(3);
 
             $annoncesBabyshower = Annonce::query()
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
@@ -203,7 +156,7 @@ class ClientController extends Controller
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
                 ->where('categories.name', 'babyshower')
                 ->whereNotNull('annonces.accepted_at')
-                ->where('annonces.type', 'normal')->paginate(6);
+                ->where('annonces.type', 'normal')->paginate(3);
 
             $annoncesAnniversaire = Annonce::query()
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
@@ -211,17 +164,17 @@ class ClientController extends Controller
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
                 ->where('categories.name', 'anniversaire')
                 ->whereNotNull('annonces.accepted_at')
-                ->where('annonces.type', 'normal')->paginate(6);
+                ->where('annonces.type', 'normal')->paginate(3);
 
             $annoncesNormal = Annonce::whereNotNull('accepted_at')
                 ->where('type', 'normal')
                 ->with(['user', 'sub_Category'])
-                ->paginate(6);
+                ->paginate(3);
 
             $annoncesVip = Annonce::whereNotNull('accepted_at')
                 ->where('type', 'vip')
                 ->with(['user', 'sub_Category'])
-                ->paginate(6);
+                ->paginate(3);
 
             $favoritedAnnonceIds = $userId ? Favoris::where('user_id', $userId)->pluck('annonce_id')->toArray() : [];
 
@@ -386,5 +339,45 @@ class ClientController extends Controller
 
 
         return response()->json($categories);
+    }
+
+
+    public function getAllAnnoncesNoLogin()
+    {
+        try {
+            $annonces = Annonce::with(['user', 'sub_Category'])->paginate(6);
+
+            // Check if the user has favorited any annonces
+
+            $formattedAnnonces = $annonces->getCollection()->map(function ($annonce) {
+                return [
+                    'id' => $annonce->id,
+                    'title' => $annonce->title,
+                    'description' => $annonce->description,
+                    'location' => $annonce->location,
+                    'sub_category_id' => $annonce->sub_category_id,
+                    'sous_category_id' => $annonce->sous_category_id,
+                    'images' => json_decode($annonce->image),
+                    'price' => $annonce->price,
+                    'type' => $annonce->type,
+                    'sub_name' => $annonce->sub_Category->name,
+                    'firstName' => $annonce->user->firstName,
+                    'lastName' => $annonce->user->lastName,
+                    'phone' => $annonce->user->phone,
+                    'created_at' => $annonce->created_at,
+                    'isFavorited' => in_array($annonce->id, []), // Check if this annonce is favorited
+                ];
+            });
+
+            return response()->json([
+                'data' => $formattedAnnonces,
+                'current_page' => $annonces->currentPage(),
+                'last_page' => $annonces->lastPage(),
+                'per_page' => $annonces->perPage(),
+                'total' => $annonces->total(),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
+        }
     }
 }
