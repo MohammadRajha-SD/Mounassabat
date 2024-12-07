@@ -8,6 +8,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import LoginButtonGmail from './LoginButtonGmail.jsx';
 import Loader from '../Loader/Index.jsx';
+import google from '../../assets/google.png';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -74,6 +75,9 @@ const Login = () => {
             setLoading(false);
         }
     };
+    const handleGoogleClick = () => {
+        document.getElementById('google-login-button').click();
+    };
 
     return (
         <>
@@ -90,8 +94,9 @@ const Login = () => {
                         <div className="py-16">
                             <div className="mx-2 md:mx-32 bg-white rounded-lg shadow-lg">
                                 <div className="py-5 text-center">
-                                    <h1 className="text-3xl font-serif font-bold text-yellow-600  mb-6">Bienvenue sur notre plateforme</h1>
-                                    <p className="text-lg text-gray-700 mb-8">Connectez-vous pour continuer ou créez un nouveau compte</p>
+                                    {/* <h1 className="text-3xl font-serif font-bold text-yellow-600  mb-6">Bienvenue sur notre plateforme</h1> */}
+                                    <h1 className="text-3xl font-serif font-bold text-yellow-600  mb-6">sur Mounassabat.ma</h1>
+                                    {/* <p className="text-lg text-gray-700 mb-8">Connectez-vous pour continuer ou créez un nouveau compte</p> */}
 
                                     <div className="px-2 md:px-12">
                                         <form onSubmit={submit}>
@@ -128,8 +133,8 @@ const Login = () => {
                                             </div>
 
                                             <div className="flex justify-between lg:flex-row flex-col mb-6">
-                                                <Link to="/ClientRegister" className="font-serif font-medium text-black text-lg hover:underline cursor-pointer">Créer un nouveau compte</Link>
-                                                <h1 className="font-serif font-medium text-yellow-500 text-lg cursor-pointer hover:underline">Mot de passe oublié ?</h1>
+                                                <Link to="/ClientRegister" className="font-serif font-medium text-black text-lg hover:underline cursor-pointer">Creer un nouveau compte</Link>
+                                                <h1 className="font-serif font-medium text-yellow-500 text-lg cursor-pointer hover:underline">Mot de passe oublie ?</h1>
                                             </div>
 
                                             {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -152,12 +157,18 @@ const Login = () => {
                                             <h1 className="text-black font-serif font-medium text-lg">Continuer avec Facebook</h1>
                                         </div>
 
-                                        {/* <div className="flex gap-5 items-center text-center bg-white shadow-none  border px-2 md:px-10 py-4">
-                                    <img className="h-8 w-8" src={google} alt="Google" />
-                                    <h1 className="text-black font-serif font-medium text-lg">Continuer avec Google</h1>
-                                </div> */}
+                                        {/* LOGO GMAIL */}
+
+                                        {/* <div className="flex gap-5 items-center text-center bg-white shadow-none  border px-2 md:px-10 py-4 cursor-pointer" onClick={handleGoogleClick}>
+                                           
+                                                <img className="h-8 w-8" src={google} alt="Google" />
+                                                <h1 className="text-black font-serif font-medium text-lg">Continuer avec Google</h1>
+                                        </div> */}
+
+
 
                                         <LoginButtonGmail />
+
                                     </div>
                                 </div>
                             </div>

@@ -9,10 +9,7 @@ const clientId = "185183656415-e7hnjo56pe6rjmr7fdqbgp2ci6qa73hn.apps.googleuserc
 
 const LoginButtonGmail = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log(localStorage.getItem('user'))
-    console.log(localStorage.getItem('token'))
-  }, [])
+ 
   const onSuccess = async (credentialResponse) => {
     try {
       const credentialResponseDecoded = jwtDecode(credentialResponse.credential);
@@ -45,7 +42,7 @@ const LoginButtonGmail = () => {
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px', width:'100%' }}>
         <GoogleLogin
           onSuccess={onSuccess}
           onError={onFailure}

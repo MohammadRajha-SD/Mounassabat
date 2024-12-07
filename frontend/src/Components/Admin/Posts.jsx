@@ -138,7 +138,6 @@ const Posts = () => {
                     </svg>
                     <div className="flex text-center items-center mt-2 gap-2">
                         <h1 className="text-3xl text-white font-bold font-mono">Annonces</h1>
-                        <h1 className="text-sm text-gray-300 mt-2">135</h1>
                     </div>
                 </div>
                 {/* HEADER END */}

@@ -46,7 +46,6 @@ const Prestataires = () => {
                     </svg>
                     <div class="flex text-center items-center mt-2 gap-2">
                         <h1 class="text-3xl text-white font-bold font-mono">Prestataires</h1>
-                        <h1 class="text-sm text-gray-300 mt-2">135</h1>
                     </div>
 
                 </div>

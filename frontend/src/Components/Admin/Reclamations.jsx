@@ -92,7 +92,6 @@ const Reclamations = () => {
                     </svg>
                     <div className="flex text-center items-center mt-2 gap-2">
                         <h1 className="text-3xl text-white font-bold font-mono">Reclamations</h1>
-                        <h1 className="text-sm text-gray-300 mt-2">135</h1>
                     </div>
                 </div>
                 <div className="bg-white w-full h-[1px] my-4"></div>
