@@ -24,6 +24,7 @@ import AnnounceForm3 from "./Components/Prestataire/AnnounceForm3.jsx";
 import Parametres from './Components/Prestataire/Parametres.jsx';
 import AnnouncesDetails from './Components/AnnouncesDetails.jsx';
 import FilterAnnounces from "./Components/FilterAnnounces.jsx";
+import Conditions from './Components/Conditions/Index.jsx';
 import { AnnonceProvider } from './Components/AnnonceContext';
 import Chat from './Components/Chat/Index.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -202,19 +203,19 @@ function App() {
                 } />
 
                 <Route path="Quisommes-nous" element={
-                        <QuiSommesNous />
+                    <QuiSommesNous />
                 } />
 
                 <Route path="AllAnnounces" element={
-                        <AllAnnounces />
+                    <AllAnnounces />
                 } />
 
                 <Route path="/AnnouncesDetails/:id" element={
-                        <AnnouncesDetails />
+                    <AnnouncesDetails />
                 } />
 
                 <Route path="FiltredAnnounces" element={
-                        <FilterAnnounces />
+                    <FilterAnnounces />
                 } />
                 <Route path="Chat" element={
                     <PrivateRoute roles={['client', 'prestataire']}>
@@ -226,6 +227,10 @@ function App() {
                     <PrivateRoute roles={['prestataire']}>
                         <StripeContainer />
                     </PrivateRoute>
+                } />
+
+                <Route path="/conditions" element={
+                    <Conditions />
                 } />
             </Routes>
         </AnnonceProvider>
