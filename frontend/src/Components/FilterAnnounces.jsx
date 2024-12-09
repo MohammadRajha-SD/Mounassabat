@@ -4,6 +4,7 @@ import Carousel from './Carousel/Index';
 import axios from 'axios';
 import { useAnnonces } from './AnnonceContext';
 import NavBar from "./Navbar/NavBar";
+import { toast } from 'react-toastify';
 
 const FilterAnnounces = () => {
     const { annonces, filterAnnonces, setAnnonces } = useAnnonces();
@@ -35,7 +36,8 @@ const FilterAnnounces = () => {
             const token = localStorage.getItem('token');
 
             if (!token) {
-                console.error('JWT token not found in local storage');
+                toast.error('you have to login');
+                window.location.href = '/Login';
                 return;
             }
 
@@ -70,6 +72,7 @@ const FilterAnnounces = () => {
             console.error('Error:', error);
         }
     };
+
     const handleDetailsClick = (id) => {
         navigate(`/AnnouncesDetails/${id}`);
     };
@@ -92,7 +95,7 @@ const FilterAnnounces = () => {
                                 className="card relative bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer"
                                 onClick={() => handleDetailsClick(annonce.id)}
                             >
-                                        <Carousel images={annonce.images} isVip={annonce.type === 'vip'} />
+                                <Carousel images={annonce.images} isVip={annonce.type === 'vip'} />
 
                                 {/* Card content */}
                                 <div className="p-5">

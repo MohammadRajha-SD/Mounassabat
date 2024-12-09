@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import NavBar from "./Navbar/NavBar";
 import Loader from './Loader/Index.jsx';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const AnnouncesDetails = () => {
     const { id } = useParams();
@@ -14,16 +15,17 @@ const AnnouncesDetails = () => {
     useEffect(() => {
         const fetchAnnonceDetails = async () => {
             try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    throw new Error('JWT token not found in local storage');
-                }
+                // const token = localStorage.getItem('token');
+                // if (!token) {
+                    // throw new Error('JWT token not found in local storage here');
+                // }
 
-                const response = await fetch(`https://mounassabat.ma/api/getAnnonceDetails/${id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
+                const response = await fetch(`https://mounassabat.ma/api/getAnnonceDetails/${id}`);
+                // {
+                //     headers: {
+                //         'Authorization': `Bearer ${token}`
+                //     }
+                // }
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch announcement details');
@@ -57,13 +59,19 @@ const AnnouncesDetails = () => {
         const payload = { user_id: id };
 
         try {
-            const response = await axios.post(
-                'https://mounassabat.ma/api/new-conversation',
-                payload,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            if(token){
 
-            window.location.href = '/Chat';
+                const response = await axios.post(
+                    'https://mounassabat.ma/api/new-conversation',
+                    payload,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+                
+                window.location.href = '/Chat';
+            }else{
+                toast.error('you have to login');
+                window.location.href = '/Login';
+            }
         } catch (error) {
             console.error('Error sending message:', error);
         }

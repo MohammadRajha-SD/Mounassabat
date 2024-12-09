@@ -5,12 +5,14 @@ import axios from 'axios';
 
 const Prestataires = () => {
     const [prestataires, setPrestataires] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     useEffect(() => {
         fetchAllPrestataires();
     }, []);
-
 
     const fetchAllPrestataires = async () => {
         try {
@@ -33,6 +35,10 @@ const Prestataires = () => {
         }
     };
 
+    const handleDelete = (id) => {
+        console.log(id);
+        closeModal();
+    };
 
     return (
         <div class="flex">
@@ -61,15 +67,15 @@ const Prestataires = () => {
                         <th class="py-6">ACTION</th>
                     </thead>
                     <tbody class="text-white text-md text-center">
-                        {prestataires.map((prestataire) => (
+                        {prestataires.map((prestataire, index) => (
                             <tr className="text-white" key={prestataire.id}>
-                                <td className="text-white font-medium font-serif">{prestataire.id}</td>
+                                <td className="text-white font-medium font-serif">{index + 1}</td>
                                 <td className="text-white font-medium font-serif">{prestataire.user.firstName} {prestataire.user.lastName}</td>
                                 <td className="text-white font-medium font-serif">{prestataire.user.email}</td>
                                 <td className="text-white font-medium font-serif">{prestataire.user.phone}</td>
                                 <td className="text-white font-medium font-serif">{format(new Date(prestataire.user.created_at), 'dd MMMM yyyy')}</td>
                                 <td>
-                                    <button className="text-white bg-red-600 font-medium font-serif px-5 py-1 rounded">BAN</button>
+                                    <button onClick={() => openModal(prestataire.id)} className="text-white bg-red-600 font-medium font-serif px-5 py-1 rounded">BAN</button>
                                 </td>
                             </tr>
                         ))}
@@ -80,6 +86,29 @@ const Prestataires = () => {
                 </table>
 
             </section>
+            {/* Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-5 rounded shadow-lg max-w-sm w-full">
+                        <h2 className="text-lg font-bold mb-4">Confirm Deletion</h2>
+                        <p className="text-gray-700 mb-4">Are you sure you want to delete this item?</p>
+                        <div className="flex justify-end space-x-3">
+                            <button
+                                onClick={closeModal}
+                                className="px-4 py-2 bg-gray-300 text-gray-800 rounded"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="px-4 py-2 bg-red-600 text-white rounded"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

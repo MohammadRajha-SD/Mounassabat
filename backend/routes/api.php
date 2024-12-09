@@ -40,6 +40,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/auth/google-login', [AuthController::class, 'googleLogin']);
 });
 
+Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/paypal/payment', [PaypalController::class, 'payment']);
@@ -54,7 +55,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/new-conversation', [ChatController::class, 'storeConversation']);
     Route::post('/send-message', [ChatController::class, 'send']);
 
-    Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
     Route::post('/reclamation', [ClientController::class, 'reclamation']);
     Route::get('/getAllAcceptedAnnonces', [ClientController::class, 'getAllAcceptedAnnonces']);
     Route::post('/favoris', [ClientController::class, 'favoris']);
@@ -62,6 +62,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getAnnonces', [ClientController::class, 'getAnnonces']);
     Route::get('/getAllDetails', [ClientController::class, 'getAllDetails']);
 
+    Route::post('/ban-prestaires', [AdminController::class, 'banUsers']);
     Route::post('/banUsers', [AdminController::class, 'banUsers']);
     Route::get('/getAllPrestataires', [AdminController::class, 'getAllPrestataires']);
     Route::get('/getAllClients', [AdminController::class, 'getAllClients']);

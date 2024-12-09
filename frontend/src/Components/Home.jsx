@@ -8,7 +8,6 @@ import conference from "../assets/icons8-conference-48.png";
 import register from "../assets/inscription.png";
 import annonce from "../assets/annonces.png";
 import cup from "../assets/cup.png";
-import Footer from "./Footer.jsx";
 import { useNavigate } from 'react-router-dom';
 import NavBar from './Navbar/NavBar.jsx';
 import axios from 'axios';
@@ -16,6 +15,7 @@ import { gapi } from 'gapi-script'
 import Loader from './Loader/Index.jsx';
 import AnnouncementSection from './AnnouncementSection';
 import { Link } from "react-router-dom";
+import Footer from './Footer.jsx';
 
 const Home = () => {
     const [showCities, setShowCities] = useState(false);

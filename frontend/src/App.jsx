@@ -202,27 +202,19 @@ function App() {
                 } />
 
                 <Route path="Quisommes-nous" element={
-                    <PrivateRoute roles={['client']}>
                         <QuiSommesNous />
-                    </PrivateRoute>
                 } />
 
                 <Route path="AllAnnounces" element={
-                    // <PrivateRoute roles={['client']}>
                         <AllAnnounces />
-                    // </PrivateRoute>
                 } />
 
                 <Route path="/AnnouncesDetails/:id" element={
-                    <PrivateRoute roles={['client']}>
                         <AnnouncesDetails />
-                    </PrivateRoute>
                 } />
 
                 <Route path="FiltredAnnounces" element={
-                    <PrivateRoute roles={['client']}>
                         <FilterAnnounces />
-                    </PrivateRoute>
                 } />
                 <Route path="Chat" element={
                     <PrivateRoute roles={['client', 'prestataire']}>

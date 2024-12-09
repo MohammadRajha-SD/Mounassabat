@@ -8,9 +8,10 @@ import register from "../../assets/inscription.png";
 import annonce from "../../assets/annonces.png";
 import cup from "../../assets/cup.png";
 import backgroundImage from "../../assets/image3.jpg";
-import Footer from "../Footer.jsx";
 import NavBar from "../Navbar/NavBar";
 import { Link } from 'react-router-dom';
+import Footer from '../Footer.jsx';
+
 const Index = () => {
     return (
         <div>

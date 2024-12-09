@@ -102,7 +102,7 @@ const ClientRegister = () => {
             <div className="py-10">
               <div className="max-w-lg mx-2 md:mx-auto bg-white py-10 px-3 rounded-lg shadow-lg">
                 <h1 className="text-3xl font-serif font-bold tracking-wider text-black capitalize text-center">
-                  SIGN UP AS CLIENT
+                INSCRIVEZ-VOUS EN TANT QUE CLIENT
                 </h1>
 
                 <div className="flex justify-end mt-3  px-4">
@@ -124,17 +124,17 @@ const ClientRegister = () => {
                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                       />
                     </svg>
-                    <span className="mx-2">OR PRESTATAIRE</span>
+                    <span className="mx-2">OU PRESTATAIRE</span>
                   </Link>
                 </div>
 
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2  px-4">
                   {[
-                    { label: "First Name", name: "firstName", type: "text" },
-                    { label: "Last Name", name: "lastName", type: "text" },
-                    { label: "Email Address", name: "email", type: "email" },
-                    { label: "Password", name: "password", type: "password" },
-                    { label: "Phone Number", name: "phone", type: "tel" },
+                    { label: "Prenom", name: "firstName", type: "text" },
+                    { label: "Nom de famille", name: "lastName", type: "text" },
+                    { label: "Adresse email", name: "email", type: "email" },
+                    { label: "Mot de passe", name: "password", type: "password" },
+                    { label: "Numero de telephone", name: "phone", type: "tel" },
                   ].map((field) => (
                     <div key={field.name}>
                       <label className="block mb-2 text-sm text-black font-medium font-serif">
@@ -162,7 +162,7 @@ const ClientRegister = () => {
                     type="submit"
                     className="flex items-center justify-between w-full px-6 h-12 mt-7 text-sm text-white bg-black rounded-lg hover:bg-gray-900 transition-colors duration-300"
                   >
-                    <span>Sign Up</span>
+                    <span>Sinscrire</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5"
