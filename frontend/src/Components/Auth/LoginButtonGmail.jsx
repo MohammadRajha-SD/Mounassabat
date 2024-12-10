@@ -42,13 +42,11 @@ const LoginButtonGmail = () => {
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px', width:'100%' }}>
         <GoogleLogin
           onSuccess={onSuccess}
           onError={onFailure}
-          style={{ width: '100%' }} 
+          size="large"
         />
-      </div>
     </GoogleOAuthProvider>
   );
 };

@@ -152,18 +152,21 @@ const Login = () => {
                                     </div>
 
                                     <div className="px-2 md:px-12">
-                                        <div className="flex gap-5 items-center text-center mb-4 bg-white shadow-none  border px-2 md:px-10 py-4">
-                                            <img className="h-8 w-8" src={facebook} alt="Facebook" />
-                                            <h1 className="text-black font-serif font-medium text-lg">Continuer avec Facebook</h1>
+                                        <div className="flex gap-2 items-center text-center mb-4 bg-white shadow-none  border px-2 md:px-5 py-4">
+                                            <img className="h-5 w-5" src={facebook} alt="Facebook" />
+                                            <div className='flex justify-center items-center'>
+                                                <h1 className="text-black font-serif font-medium text-center">Continuer avec Facebook</h1>
+                                                <div>yyyy</div>
+                                            </div>
                                         </div>
 
                                         {/* LOGO GMAIL */}
-
-                                        {/* <div className="flex gap-5 items-center text-center bg-white shadow-none  border px-2 md:px-10 py-4 cursor-pointer" onClick={handleGoogleClick}>
-                                           
+                                        {/* 
+                                        <div className="flex gap-5 items-center text-center bg-white shadow-none  border px-2 md:px-10 py-4 cursor-pointer" onClick={handleGoogleClick}>
                                                 <img className="h-8 w-8" src={google} alt="Google" />
                                                 <h1 className="text-black font-serif font-medium text-lg">Continuer avec Google</h1>
-                                        </div> */}
+                                        </div> 
+                                        */}
 
 
 

@@ -5,12 +5,22 @@ const Carousel = ({ images, isVip = false, width = '320px', height = '250px' }) 
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const goToPreviousSlide = () => {
-        setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+        setCurrentSlide((prev) => {
+            const prevSlide = prev === images.length - 1 ? 0 : prev - 1;
+            console.log("Prev Slide:", prevSlide);
+            return prevSlide;
+        });
     };
 
+ 
     const goToNextSlide = () => {
-        setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+        setCurrentSlide((prev) => {
+            const nextSlide = prev === images.length - 1 ? 0 : prev + 1;
+            console.log("Next Slide:", nextSlide);
+            return nextSlide;
+        });
     };
+    
 
     return (
         <div className="relative" style={{ width, height }}>

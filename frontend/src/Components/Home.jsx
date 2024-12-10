@@ -163,7 +163,6 @@ const Home = () => {
                 setMarriageAnnonces(response.data.marriage);
                 setBabyshowerAnnonces(response.data.babyshower);
                 setAnniversaireAnnonces(response.data.anniversaire);
-                console.log(response.data.normal);
             } else {
                 console.error('Failed to fetch annonces:', response.statusText);
             }
@@ -292,7 +291,7 @@ const Home = () => {
                             Un Clic, <span style={{ color: '#e6cf8c' }}>vos</span>
                         </h1>
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
-                            <span style={{ color: '#e6cf8c' }}>Ã©vÃ©nements</span> bien
+                            <span style={{ color: '#e6cf8c' }}>Ã©vÃ©nements</span> bin
                         </h1>
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
                             yedik
