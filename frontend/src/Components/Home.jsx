@@ -302,54 +302,70 @@ const Home = () => {
                     </div>
 
                     {/* Categories */}
-                    <div className="bg-white rounded-lg shadow-md md:m-12  p-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="bg-white rounded-lg shadow-md md:m-12 p-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+                            {/* Search Input */}
                             <div className="relative w-full">
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 9a3 3 0 011-2m0 12h4m0-3c0-4.1 4-4.9 4-9a6 6 0 10-12 0c0 4 4 5 4 9h4z"></path></svg>
+                                    <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
+                                        <path d="M9 9a3 3 0 011-2m0 12h4m0-3c0-4.1 4-4.9 4-9a6 6 0 10-12 0c0 4 4 5 4 9h4z"></path>
+                                    </svg>
                                 </span>
-                                <input type="text" placeholder="Que recherchez-vous ?" value={searchCategory} onChange={handleSearchCategory} className="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent" />
+                                <input
+                                    type="text"
+                                    placeholder="Que recherchez-vous ?"
+                                    value={searchCategory}
+                                    onChange={handleSearchCategory}
+                                    className="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent text-sm"
+                                />
                             </div>
 
-                            {/* Categories start */}
+                            {/* Category Dropdown */}
                             <div className="relative w-full">
-                                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 9a3 3 0 011-2m0 12h4m0-3c0-4.1 4-4.9 4-9a6 6 0 10-12 0c0 4 4 5 4 9h4z"></path></svg>
-                                </span>
-                                <select className="w-full py-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent" onChange={handleCategoryChange} value={selectedCategory} >
-                                    <option value={''} selected>Tous les catÃ©gories</option>
-                                    {categories.length > 0 && (
-                                        <>
-                                            {categories.map((category) => (
-                                                <option key={category.id} value={category.name}>{category.name}</option>
-                                            ))}
-                                        </>
-                                    )}
+                                <select
+                                    className="w-full py-3 pl-10 pr-4 border md:h-12 h-12 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent text-sm"
+                                    onChange={handleCategoryChange}
+                                    value={selectedCategory}
+                                >
+                                    <option value="">Tous les categories</option>
+                                    {categories.length > 0 && categories.map((category) => (
+                                        <option key={category.id} value={category.name}>
+                                            {category.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
-                            {/* Categories end */}
 
-                            {/* CITY START */}
-                            <div onClick={() => setShowCities(true)} className="cursor-pointer flex items-center justify-between w-full px-4  text-gray-700 bg-white border border-gray-300 rounded-md  dark:text-gray-300  focus:border-yellow-500 dark:focus:border-yellow-500 focus:outline-none focus:ring">
-                                <div className="flex items-center ">
-                                    <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 13a3 3 0 100-6 3 3 0 000 6z"></path><path d="M17.8 13.938h-.011a7 7 0 11-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155z"></path></svg>
-                                    <p className='mx-2 text-black font-semibold text-md'>{selectedCity || "Ville (Ex: Casablanca)"}</p>
-                                    {/* <input type="text" value={selectedCity} className='hidden' required /> */}
+                            {/* City Dropdown */}
+                            <div onClick={() => setShowCities(true)} className="cursor-pointer flex items-center justify-between w-full px-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-md dark:text-gray-300 focus:border-yellow-500 dark:focus:border-yellow-500 focus:outline-none focus:ring">
+                                <div className="flex items-center">
+                                    <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
+                                        <path d="M12 13a3 3 0 100-6 3 3 0 000 6z"></path>
+                                        <path d="M17.8 13.938h-.011a7 7 0 11-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155z"></path>
+                                    </svg>
+                                    <p className="mx-2 text-black font-semibold text-sm">{selectedCity || "Ville (Ex: Casablanca)"}</p>
                                 </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M1.5 6a.5.5 0 0 1 .707 0L8 11.293 13.793 6.5a.5.5 0 1 1 .707.707l-6 6a.5.5 0 0 1-.707 0l-6-6A.5.5 0 0 1 1.5 6z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-chevron-down" viewBox="0 0 16 16">
+                                    <path fillRule="evenodd" d="M1.5 6a.5.5 0 0 1 .707 0L8 11.293 13.793 6.5a.5.5 0 1 1 .707.707l-6 6a.5.5 0 0 1-.707 0l-6-6A.5.5 0 0 1 1.5 6z" />
                                 </svg>
                             </div>
-                            {/* CITY END */}
 
+                            {/* Search Button */}
                             <div className="w-full">
-                                <button className="w-full text-white bg-black px-8 py-3 rounded-md font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition duration-200" onClick={() => filterButton()}>
+                                <button
+                                    className="w-full text-white bg-black px-8 py-3 rounded-md font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition duration-200 text-sm"
+                                    onClick={() => filterButton()}
+                                >
                                     Rechercher
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 21l-3.5-3.5M17 10a7 7 0 10-14 0 7 7 0 0014 0z"></path></svg>
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
+                                        <path d="M21 21l-3.5-3.5M17 10a7 7 0 10-14 0 7 7 0 0014 0z"></path>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
                     </div>
+
 
                     {/* 5 Cards */}
                     <div className="flex items-center flex-wrap justify-center gap-6 py-10">
