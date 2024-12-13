@@ -7,28 +7,28 @@ const Footer = () => {
     return (
         <div>
             <footer className="bg-stone-800 text-white py-8">
-                <div className="w-full max-w-[1200px] mx-auto flex flex-wrap justify-between py-4">
-                    <section>
-                        <p className="mb-2 flex items-center gap-2 font-serif font-medium">
+                <div className="w-full max-w-[1200px] mx-auto flex flex-wrap justify-between px-4 py-8">
+                    <div className='text-left w-full md:w-1/3 mb-6'>
+                        <p className="mb-4 flex items-center gap-2 font-serif font-medium">
                             <span className='bg-amber-300 rounded-full p-1 border-solid border-2 border-amber-100 hover:shadow-lg hover:shadow-amber-400'>
                                 <img className='w-3 h-3' src="https://img.icons8.com/ios-filled/50/iphone-x.png" alt="iphone-x" />
                             </span>
                             <strong>+212 520-790389  <br />+212 620-268855</strong>
                         </p>
-                        <p className="mb-2 flex items-center gap-2 font-serif font-medium">
+                        <p className="mb-4 flex items-center gap-2 font-serif font-medium">
                             <span className='bg-amber-300 rounded-full p-1 border-solid border-2 border-amber-100 hover:shadow-lg hover:shadow-amber-400'>
                                 <img className='w-3 h-3' src="https://img.icons8.com/ios/50/order-delivered.png" alt="order-delivered" />
                             </span>
                             Technopark Casablanca 4eme etage  bureau 435
                         </p>
-                        <p className="mb-2 flex items-center gap-2 font-serif font-medium">
+                        <p className="mb-4 flex items-center gap-2 font-serif font-medium">
                             <span className='bg-amber-300 rounded-full p-1 border-solid border-2 border-amber-100 hover:shadow-lg hover:shadow-amber-400'>
                                 <img className='w-3 h-3' src="https://img.icons8.com/material-two-tone/24/email.png" alt="email" />
                             </span>
                             contact@mounassabat.ma
                         </p>
-                        <p className="mt-2 text-center font-serif font-medium">Suivez nos reseaux sociaux</p>
-                        <div className="flex gap-2 justify-center py-2">
+                        <p className="mt-4 text-center font-serif font-medium">Suivez nos reseaux sociaux</p>
+                        <div className="flex gap-2 justify-center py-5">
                             <Link to={'HTTPS://WWW.FACEBOOK.COM/PROFILE.PHP?ID=61551919560397&MIBEXTID=LQQJ4D'}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 48 48">
                                     <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
@@ -68,65 +68,65 @@ const Footer = () => {
                             </Link>
 
                         </div>
-                    </section>
-
-                    <section>
-                        <h4 className="font-bold mb-3 font-serif">Information</h4>
+                    </div>
+                    <div className='text-justify w-full md:w-1/3 mb-6'>
+                        <h4 className="font-bold mb-8 font-serif">Information</h4>
                         <ul>
                             {[
                                 { name: 'Qui sommes-nous ?', routeTo: '/Quisommes-nous' },
                                 { name: 'A Propos', routeTo: '/Quisommes-nous' },
                                 { name: 'Se connecter / Sinscrire', routeTo: '/Login' },
                             ].map((item, index) => (
-                                <li key={index} className="mb-3 relative hover:list-disc">
+                                <li key={index} className="mb-4 relative hover:list-disc">
                                     <Link to={item.routeTo} className="hover-item hover:text-yellow-600 duration-500">
                                         {item.name}
                                     </Link>
                                 </li>
                             ))}
+                          
+                        </ul>
 
-                            <li className="relative hover:list-disc">
-                                <Link to={'/conditions'} className="hover-item hover:text-yellow-600 duration-500">
+                    </div>
+                    <div className='text-justify w-full md:w-1/3 mb-6'>
+
+                        <div className="flex flex-col items-center p-6">
+                            <h4 className="font-bold mb-8 font-serif">
+                                <Link to={'/conditions'}>
                                     AIDE ET RENSEIGNEMENT
                                 </Link>
-                            </li>
-                        </ul>
-                    </section>
+                            </h4>
 
-                    <section>
-                        <img src={logo} alt="Logo" className="max-w-[125px] mx-auto mb-3" />
+                            <p className="text-lg font-medium mb-4">Telechargez l application gratuitement:</p>
 
-                        <p className="text-lg font-medium mb-4">Telechargez l application gratuitement:</p>
-
-                        <div className="flex space-x-4">
-                            {/* Google Play Button */}
-                            <a
-                                href="#"
-                                className="flex items-center text-white px-4 py-2 rounded-lg shadow-lg hover:bg-gray-800"
-                                aria-label="Download on Google Play"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48">
-                                    <linearGradient id="jFdG-76_seIEvf-hbjSsaa_rZwnRdJyYqRi_gr1" x1="1688.489" x2="1685.469" y1="-883.003" y2="-881.443" gradientTransform="matrix(11.64 0 0 22.55 -19615.32 19904.924)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#047ed6"></stop><stop offset="1" stop-color="#50e6ff"></stop></linearGradient><path fill="url(#jFdG-76_seIEvf-hbjSsaa_rZwnRdJyYqRi_gr1)" fill-rule="evenodd" d="M7.809,4.608c-0.45,0.483-0.708,1.227-0.708,2.194	v34.384c0,0.967,0.258,1.711,0.725,2.177l0.122,0.103L27.214,24.2v-0.433L7.931,4.505L7.809,4.608z" clip-rule="evenodd"></path><linearGradient id="jFdG-76_seIEvf-hbjSsab_rZwnRdJyYqRi_gr2" x1="1645.286" x2="1642.929" y1="-897.055" y2="-897.055" gradientTransform="matrix(9.145 0 0 7.7 -15001.938 6931.316)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffda1c"></stop><stop offset="1" stop-color="#feb705"></stop></linearGradient><path fill="url(#jFdG-76_seIEvf-hbjSsab_rZwnRdJyYqRi_gr2)" fill-rule="evenodd" d="M33.623,30.647l-6.426-6.428v-0.45l6.428-6.428	l0.139,0.086l7.603,4.321c2.177,1.227,2.177,3.249,0,4.493l-7.603,4.321C33.762,30.561,33.623,30.647,33.623,30.647z" clip-rule="evenodd"></path><linearGradient id="jFdG-76_seIEvf-hbjSsac_rZwnRdJyYqRi_gr3" x1="1722.978" x2="1720.622" y1="-889.412" y2="-886.355" gradientTransform="matrix(15.02 0 0 11.5775 -25848.943 10324.73)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d9414f"></stop><stop offset="1" stop-color="#8c193f"></stop></linearGradient><path fill="url(#jFdG-76_seIEvf-hbjSsac_rZwnRdJyYqRi_gr3)" fill-rule="evenodd" d="M33.762,30.561l-6.565-6.567L7.809,43.382	c0.708,0.761,1.9,0.847,3.232,0.103L33.762,30.561" clip-rule="evenodd"></path><linearGradient id="jFdG-76_seIEvf-hbjSsad_rZwnRdJyYqRi_gr4" x1="1721.163" x2="1722.215" y1="-891.39" y2="-890.024" gradientTransform="matrix(15.02 0 0 11.5715 -25848.943 10307.886)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#33c481"></stop><stop offset="1" stop-color="#61e3a7"></stop></linearGradient><path fill="url(#jFdG-76_seIEvf-hbjSsad_rZwnRdJyYqRi_gr4)" fill-rule="evenodd" d="M33.762,17.429L11.041,4.522	c-1.33-0.761-2.524-0.658-3.232,0.103l19.386,19.369L33.762,17.429z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span className='ml-2'>Google Play</span>
-                            </a>
-                            {/* App Store Button */}
-                            <a
-                                href="#"
-                                className="flex items-center text-white px-4 py-2 rounded-lg shadow-lg hover:bg-gray-800"
-                                aria-label="Download on App Store"
-                            >
-                                <img
-                                    src={appleLogo}
-                                    alt="Apple Logo"
-                                    className="h-10 w-10 mr-2"
-                                />
-                                <span> App Store</span>
-                            </a>
+                            <div className="flex space-x-4">
+                                {/* Google Play Button */}
+                                <a
+                                    href="#"
+                                    className="flex items-center text-white px-4 py-2 rounded-lg shadow-lg hover:bg-gray-800"
+                                    aria-label="Download on Google Play"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48">
+                                        <linearGradient id="jFdG-76_seIEvf-hbjSsaa_rZwnRdJyYqRi_gr1" x1="1688.489" x2="1685.469" y1="-883.003" y2="-881.443" gradientTransform="matrix(11.64 0 0 22.55 -19615.32 19904.924)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#047ed6"></stop><stop offset="1" stop-color="#50e6ff"></stop></linearGradient><path fill="url(#jFdG-76_seIEvf-hbjSsaa_rZwnRdJyYqRi_gr1)" fill-rule="evenodd" d="M7.809,4.608c-0.45,0.483-0.708,1.227-0.708,2.194	v34.384c0,0.967,0.258,1.711,0.725,2.177l0.122,0.103L27.214,24.2v-0.433L7.931,4.505L7.809,4.608z" clip-rule="evenodd"></path><linearGradient id="jFdG-76_seIEvf-hbjSsab_rZwnRdJyYqRi_gr2" x1="1645.286" x2="1642.929" y1="-897.055" y2="-897.055" gradientTransform="matrix(9.145 0 0 7.7 -15001.938 6931.316)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffda1c"></stop><stop offset="1" stop-color="#feb705"></stop></linearGradient><path fill="url(#jFdG-76_seIEvf-hbjSsab_rZwnRdJyYqRi_gr2)" fill-rule="evenodd" d="M33.623,30.647l-6.426-6.428v-0.45l6.428-6.428	l0.139,0.086l7.603,4.321c2.177,1.227,2.177,3.249,0,4.493l-7.603,4.321C33.762,30.561,33.623,30.647,33.623,30.647z" clip-rule="evenodd"></path><linearGradient id="jFdG-76_seIEvf-hbjSsac_rZwnRdJyYqRi_gr3" x1="1722.978" x2="1720.622" y1="-889.412" y2="-886.355" gradientTransform="matrix(15.02 0 0 11.5775 -25848.943 10324.73)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d9414f"></stop><stop offset="1" stop-color="#8c193f"></stop></linearGradient><path fill="url(#jFdG-76_seIEvf-hbjSsac_rZwnRdJyYqRi_gr3)" fill-rule="evenodd" d="M33.762,30.561l-6.565-6.567L7.809,43.382	c0.708,0.761,1.9,0.847,3.232,0.103L33.762,30.561" clip-rule="evenodd"></path><linearGradient id="jFdG-76_seIEvf-hbjSsad_rZwnRdJyYqRi_gr4" x1="1721.163" x2="1722.215" y1="-891.39" y2="-890.024" gradientTransform="matrix(15.02 0 0 11.5715 -25848.943 10307.886)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#33c481"></stop><stop offset="1" stop-color="#61e3a7"></stop></linearGradient><path fill="url(#jFdG-76_seIEvf-hbjSsad_rZwnRdJyYqRi_gr4)" fill-rule="evenodd" d="M33.762,17.429L11.041,4.522	c-1.33-0.761-2.524-0.658-3.232,0.103l19.386,19.369L33.762,17.429z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span className='ml-2'>Google Play</span>
+                                </a>
+                                {/* App Store Button */}
+                                <a
+                                    href="#"
+                                    className="flex items-center text-white px-4 py-2 rounded-lg shadow-lg hover:bg-gray-800"
+                                    aria-label="Download on App Store"
+                                >
+                                    <img
+                                        src={appleLogo}
+                                        alt="Apple Logo"
+                                        className="h-10 w-10 mr-2"
+                                    />
+                                    <span> App Store</span>
+                                </a>
+                            </div>
                         </div>
-                    </section>
+                    </div>
                 </div>
-
             </footer>
         </div>
     );
