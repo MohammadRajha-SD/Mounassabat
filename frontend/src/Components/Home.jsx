@@ -286,15 +286,10 @@ const Home = () => {
                     <NavBar />
 
                     {/* Text Image */}
-                    <div className="px-4 md:px-8 mt-2">
+                    <div className="px-4 mt-2">
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
-                            Un Clic, <span style={{ color: '#e6cf8c' }}>vos</span>
-                        </h1>
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
-                            <span style={{ color: '#e6cf8c' }}>Ã©vÃ©nements</span> bin
-                        </h1>
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
-                            yedik
+                            {/* Événements */}
+                            Un clic, <span style={{ color: '#e6cf8c' }}>Vos Evenements</span> Bin Yedik
                         </h1>
                         <p className="py-5 text-gray-600 text-lg md:text-xl font-serif font-medium">
                             DÃ©couvrons les meilleurs Prestataires des Ã©vÃ©nements
@@ -367,7 +362,6 @@ const Home = () => {
                     </div>
 
 
-                    {/* 5 Cards */}
                     <div className="flex items-center flex-wrap justify-center gap-6 py-10">
                         {[
                             { to: 'Marriage', src: marriage, title: 'Mariage' },
@@ -376,24 +370,27 @@ const Home = () => {
                             { to: 'BabyShower', src: babyShower, title: 'BabyShower' },
                             { to: 'Conférence', src: conference, title: 'ConfÃ©rence' }
                         ].map(item => (
-                            <div key={item.title} className="w-48 flex flex-col items-center border-2 border-gray-300 py-4 px-5 rounded-lg hover:bg-yellow-600 hover:text-white transition duration-300 cursor-pointer">
-                                <Link to={'/FiltredAnnounces?category=' + item.to}>
-                                    <img className="w-12 h-12 mb-3" src={item.src} alt={item.title} />
-                                    <h1 className="text-lg font-serif font-medium">{item.title}</h1>
+                            <div
+                                key={item.title}
+                                className="w-48 flex flex-col items-center justify-center border-2 border-gray-300 py-4 px-5 rounded-lg hover:bg-yellow-600 hover:text-white transition duration-300 cursor-pointer"
+                            >
+                                <Link to={'/FiltredAnnounces?category=' + item.to} className="flex flex-col items-center">
+                                    <img className="w-12 h-12 mb-2" src={item.src} alt={item.title} />
+                                    <h1 className="text-lg font-serif font-medium text-center">{item.title}</h1>
                                 </Link>
                             </div>
                         ))}
                     </div>
 
+
                     {/* Main 5 Sections */}
                     <div className="container  px-3  mx-auto">
                         <h1 className="text-center font-serif text-white font-semibold text-md bg-zinc-400 px-6 py-4  rounded-md">DÃ©couvrez les nouveautÃ©s</h1>
 
-                        <AnnouncementSection title="Annonces VIP" annonces={vipAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
-                        {/* <AnnouncementSection title="Annonces Normales" annonces={normalAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} /> */}
-                        <AnnouncementSection title="Annonces Mariage" annonces={marriageAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
-                        <AnnouncementSection title="Annonces Baby Shower" annonces={babyshowerAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
-                        <AnnouncementSection title="Annonces Anniversaire" annonces={anniversaireAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
+                        <AnnouncementSection title="VIP" annonces={vipAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
+                        <AnnouncementSection title="Mariage" annonces={marriageAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
+                        <AnnouncementSection title="Baby Shower" annonces={babyshowerAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
+                        <AnnouncementSection title="Anniversaire" annonces={anniversaireAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
                     </div>
 
                     <div className="py-10 px-2">

@@ -4,7 +4,7 @@ const AnnouncementSection = ({ title, annonces, handleFavoritsClick, handleDetai
     return (
         <>
             <div className="border-b-2 border-b-yellow-500 m-2 mb-6 p-2 flex items-center justify-between">
-                <h2 className="text-4xl text-black font-serif font-medium pt-5">{title}</h2>
+                <h2 className="text-4xl text-black font-serif font-medium pt-5">Annonces  {title}</h2>
                 <a href='/AllAnnounces' className="bg-yellow-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg">
                     Toutes Les annonces
                 </a>
@@ -18,7 +18,7 @@ const AnnouncementSection = ({ title, annonces, handleFavoritsClick, handleDetai
                                 key={index}
                                 className="card relative bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer w-80 flex-shrink-0"
                             >
-                                <Carousel images={annonce.images} isVip={annonce.type === 'vip'} />
+                                <Carousel images={annonce.images} isVip={annonce.type === 'vip'} id={annonce.id} />
 
                                 <div className="p-5"
                                     onClick={() => handleDetailsClick(annonce.id)}

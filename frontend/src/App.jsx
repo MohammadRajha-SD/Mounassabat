@@ -35,7 +35,6 @@ import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
-import SupportUs from './Components/SupportUS.jsx';
 function App() {
     const [token, setToken] = useState(false);
     const [isValidToken, setIsValidToken] = useState(false);
@@ -88,7 +87,6 @@ function App() {
             <ToastContainer />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/support-us" element={<SupportUs />} />
                 <Route path="Login" element={<Login />} />
                 <Route path="ClientRegister" element={<ClientRegister />} />
                 <Route path="PrestataireRegister" element={<PrestataireRegister />} />

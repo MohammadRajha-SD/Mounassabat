@@ -1,26 +1,28 @@
 import { useState } from 'react';
 import { StarIcon } from '@heroicons/react/24/solid';
+import { useNavigate } from 'react-router-dom'; // Import the navigation hook
 
-const Carousel = ({ images, isVip = false, width = '320px', height = '250px' }) => {
+const Carousel = ({ images, isVip = false, width = '320px', height = '250px', id=null }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const navigate = useNavigate(); // Initialize the navigation hook
 
     const goToPreviousSlide = () => {
         setCurrentSlide((prev) => {
-            const prevSlide = prev === images.length - 1 ? 0 : prev - 1;
-            console.log("Prev Slide:", prevSlide);
+            const prevSlide = prev === 0 ? images.length - 1 : prev - 1;
             return prevSlide;
         });
     };
 
- 
     const goToNextSlide = () => {
         setCurrentSlide((prev) => {
             const nextSlide = prev === images.length - 1 ? 0 : prev + 1;
-            console.log("Next Slide:", nextSlide);
             return nextSlide;
         });
     };
-    
+
+    const handleImageClick = () => {
+        navigate(`/AnnouncesDetails/${id}`);
+    };
 
     return (
         <div className="relative" style={{ width, height }}>
@@ -29,8 +31,9 @@ const Carousel = ({ images, isVip = false, width = '320px', height = '250px' }) 
                     {images.length > 0 && (
                         <img
                             src={`https://mounassabat.ma/${images[currentSlide]}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover cursor-pointer"
                             alt={`Slide ${currentSlide}`}
+                            onClick={handleImageClick} // Add click event to the image
                         />
                     )}
 
@@ -52,8 +55,9 @@ const Carousel = ({ images, isVip = false, width = '320px', height = '250px' }) 
                                 <button
                                     key={slideIndex}
                                     type="button"
-                                    className={`w-3 h-3 rounded-full transition ${slideIndex === currentSlide ? 'bg-yellow-600' : 'bg-gray-300'
-                                        }`}
+                                    className={`w-3 h-3 rounded-full transition ${
+                                        slideIndex === currentSlide ? 'bg-yellow-600' : 'bg-gray-300'
+                                    }`}
                                     onClick={() => setCurrentSlide(slideIndex)}
                                 />
                             ))}
