@@ -116,7 +116,7 @@ const AllAnnounces = () => {
         <div>
             <NavBar />
             <div className="border-b m-2 p-2 flex items-center justify-between">
-                <h1 className="text-4xl">All Announces</h1>
+                <h1 className="text-4xl">Toutes les annonces</h1>
                 <a href='/' className="bg-yellow-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
             </div>
             <div className="container px-3 mx-auto py-20">

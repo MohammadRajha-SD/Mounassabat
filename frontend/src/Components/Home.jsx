@@ -403,7 +403,7 @@ const Home = () => {
 
                         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-8 mt-8">
                             <Link to={'/AllAnnounces'} className="bg-black text-base md:text-xl px-6 md:px-12 py-2 md:py-3 rounded-sm font-serif font-medium text-white">
-                                Rechercher
+                            RECHERCHER UN ANNONCE
                             </Link>
                             <Link to={'/AnnounceForm'} className="flex justify-center items-center gap-2 md:gap-4 bg-yellow-600 text-base md:text-xl px-6 md:px-8 py-2 md:py-3 rounded-sm font-serif font-medium text-white">
                                 Publier Votre Annonce

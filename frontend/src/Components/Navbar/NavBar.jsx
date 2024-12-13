@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Logout from './Logout.jsx';
 import Login from './Login.jsx';
 import SupportIcon from '../../assets/support-icon.png';
-import Traduction from '../../assets/traduction.png';
+// import Traduction from '../../assets/traduction.png';
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
@@ -78,7 +78,7 @@ const NavBar = () => {
                         <img className="h-10 w-10 mr-2 rounded-full" src={SupportIcon} alt="" />
                     </Link>
 
-                    <img className="h-10 w-10 rounded-full" src={Traduction} alt="" />
+                    {/* <img className="h-10 w-10 rounded-full" src={Traduction} alt="" /> */}
 
                     {user && (<Logout />)}
                     {!user && (<Login />)}

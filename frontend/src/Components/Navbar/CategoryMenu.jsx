@@ -142,7 +142,7 @@ const CategoryMenu = ({ handleCategoryChange, handleSubCategoryChange, handleSou
             {/* Menu for  desktop */}
             <ul className="menu-desktop justify-between items-center gap-4 transition-all duration-[0.3s] ease-in-out bg-[#fff] max-[769px]:hidden flex w-full max-[769px]:pt-3 ">
                 <Dropdown
-                    category="Marriage"
+                    category="Mariage"
                     subCategories={marriageSubCategories}
                     handleCategoryChange={handleCategoryChange}
                     handleSubCategoryChange={handleSubCategoryChange}
@@ -170,7 +170,7 @@ const CategoryMenu = ({ handleCategoryChange, handleSubCategoryChange, handleSou
                     handleSousCategoryChange={handleSousCategoryChange}
                 />
                 <Dropdown
-                    category="Conférence"
+                    category="Conference"
                     subCategories={ConferenceSubCategories}
                     handleCategoryChange={handleCategoryChange}
                     handleSubCategoryChange={handleSubCategoryChange}
@@ -212,7 +212,7 @@ const CategoryMenu = ({ handleCategoryChange, handleSubCategoryChange, handleSou
                     handleSousCategoryChange={handleSousCategoryChange}
                 />
                 <DropdownMobile
-                    category="Conférence"
+                    category="Conference"
                     subCategories={ConferenceSubCategories}
                     handleCategoryChange={handleCategoryChange}
                     handleSubCategoryChange={handleSubCategoryChange}
