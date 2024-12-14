@@ -12,11 +12,12 @@ export const AnnonceProvider = ({ children }) => {
             //     console.error('JWT token not found in local storage');
             //     return;
             // }
-    
+
             let url = 'https://mounassabat.ma/api/getFiltredAnnonces';
+            
             const urlObj = new URL(url);
             const params = new URLSearchParams();
-    
+
             // Dynamically append query parameters only if they are provided
             if (category) {
                 params.append('category', category);
@@ -33,36 +34,31 @@ export const AnnonceProvider = ({ children }) => {
             if (search) {
                 params.append('search', search);
             }
-    
+
             // If params have been appended, set the search part of the URL
             if (params.toString()) {
                 urlObj.search = params.toString();
             }
-    
+
             const finalUrl = urlObj.toString();
             const response = await fetch(finalUrl, {
                 method: 'GET',
-               
+
             });
-    
-            // headers: {
-            //     'Content-Type': 'application/json',
-            //     Authorization: `Bearer ${token}`
-            // }
+
             if (!response.ok) {
                 console.error('Failed to fetch annonces:', response.statusText);
                 return;
             }
-    
+
             const data = await response.json();
-    
+
             setAnnonces(data.annonces);
-    
         } catch (error) {
             console.error('Error fetching annonces:', error);
         }
     };
-    
+
 
     return (
         <AnnonceContext.Provider value={{ annonces, filterAnnonces, setAnnonces }}>
