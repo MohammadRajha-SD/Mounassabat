@@ -37,8 +37,7 @@ const Dropdown = ({ category, subCategories, handleCategoryChange, handleSubCate
         <li className="dropdown drop-list relative transition-all duration-[0.3s] ease-in-out">
             <Link
                 onClick={() => handleCategoryChange(category)} // Category handling stays the same
-                className="dropdown-arrow relative transition-all duration-[0.3s] ease-in-out py-[15px] text-[15px] capitalize text-black flex items-center font-medium"
-                style={{ fontFamily: "'Open Sans', sans-serif" }}>
+                className="font-serif font-medium text-center dropdown-arrow relative transition-all duration-[0.3s] ease-in-out py-[15px] text-[15px] capitalize text-black flex items-center">
                 {category}
                 <i className={`fi-rr-angle-small-right text-black text-[18px] rotate-[90deg]`}></i>
             </Link>
