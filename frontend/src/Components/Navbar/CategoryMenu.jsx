@@ -12,18 +12,18 @@ const marriageSubCategories = [
         slug: 'traiteur-pour-mariage',
     },
     {
-        name: 'Lieu de rÃ©ception',
+        name: 'Lieu de réception',
         isDropdown: true,
         slug: 'lieu-de-reception',
         children: [
             { name: 'Salle de fete', slug: 'salle-de-fete' },
-            { name: 'Villa privÃ©e', slug: 'villa-privee' },
-            { name: 'Salle de RÃ©ception', slug: 'salle-de-reception' },
+            { name: 'Villa privée', slug: 'villa-privee' },
+            { name: 'Salle de Réception', slug: 'salle-de-reception' },
         ],
     },
     { name: 'Nagafa (Planification de marriage)', slug: 'nagafa' },
     { name: 'Tyafer / Chocolatier', slug: 'tyafer-chocolatier' },
-    { name: 'Photographe et vidÃ©ographe', slug: 'photographe-videographe' },
+    { name: 'Photographe et vidéographe', slug: 'photographe-videographe' },
     {
         name: 'Musique',
         isDropdown: true,
@@ -41,23 +41,23 @@ const marriageSubCategories = [
     { name: 'Femme de Menage Freelance', slug: 'femme-de-menage-freelance' },
     { name: 'Agence de voyage (Lien de Miel)', slug: 'agence-de-voyage' },
     { name: 'Patisserie / Wedding Cake', slug: 'patisserie-wedding-cake' },
-    { name: 'Adoul / CÃ©rÃ©monie', slug: 'adoul-ceremonie' },
-    { name: 'Locataire des Robes de mariÃ©e et tenues pour le mariÃ©', slug: 'locataire-robes' },
+    { name: 'Adoul / Cérémonie', slug: 'adoul-ceremonie' },
+    { name: 'Locataire des Robes de mariée et tenues pour le marié', slug: 'locataire-robes' },
 ];
 
 const feteDeNaissanceSubCategories = [
     { name: 'Artiste ou animateur', slug: 'artiste-ou-animateur', isDropdown: false },  // Artist or Host
-    { name: 'DÃ©corateur de fÃªte', slug: 'decorateur-de-fete', isDropdown: false },  // Party decorator
-    { name: 'HennÃ©', slug: 'henne', isDropdown: false },  // Henna
-    { name: 'Lieu de rÃ©ception', slug: 'lieu-de-reception', isDropdown: false },  // Reception venue
-    { name: 'Location de matÃ©riel pàtissier ou boulanger', slug: 'location-de-materiel-patissier-boulanger', isDropdown: false },  // Pastry or bakery equipment rental
-    { name: 'Photographe ou vidÃ©ographe', slug: 'photographer-ou-videographer', isDropdown: false },  // Photographer or Videographer
+    { name: 'Décorateur de fête', slug: 'decorateur-de-fete', isDropdown: false },  // Party decorator
+    { name: 'Henné', slug: 'henne', isDropdown: false },  // Henna
+    { name: 'Lieu de réception', slug: 'lieu-de-reception', isDropdown: false },  // Reception venue
+    { name: 'Location de matériel pàtissier ou boulanger', slug: 'location-de-materiel-patissier-boulanger', isDropdown: false },  // Pastry or bakery equipment rental
+    { name: 'Photographe ou vidéographe', slug: 'photographer-ou-videographer', isDropdown: false },  // Photographer or Videographer
     { name: 'Traiteur pour sbouaa', slug: 'traiteur-pour-sbouaa', isDropdown: false },  // Caterer for event (Sbouaa)
 ];
 
 const babyShowerSubCategories = [
     {
-        name: 'Agence DÃ©coration',
+        name: 'Agence Décoration',
         slug: 'agence-decoration',
         isDropdown: false,
     },
@@ -83,9 +83,9 @@ const anniversaireSubCategories = [
             { name: 'Animateur', slug: 'animateur' },
             { name: 'Clown', slug: 'clown' },
             { name: 'Patissier ou Boulanger', slug: 'patissier-ou-boulanger' },
-            { name: 'DÃ©corateur de Fete', slug: 'decorateur-de-fete' },
-            { name: 'Lieu de RÃ©ception', slug: 'lieu-de-reception' },
-            { name: 'Photographe et VidÃ©ographer', slug: 'photographe-et-videographer' },
+            { name: 'Décorateur de Fete', slug: 'decorateur-de-fete' },
+            { name: 'Lieu de Réception', slug: 'lieu-de-reception' },
+            { name: 'Photographe et Vidéographer', slug: 'photographe-et-videographer' },
             { name: 'Patisserie / Wedding Cake', slug: 'patisserie-wedding-cake' },
             { name: 'Locataire de jeux et d\'attractions', slug: 'locataire-de-jeux-et-attractions' },
         ],
@@ -97,10 +97,10 @@ const anniversaireSubCategories = [
         children: [
             { name: 'Traiteur Anniversaire Adulte', slug: 'traiteur-anniversaire-adulte' },
             { name: 'Patissier ou Boulanger', slug: 'patissier-ou-boulanger' },
-            { name: 'DÃ©corateur de Fete', slug: 'decorateur-de-fete' },
-            { name: 'Photographe et VidÃ©ographer', slug: 'photographe-et-videographer' },
+            { name: 'Décorateur de Fete', slug: 'decorateur-de-fete' },
+            { name: 'Photographe et Vidéographer', slug: 'photographe-et-videographer' },
             { name: 'DJ ou groupe de Musique', slug: 'dj-ou-groupe-de-musique' },
-            { name: 'Lieu de RÃ©ception', slug: 'lieu-de-reception' },
+            { name: 'Lieu de Réception', slug: 'lieu-de-reception' },
         ],
     },
 ];
@@ -111,25 +111,25 @@ const ConferenceSubCategories = [
         slug: "colloque",
         isDropdown: true,
         children: [
-            { name: "Traiteur ConfÃ©rence", slug: "traiteur-conference" },
+            { name: "Traiteur Conférence", slug: "traiteur-conference" },
             { name: "Salle Hotel", slug: "salle-hotel" }
         ]
     },
     {
-        name: "EvÃ©nement professionnel",
+        name: "Evénement professionnel",
         slug: "evenement-professionnel",
         isDropdown: true,
         children: [
-            { name: "Traiteur ConfÃ©rence", slug: "traiteur-conference" },
+            { name: "Traiteur Conférence", slug: "traiteur-conference" },
             { name: "Salle Hotel", slug: "salle-hotel" }
         ]
     },
     {
-        name: "SÃ©minaire",
+        name: "Séminaire",
         slug: "seminaire",
         isDropdown: true,
         children: [
-            { name: "Traiteur Pour SÃ©minaire", slug: "traiteur-pour-seminaire" },
+            { name: "Traiteur Pour Séminaire", slug: "traiteur-pour-seminaire" },
             { name: "Salle Hotel", slug: "salle-hotel" }
         ]
     }
@@ -149,7 +149,7 @@ const CategoryMenu = ({ handleCategoryChange, handleSubCategoryChange, handleSou
                     handleSousCategoryChange={handleSousCategoryChange}
                 />
                 <Dropdown
-                    category="FÃªte de naissance"
+                    category="Fête de naissance"
                     subCategories={feteDeNaissanceSubCategories}
                     handleCategoryChange={handleCategoryChange}
                     handleSubCategoryChange={handleSubCategoryChange}
@@ -170,7 +170,7 @@ const CategoryMenu = ({ handleCategoryChange, handleSubCategoryChange, handleSou
                     handleSousCategoryChange={handleSousCategoryChange}
                 />
                 <Dropdown
-                    category="ConfÃ©rence"
+                    category="Conférence"
                     subCategories={ConferenceSubCategories}
                     handleCategoryChange={handleCategoryChange}
                     handleSubCategoryChange={handleSubCategoryChange}
@@ -191,7 +191,7 @@ const CategoryMenu = ({ handleCategoryChange, handleSubCategoryChange, handleSou
                     handleSubCategoryChange={handleSubCategoryChange}
                 />
                 <DropdownMobile
-                    category="FÃªte de naissance"
+                    category="Fête de naissance"
                     subCategories={feteDeNaissanceSubCategories}
                     handleCategoryChange={handleCategoryChange}
                     handleSubCategoryChange={handleSubCategoryChange}
@@ -212,7 +212,7 @@ const CategoryMenu = ({ handleCategoryChange, handleSubCategoryChange, handleSou
                     handleSousCategoryChange={handleSousCategoryChange}
                 />
                 <DropdownMobile
-                    category="ConfÃ©rence"
+                    category="Conférence"
                     subCategories={ConferenceSubCategories}
                     handleCategoryChange={handleCategoryChange}
                     handleSubCategoryChange={handleSubCategoryChange}
