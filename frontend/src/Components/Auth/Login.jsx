@@ -53,7 +53,7 @@ const Login = () => {
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
 
-                toast.success("Connexion réussie ! Redirection...");
+                toast.success("Connexion reussie ! Redirection...");
 
                 switch (user.role) {
                     case 'admin':
@@ -152,13 +152,13 @@ const Login = () => {
                                     </div>
 
                                     <div className="px-2 md:px-12">
-                                        <div className="flex gap-2 items-center text-center mb-4 bg-white shadow-none  border px-2 md:px-5 py-4">
+                                        {/* <div className="flex gap-2 items-center text-center mb-4 bg-white shadow-none  border px-2 md:px-5 py-4">
                                             <img className="h-5 w-5" src={facebook} alt="Facebook" />
                                             <div className='flex justify-center items-center'>
                                                 <h1 className="text-black font-serif font-medium text-center">Continuer avec Facebook</h1>
                                                 <div>yyyy</div>
                                             </div>
-                                        </div>
+                                        </div> */}
 
                                         {/* LOGO GMAIL */}
                                         {/* 

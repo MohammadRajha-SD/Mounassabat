@@ -17,7 +17,7 @@ const AnnounceForm = () => {
     const [selectedOption, setSelectedOption] = useState(null);
     const [token, setToken] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const navigate = useNavigate();
 
     const options = [
@@ -392,7 +392,7 @@ const AnnounceForm = () => {
 
     return (
         <>
-            {isLoading&& (<Loader />)}
+            {isLoading && (<Loader />)}
             <div className='min-h-screen  bg-gray-100 '>
                 <Header3 />
                 <div className="flex flex-col md:flex-row pt-32 pb-20 md:py-20  gap-5 mx-2  lg:mx-10">
@@ -472,7 +472,7 @@ const AnnounceForm = () => {
                 {visiblePaymentForm ? (
                     <>
                         <button className='bg-blue-400 text-white px-3 py-2 font-serif mx-2 rounded-lg' type='button' onClick={() => openModalWithCheck()}>
-                            Pay Now
+                            Payer maintenant
                         </button>
 
                         <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />

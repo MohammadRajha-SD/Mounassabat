@@ -278,7 +278,7 @@ const AnnounceForm = () => {
                                         </div>
                                     </div><input
                                         id="phonenumber"
-                                        type="text"
+                                        type="tel"
                                         value={phoneNumber}
                                         onChange={(e) => setPhoneNumber(e.target.value)}
                                         className="block w-full h-14 font-bold text-md py-2 px-2 mt-2  bg-white border border-gray-300 rounded-md  focus:border-yellow-500  focus:outline-none focus:ring" required />

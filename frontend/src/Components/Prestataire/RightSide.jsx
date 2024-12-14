@@ -46,7 +46,7 @@ const RightSide = ({ title = 'Comment définir mon annonce', content }) => {
             </div>
 
             <div className='flex justify-center items-center mt-3'>
-                <a className='underline text-md py-3 font-bold text-gray-900' href="">Termes et conditions d’annonce</a>
+                <a className='underline text-md py-3 font-bold text-gray-900' href="/conditions">Termes et conditions d’annonce</a>
             </div>
         </div>
     );

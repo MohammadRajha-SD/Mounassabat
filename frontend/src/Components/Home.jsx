@@ -362,7 +362,7 @@ const Home = () => {
                     </div>
 
 
-                    <div className="flex items-center flex-wrap justify-center gap-6 py-10">
+                    <div className="flex items-center flex-wrap justify-center gap-6 py-10 mb-28">
                         {[
                             { to: 'Marriage', src: marriage, title: 'Mariage' },
                             { to: 'Anniversaire', src: anniversaire, title: 'Anniversaire' },
