@@ -8,7 +8,7 @@ const SubMenu = ({ subCategories, handleSubCategoryChange, handleSousCategoryCha
                     <a
                         onClick={() => handleSubCategoryChange(sub.slug)} // Use slug instead of name
                         className="transition-all duration-[0.3s] ease-in-out leading-[20px] px-[20px] py-[4px] font-normal text-gray-800 capitalize flex justify-between items-center hover:text-yellow-600"
-                    >
+                        style={{ fontFamily: "'Open Sans', sans-serif" }}>
                         {sub.name}
                         {sub.isDropdown && <i className="fi-rr-angle-small-right text-black text-[18px]"></i>}
                     </a>
@@ -38,7 +38,7 @@ const Dropdown = ({ category, subCategories, handleCategoryChange, handleSubCate
             <Link
                 onClick={() => handleCategoryChange(category)} // Category handling stays the same
                 className="dropdown-arrow relative transition-all duration-[0.3s] ease-in-out py-[15px] text-[15px] capitalize text-black flex items-center font-medium"
-            >
+                style={{ fontFamily: "'Open Sans', sans-serif" }}>
                 {category}
                 <i className={`fi-rr-angle-small-right text-black text-[18px] rotate-[90deg]`}></i>
             </Link>
@@ -48,7 +48,7 @@ const Dropdown = ({ category, subCategories, handleCategoryChange, handleSubCate
                 handleSubCategoryChange={handleSubCategoryChange}
                 handleSousCategoryChange={handleSousCategoryChange}
             />
-        </li>
+        </li >
     );
 };
 

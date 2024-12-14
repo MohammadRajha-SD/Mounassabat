@@ -361,7 +361,6 @@ const Home = () => {
                         </div>
                     </div>
 
-
                     <div className="flex items-center flex-wrap justify-center gap-6 py-10 mb-28">
                         {[
                             { to: 'Marriage', src: marriage, title: 'Mariage' },
@@ -381,7 +380,6 @@ const Home = () => {
                             </div>
                         ))}
                     </div>
-
 
                     {/* Main 5 Sections */}
                     <div className="container  px-3  mx-auto">
@@ -458,7 +456,6 @@ const Home = () => {
                         </>
                     )}
                     {/* Show Cities End */}
-
 
                     {/* Footer */}
                     <Footer />

@@ -1,3 +1,13 @@
+/* Define Nerd Font */
+@font-face {
+    font-family: 'NerdFont';
+    src: url('/public/ArimoNerdFont-Regular.ttf') format('truetype');
+}
+
+/* Apply Nerd Font globally */
+body {
+    font-family: 'NerdFont', sans-serif;
+}
 
 ul li {
     cursor: pointer;
@@ -5,30 +15,39 @@ ul li {
 }
 
 h1 {
-    font-family: "Manrope", sans-serif;
+    font-family: 'NerdFont', sans-serif;
     font-weight: 700;
     letter-spacing: 0.01rem;
 }
 
 .font-manrope {
-    font-family: "Manrope", sans-serif;
+    font-family: 'NerdFont', sans-serif;
 }
 
 .font-Poppins {
-    font-family: "Poppins, sans-serif";
+    font-family: 'NerdFont', sans-serif;
+
 }
 
 .font-Montserrat {
-    font-family: "Montserrat";
+    font-family: 'NerdFont', sans-serif;
+
 }
 
-h2, h3, h4, h5, h6 {
-    font-family: "Manrope", sans-serif;
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'NerdFont', sans-serif;
+
     font-weight: 400;
     letter-spacing: 0.01rem;
 }
 
-p, li, span {
+p,
+li,
+span {
     letter-spacing: 0.02rem;
 }
 
@@ -42,14 +61,17 @@ p {
     -webkit-box-shadow: 2px 2px 15px 0 rgba(0, 0, 0, 0.07);
     box-shadow: 2px 2px 15px 0 rgba(0, 0, 0, 0.07);
 }
+
 .gi-main-menu ul li.dropdown li.position-static {
     position: relative !important;
 }
+
 .gi-main-menu ul li.dropdown li.position-static:hover .sub-menu.sub-menu-child {
     margin: -5px 0 0 0;
     opacity: 1;
     visibility: visible;
 }
+
 .gi-main-menu ul li.dropdown ul.sub-menu.sub-menu-child {
     margin: 30px 0 0 0;
     left: 100% !important;
@@ -57,11 +79,13 @@ p {
     visibility: hidden;
     top: 0;
 }
+
 .gi-main-menu ul li.dropdown:hover .sub-menu {
     margin-top: 0;
     opacity: 1;
     visibility: visible;
 }
+
 .gi-main-menu ul li.dropdown:hover .mega-menu {
     margin-top: 0;
     opacity: 1;
@@ -75,4 +99,3 @@ p {
 .card img {
     transition: transform 0.6s ease;
 }
-
