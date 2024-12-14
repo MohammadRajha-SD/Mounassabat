@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import Sidebar from './Sidebar';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Clients = () => {
     const [clients, setClients] = useState([]);
@@ -17,14 +18,14 @@ const Clients = () => {
                 console.error('JWT token not found in local storage');
                 return;
             }
-    
+
             const response = await axios.get('https://mounassabat.ma/api/getAllClients', {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
             });
-    
+
             // Check if the response is successful
             if (response.status === 200) {
                 const data = response.data;
@@ -37,9 +38,43 @@ const Clients = () => {
         }
     };
 
+    const handleBanned = async (id, is_banned) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                console.error('JWT token not found in local storage');
+                return;
+            }
+
+            const response = await axios.post(
+                'https://mounassabat.ma/api/user-banned',
+                { id, is_banned },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            );
+
+            toast.success(response.data.message);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+        } catch (error) {
+            toast.error('Error updating user ban status:', error);
+        } finally {
+            closeModal();
+        }
+    };
+
+
     return (
         <div className="flex">
-            <Sidebar active="clients"/>
+            <Sidebar active="clients" />
 
             <section className="bg-black w-full h-[100vh] px-5 py-2.5">
                 <div className="flex gap-2 text-center items-center">
@@ -74,8 +109,13 @@ const Clients = () => {
                                 <td className="text-white font-medium font-serif">{client.user.phone}</td>
                                 <td className="text-white font-medium font-serif">{format(new Date(client.user.created_at), 'dd MMMM yyyy')}</td>
                                 <td>
-                                    <button className="text-white bg-red-600 font-medium font-serif px-5 py-1 rounded">BAN</button>
-                                </td>
+                                    <button
+                                        // onClick={() => openModal()}
+                                        onClick={() => handleBanned(client.user.id, client.user.is_banned)}
+                                        className={`text-white ${client.user.is_banned ? 'bg-yellow-600' : 'bg-red-600'} font-medium font-serif px-5 py-1 rounded`}
+                                    >
+                                        {client.user.is_banned ? 'Unban' : 'Ban'}
+                                    </button>                                </td>
                             </tr>
                         ))}
                     </tbody>

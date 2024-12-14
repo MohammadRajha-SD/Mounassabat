@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import Sidebar from './Sidebar';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Prestataires = () => {
     const [prestataires, setPrestataires] = useState([]);
@@ -34,10 +35,39 @@ const Prestataires = () => {
         }
     };
 
-    const handleDelete = (id) => {
-        console.log(id);
-        closeModal();
+    const handleBanned = async (id, is_banned) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                console.error('JWT token not found in local storage');
+                return;
+            }
+
+            const response = await axios.post(
+                'https://mounassabat.ma/api/user-banned',
+                { id, is_banned },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            );
+
+            toast.success(response.data.message);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+        } catch (error) {
+            toast.error('Error updating user ban status:', error);
+        } finally {
+            closeModal();
+        }
     };
+
 
     return (
         <div class="flex">
@@ -74,40 +104,43 @@ const Prestataires = () => {
                                 <td className="text-white font-medium font-serif">{prestataire.user.phone}</td>
                                 <td className="text-white font-medium font-serif">{format(new Date(prestataire.user.created_at), 'dd MMMM yyyy')}</td>
                                 <td>
-                                    <button onClick={() => openModal(prestataire.id)} className="text-white bg-red-600 font-medium font-serif px-5 py-1 rounded">{prestataire.user.is_banned ? 'Unban' : 'Ban'}</button>
+                                    <button
+                                        // onClick={() => openModal()}
+                                        onClick={() => handleBanned(prestataire.user.id, prestataire.user.is_banned)}
+                                        className={`text-white ${prestataire.user.is_banned ? 'bg-yellow-600' : 'bg-red-600'} font-medium font-serif px-5 py-1 rounded`}
+                                    >
+                                        {prestataire.user.is_banned ? 'Unban' : 'Ban'}
+                                    </button>
+
+                                    {/* Modal */}
+                                    {isModalOpen && (
+                                        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                                            <div className="bg-white p-5 rounded shadow-lg max-w-sm w-full">
+                                                <h2 className="text-lg font-bold mb-4">Confirm</h2>
+                                                <p className="text-gray-700 mb-4">Are you sure ?</p>
+                                                <div className="flex justify-end space-x-3">
+                                                    <button
+                                                        onClick={closeModal}
+                                                        className="px-4 py-2 bg-gray-300 text-gray-800 rounded"
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleBanned(prestataire.user.id, prestataire.user.is_banned)}
+                                                        className={`px-4 py-2 ${prestataire.user.is_banned ? 'bg-yellow-600' : 'bg-red-600'} text-white rounded`}
+                                                    >
+                                                        {prestataire.user.is_banned ? 'Unban' : 'Ban'}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </td>
                             </tr>
                         ))}
                     </tbody>
-
-
-
                 </table>
-
             </section>
-            {/* Modal */}
-            {isModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white p-5 rounded shadow-lg max-w-sm w-full">
-                        <h2 className="text-lg font-bold mb-4">Confirm Deletion</h2>
-                        <p className="text-gray-700 mb-4">Are you sure you want to delete this item?</p>
-                        <div className="flex justify-end space-x-3">
-                            <button
-                                onClick={closeModal}
-                                className="px-4 py-2 bg-gray-300 text-gray-800 rounded"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={handleDelete}
-                                className="px-4 py-2 bg-red-600 text-white rounded"
-                            >
-                                ban 
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

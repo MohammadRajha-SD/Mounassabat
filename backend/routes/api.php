@@ -87,4 +87,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/profile/user', [PrestataireController::class, 'update']);
 
     Route::get('verify-token', [AuthController::class, 'verifyToken']);
+
+
+    Route::post('/user-banned', [AdminController::class, 'updateBannedStatus']);
 });

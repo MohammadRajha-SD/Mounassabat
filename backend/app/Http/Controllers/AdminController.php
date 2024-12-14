@@ -8,9 +8,41 @@ use App\Models\Prestataire;
 use App\Models\Reclamation;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+
+    public function updateBannedStatus(Request $request)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id', 
+            'is_banned' => 'required|boolean', 
+        ]);
+
+        try {
+            // Find the user by ID and update the is_banned status
+            $user = User::findOrFail($validated['id']);
+            $user->is_banned = !$validated['is_banned'];
+            $user->save();
+
+            // Return a success response
+            return response()->json([
+                'message' => 'User ban status updated successfully.',
+                'user' => $user,
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Return an error response in case of failure
+            return response()->json([
+                'message' => 'Failed to update user ban status.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
     public function getAllPrestataires()
     {
         $prestataires = Prestataire::with('user')->get();
@@ -23,40 +55,40 @@ class AdminController extends Controller
     }
 
     public function getAllReclamations()
-{
-    $reclamations = Reclamation::with('user')->paginate(6);
-    return response()->json($reclamations);
-}
-public function getAllAnnonces()
-{
-    $annonces = Annonce::whereNull('accepted_at')
-        ->with(['user', 'sub_Category']) 
-        ->paginate(4);
+    {
+        $reclamations = Reclamation::with('user')->paginate(6);
+        return response()->json($reclamations);
+    }
+    public function getAllAnnonces()
+    {
+        $annonces = Annonce::whereNull('accepted_at')
+            ->with(['user', 'sub_Category'])
+            ->paginate(4);
 
-    $formattedAnnonces = $annonces->getCollection()->map(function ($annonce) {
-        return [
-            'user' => $annonce->user,
-            'id' => $annonce->id,
-            'title' => $annonce->title,
-            'description' => $annonce->description,
-            'location' => $annonce->location,
-            'sub_category_id' => $annonce->sub_category_id,
-            'sous_category_id' => $annonce->sous_category_id,
-            'image' => json_decode($annonce->image),
-            'price' => $annonce->price,
-            'accepted_at' => $annonce->accepted_at,
-            'sub_name' => $annonce->sub_Category->name, 
-        ];
-    });
+        $formattedAnnonces = $annonces->getCollection()->map(function ($annonce) {
+            return [
+                'user' => $annonce->user,
+                'id' => $annonce->id,
+                'title' => $annonce->title,
+                'description' => $annonce->description,
+                'location' => $annonce->location,
+                'sub_category_id' => $annonce->sub_category_id,
+                'sous_category_id' => $annonce->sous_category_id,
+                'image' => json_decode($annonce->image),
+                'price' => $annonce->price,
+                'accepted_at' => $annonce->accepted_at,
+                'sub_name' => $annonce->sub_Category->name,
+            ];
+        });
 
-    // Return both the formatted annonces and pagination meta data
-    return response()->json([
-        'data' => $formattedAnnonces,
-        'current_page' => $annonces->currentPage(),
-        'last_page' => $annonces->lastPage(),
-        'total' => $annonces->total(),
-    ]);
-}
+        // Return both the formatted annonces and pagination meta data
+        return response()->json([
+            'data' => $formattedAnnonces,
+            'current_page' => $annonces->currentPage(),
+            'last_page' => $annonces->lastPage(),
+            'total' => $annonces->total(),
+        ]);
+    }
 
     public function banUsers()
     {
@@ -93,7 +125,7 @@ public function getAllAnnonces()
     public function countPrestataires()
     {
         try {
-            $count = Prestataire::count(); 
+            $count = Prestataire::count();
             return response()->json(['count' => $count]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to count prestataires'], 500);
@@ -103,7 +135,7 @@ public function getAllAnnonces()
     public function countClients()
     {
         try {
-            $count = Client::count(); 
+            $count = Client::count();
             return response()->json(['count' => $count]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to count Clients'], 500);
@@ -113,7 +145,7 @@ public function getAllAnnonces()
     public function countAnnonces()
     {
         try {
-            $count = Annonce::count(); 
+            $count = Annonce::count();
             return response()->json(['count' => $count]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to count annonces'], 500);
@@ -123,7 +155,7 @@ public function getAllAnnonces()
     public function countReclamations()
     {
         try {
-            $count = Reclamation::count(); 
+            $count = Reclamation::count();
             return response()->json(['count' => $count]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to count reclamation'], 500);
@@ -158,11 +190,11 @@ public function getAllAnnonces()
     {
         try {
             $annonce = Annonce::findOrFail($id);
-            
+
             if ($annonce->accepted_at !== null) {
                 return response()->json(['message' => 'Annonce already accepted'], 400);
             }
-            
+
             $annonce->accepted_at = now();
             $annonce->save();
 
