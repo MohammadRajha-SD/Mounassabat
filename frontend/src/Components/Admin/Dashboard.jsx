@@ -69,6 +69,8 @@ const Dashboard = () => {
                 axios.get('https://mounassabat.ma/api/getLatestReclamations', { headers }),
             ]);
 
+            console.log(annoncesResponse.data);
+
             setLatestPrestataires(prestatairesResponse.data);
             setLatestClients(clientsResponse.data);
             setLatestAnnonces(annoncesResponse.data);

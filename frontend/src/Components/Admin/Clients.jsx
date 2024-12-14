@@ -115,7 +115,8 @@ const Clients = () => {
                                         className={`text-white ${client.user.is_banned ? 'bg-yellow-600' : 'bg-red-600'} font-medium font-serif px-5 py-1 rounded`}
                                     >
                                         {client.user.is_banned ? 'Unban' : 'Ban'}
-                                    </button>                                </td>
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

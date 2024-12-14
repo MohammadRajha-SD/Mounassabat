@@ -112,7 +112,7 @@ class AdminController extends Controller
 
     public function getLatestAnnonces()
     {
-        $LatestAnnonces = Annonce::with('user')->orderBy('created_at', 'desc')->take(5)->get();
+        $LatestAnnonces = Annonce::with('user')->whereNull('accepted_at')->latest()->get();
         return response()->json($LatestAnnonces);
     }
 
@@ -145,7 +145,7 @@ class AdminController extends Controller
     public function countAnnonces()
     {
         try {
-            $count = Annonce::count();
+            $count = Annonce::whereNull('accepted_at')->count();
             return response()->json(['count' => $count]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to count annonces'], 500);
