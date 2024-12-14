@@ -128,7 +128,7 @@ const AnnounceForm = () => {
 
             
             <div className="fixed right-0 bottom-0 z-10 bg-white w-screen flex justify-end items-center py-2 shadow-md">
-                    <button onClick={handleContinueClick} className='bg-yellow-600 text-white p-2 mx-2 rounded-lg' type='submit' to='/src/Components/AnnounceForm2.jsx'>CONTINUER</button>
+                    <button onClick={handleContinueClick} className='bg-[#e6cf8c] text-white p-2 mx-2 rounded-lg' type='submit' to='/src/Components/AnnounceForm2.jsx'>CONTINUER</button>
                 </div>
         </>
     );

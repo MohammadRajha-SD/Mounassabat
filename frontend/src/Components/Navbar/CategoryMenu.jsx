@@ -224,7 +224,7 @@ const CategoryMenu = ({ handleCategoryChange, handleSubCategoryChange, handleSou
 
                 {role != 'client' && (
                     <Link to="/AnnounceForm" className="gi-header-action self-center max-[575px]:w-full max-[575px]:py-[10px] max-[575px]:bg-[#4b5966] mx-2 ">
-                        <div className="text-white bg-yellow-600 py-2.5 px-3 rounded-md font-serif font-medium ">
+                        <div className="text-white bg-[#e6cf8c] py-2.5 px-3 rounded-md font-serif font-medium ">
                             <div className="flex justify-center items-center gap-x-4">
                                 <button className="">Publier votre annonce</button>
                                 <svg className="w-5 h-5 dark:text-white" aria-hidden="true"

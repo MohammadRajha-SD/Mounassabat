@@ -5,7 +5,7 @@ const AnnouncementSection = ({ title, annonces, handleFavoritsClick, handleDetai
         <>
             <div className="border-b-2 border-b-yellow-500 m-2 mb-6 p-2 flex items-center justify-between">
                 <h2 className="text-4xl text-black font-serif font-medium pt-5">Annonces  {title}</h2>
-                <a href='/AllAnnounces' className="bg-yellow-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg">
+                <a href='/AllAnnounces' className="bg-[#e6cf8c] text-white px-5 font-semibold pt-1 pb-2 rounded-lg">
                     Toutes Les annonces
                 </a>
             </div>
@@ -26,7 +26,7 @@ const AnnouncementSection = ({ title, annonces, handleFavoritsClick, handleDetai
                                     <h2 className="text-xl font-semibold text-gray-800">{annonce.title}</h2>
                                     <div className="flex items-center">
                                         <svg
-                                            className="w-5 h-5 bg-yellow-600 px-1 py-1 dark:text-white rounded-full"
+                                            className="w-5 h-5 bg-[#e6cf8c] px-1 py-1 dark:text-white rounded-full"
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
                                             viewBox="0 0 24 24"
@@ -86,7 +86,7 @@ const AnnouncementSection = ({ title, annonces, handleFavoritsClick, handleDetai
                                                 e.stopPropagation(); // Prevent card click from triggering when clicking favorite
                                                 handleFavoritsClick(annonce.id);
                                             }}
-                                            className={`border border-gray-400 px-1 py-1 rounded-full cursor-pointer transition duration-300 ${annonce.isFavorited ? 'bg-yellow-500 hover:bg-white' : 'text-gray-900'
+                                            className={`border border-gray-400 px-1 py-1 rounded-full cursor-pointer transition duration-300 ${annonce.isFavorited ? 'bg-[#e6cf8c] hover:bg-white' : 'text-gray-900'
                                                 } hover:text-yellow-500 hover:border-yellow-500`}
                                         >
                                             <svg

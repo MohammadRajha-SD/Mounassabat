@@ -117,7 +117,7 @@ const AllAnnounces = () => {
             <NavBar />
             <div className="border-b m-2 p-2 flex items-center justify-between">
                 <h1 className="text-4xl">Toutes les annonces</h1>
-                <a href='/' className="bg-yellow-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
+                <a href='/' className="bg-[#e6cf8c] text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
             </div>
             <div className="container px-3 mx-auto py-20">
                 {/* Announces Start */}
@@ -137,7 +137,7 @@ const AllAnnounces = () => {
 
                                     <div className="flex items-center">
                                         <svg
-                                            className="w-5 h-5 bg-yellow-600 px-1 py-1 dark:text-white rounded-full"
+                                            className="w-5 h-5 bg-[#e6cf8c] px-1 py-1 dark:text-white rounded-full"
                                             aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="24"
@@ -204,7 +204,7 @@ const AllAnnounces = () => {
                                                     e.stopPropagation(); // Prevents triggering the card click event
                                                     handleFavoritsClick(annonce.id);
                                                 }}
-                                                className={`border border-gray-400 px-1 py-1 rounded-full cursor-pointer transition duration-300 ${annonce.isFavorited ? 'bg-yellow-500 hover:bg-white' : 'text-gray-900'}  hover:text-yellow-500 hover:border-yellow-500`}
+                                                className={`border border-gray-400 px-1 py-1 rounded-full cursor-pointer transition duration-300 ${annonce.isFavorited ? 'bg-[#e6cf8c] hover:bg-white' : 'text-gray-900'}  hover:text-yellow-500 hover:border-yellow-500`}
                                                 aria-label={`Toggle favorite for ${annonce.title}`}
                                             >
                                                 <svg
@@ -242,13 +242,13 @@ const AllAnnounces = () => {
                         <button
                             onClick={handlePrevPage}
                             disabled={currentPage === 1}
-                            className={`px-8 py-3 mx-2 text-sm font-medium text-white bg-yellow-600 rounded-md ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}>
+                            className={`px-8 py-3 mx-2 text-sm font-medium text-white bg-[#e6cf8c] rounded-md ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}>
                             Previous
                         </button>
                         <button
                             onClick={handleNextPage}
                             disabled={currentPage === totalPages}
-                            className={`px-8 py-3 mx-2 text-sm font-medium text-white bg-yellow-600 rounded-md ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}>
+                            className={`px-8 py-3 mx-2 text-sm font-medium text-white bg-[#e6cf8c] rounded-md ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}>
                             Next
                         </button>
                     </div>

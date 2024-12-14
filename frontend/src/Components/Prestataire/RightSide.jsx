@@ -4,7 +4,7 @@ const RightSide = ({ title = 'Comment définir mon annonce', content }) => {
             {/* ICON && Text Header */}
             <div className='flex gap-2 justify-start items-center mb-3'>
                 <div className='flex-col gap-2'>
-                    <div className='bg-yellow-400 rounded-full' style={{ width: '35px', height: '35px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <div className='bg-[#e6cf8c] rounded-full' style={{ width: '35px', height: '35px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                             <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                                 <g id="ic-lamp" fillRule="nonzero" fill="#FFFFFF">

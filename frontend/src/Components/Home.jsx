@@ -372,7 +372,7 @@ const Home = () => {
                         ].map(item => (
                             <div
                                 key={item.title}
-                                className="w-48 flex flex-col items-center justify-center border-2 border-gray-300 py-4 px-5 rounded-lg hover:bg-yellow-600 hover:text-white transition duration-300 cursor-pointer"
+                                    className="w-48 flex flex-col items-center justify-center border-2 border-gray-300 py-4 px-5 rounded-lg hover:bg-[#e6cf8c] hover:text-white transition duration-300 cursor-pointer"
                             >
                                 <Link to={'/FiltredAnnounces?category=' + item.to} className="flex flex-col items-center">
                                     <img className="w-12 h-12 mb-2" src={item.src} alt={item.title} />
@@ -405,7 +405,7 @@ const Home = () => {
                             <Link to={'/AllAnnounces'} className="bg-black text-base md:text-xl px-6 md:px-12 py-2 md:py-3 rounded-sm font-serif font-medium text-white">
                             RECHERCHER UN ANNONCE
                             </Link>
-                            <Link to={'/AnnounceForm'} className="flex justify-center items-center gap-2 md:gap-4 bg-yellow-600 text-base md:text-xl px-6 md:px-8 py-2 md:py-3 rounded-sm font-serif font-medium text-white">
+                            <Link to={'/AnnounceForm'} style={{ backgroundColor: '#e6cf8c' }} className="flex justify-center items-center gap-2 md:gap-4  text-base md:text-xl px-6 md:px-8 py-2 md:py-3 rounded-sm font-serif font-medium text-white">
                                 Publier Votre Annonce
                                 <svg className="w-5 md:w-6 h-5 md:h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"

@@ -478,7 +478,7 @@ const AnnounceForm = () => {
                         <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
                     </>
                 ) : <>
-                    <button onClick={handleContinueClick} className='bg-yellow-600 text-white p-2 mx-2 rounded-lg' type='submit' >CONTINUER</button>
+                    <button onClick={handleContinueClick} className='bg-[#e6cf8c] text-white p-2 mx-2 rounded-lg' type='submit' >CONTINUER</button>
                 </>}
             </div >
         </>

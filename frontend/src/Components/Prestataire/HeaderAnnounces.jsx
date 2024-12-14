@@ -66,7 +66,7 @@ const HeaderAnnounces = ({actived = 'Mes Annonces'}) => {
                         <img className="h-10 w-10 mr-2 rounded-full" src={SupportIcon} alt="" />
                     </Link>
                     
-                    <img className="h-10 w-10 rounded-full" src={Traduction} alt="" />
+                    {/* <img className="h-10 w-10 rounded-full" src={Traduction} alt="" /> */}
 
                     <Link to={'/AnnounceForm'} className="flex items-center justify-between text-white bg-yellow-600 p-2     rounded-md font-serif font-medium">
                         Publier votre annonce

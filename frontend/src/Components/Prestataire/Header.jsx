@@ -8,7 +8,7 @@ const Header = () => {
                 <p className='text-yellow-500 text-sm sm'>Remplire les informations générales de votre annonce</p>
             </div>
             <div className="flex items-center space-x-2 md:mb-0 mb-2">
-                <div className="bg-yellow-500 rounded-full p-1 flex justify-center items-center" style={{ width: '35px', height: '35px' }}>
+                <div className="bg-[#e6cf8c] rounded-full p-1 flex justify-center items-center" style={{ width: '35px', height: '35px' }}>
                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 7C6.44772 7 6 7.44772 6 8C6 8.55228 6.44772 9 7 9H13C13.5523 9 14 8.55228 14 8C14 7.44772 13.5523 7 13 7H7Z" fill="#FFFFFF" />
                         <path d="M6 12C6 11.4477 6.44772 11 7 11H13C13.5523 11 14 11.4477 14 12C14 12.5523 13.5523 13 13 13H7C6.44772 13 6 12.5523 6 12Z" fill="#FFFFFF" />

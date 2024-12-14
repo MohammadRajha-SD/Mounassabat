@@ -125,7 +125,7 @@ const Parametres = () => {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className={`w-full p-2 mt-4 bg-yellow-500 text-white rounded-md hover:bg-yellow-400 transition ${loading ? 'opacity-50 cursor-not-allowed' : ''
+                        className={`w-full p-2 mt-4 bg-[#e6cf8c] text-white rounded-md hover:bg-yellow-400 transition ${loading ? 'opacity-50 cursor-not-allowed' : ''
                             }`}
                         disabled={loading}
                     >

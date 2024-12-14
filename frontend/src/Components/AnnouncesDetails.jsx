@@ -90,7 +90,7 @@ const AnnouncesDetails = () => {
             <div className="container px-3 py-16 mx-auto">
                 <div className="border-b pb-2 flex items-center justify-between">
                     <h1 className="text-4xl">Announces Details </h1>
-                    <a href='/AllAnnounces' className="bg-yellow-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
+                    <a href='/AllAnnounces' className="bg-[#e6cf8c] text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center gap-10 mt-5">
@@ -114,7 +114,7 @@ const AnnouncesDetails = () => {
                                         <button
                                             key={slideIndex}
                                             type="button"
-                                            className={`w-3 h-3 rounded-full ${slideIndex === currentIndex ? 'bg-yellow-600' : 'bg-gray-300'} hover:bg-yellow-400 focus:outline-none focus:bg-yellow-400 transition`}
+                                            className={`w-3 h-3 rounded-full ${slideIndex === currentIndex ? 'bg-[#e6cf8c]' : 'bg-gray-300'} hover:bg-yellow-400 focus:outline-none focus:bg-yellow-400 transition`}
                                             onClick={() => setCurrentIndex(slideIndex)}
                                             aria-label={`Go to slide ${slideIndex + 1}`} // Accessibility
                                         ></button>
@@ -122,7 +122,7 @@ const AnnouncesDetails = () => {
                                 </div>
                                 <button
                                     type="button"
-                                    className="flex absolute top-1/2 left-3 z-40 items-center justify-center w-10 h-10 bg-yellow-600 rounded-full hover:bg-gray-300 focus:outline-none transition"
+                                    className="flex absolute top-1/2 left-3 z-40 items-center justify-center w-10 h-10 bg-[#e6cf8c] rounded-full hover:bg-gray-300 focus:outline-none transition"
                                     onClick={goToPreviousSlide}
                                     aria-label="Previous Slide" // Accessibility
                                 >
@@ -132,7 +132,7 @@ const AnnouncesDetails = () => {
                                 </button>
                                 <button
                                     type="button"
-                                    className="flex absolute top-1/2 right-3 z-40 items-center justify-center w-10 h-10 bg-yellow-600 rounded-full hover:bg-gray-300 focus:outline-none transition"
+                                    className="flex absolute top-1/2 right-3 z-40 items-center justify-center w-10 h-10 bg-[#e6cf8c] rounded-full hover:bg-gray-300 focus:outline-none transition"
                                     onClick={goToNextSlide}
                                     aria-label="Next Slide" // Accessibility
                                 >

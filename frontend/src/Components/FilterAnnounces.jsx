@@ -82,7 +82,7 @@ const FilterAnnounces = () => {
 
             <div className="border-b m-2 p-2 flex items-center justify-between">
                 <h1 className="text-4xl">Filtered Announces</h1>
-                <a href='/' className="bg-yellow-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
+                <a href='/' className="bg-[#e6cf8c] text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
             </div>
 
             <div className="container px-3 mx-auto py-10">
@@ -102,7 +102,7 @@ const FilterAnnounces = () => {
                                     <h2 className="text-xl font-semibold text-gray-800">{annonce.title}</h2>
                                     <div className="flex items-center">
                                         <svg
-                                            className="w-5 h-5 bg-yellow-600 px-1 py-1 dark:text-white rounded-full"
+                                            className="w-5 h-5 bg-[#e6cf8c] px-1 py-1 dark:text-white rounded-full"
                                             aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="24"
@@ -141,7 +141,7 @@ const FilterAnnounces = () => {
                                         </div>
                                         <div
                                             onClick={(e) => { e.stopPropagation(); handleFavoritsClick(annonce.id); }}
-                                            className={`border border-gray-400 px-1 py-1 rounded-full cursor-pointer transition duration-300 ${annonce.isFavorited ? 'bg-yellow-500 hover:bg-white' : 'text-gray-900'} hover:text-yellow-500 hover:border-yellow-500`}
+                                            className={`border border-gray-400 px-1 py-1 rounded-full cursor-pointer transition duration-300 ${annonce.isFavorited ? 'bg-[#e6cf8c] hover:bg-white' : 'text-gray-900'} hover:text-yellow-500 hover:border-yellow-500`}
                                         >
                                             <svg
                                                 className={`w-5 h-5 duration-300 ${annonce.isFavorited ? 'text-white' : 'text-gray-900'} hover:text-yellow-500`}
