@@ -48,23 +48,29 @@ const Login = () => {
             });
             const { token, user } = response.data;
 
+
             // Save token and user details in localStorage
             if (token && user) {
-                localStorage.setItem('token', token);
-                localStorage.setItem('user', JSON.stringify(user));
+                if (user.is_banned) {
+                    toast.error("Votre compte a ete suspendu.");
+                } else {
 
-                toast.success("Connexion reussie ! Redirection...");
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('user', JSON.stringify(user));
 
-                switch (user.role) {
-                    case 'admin':
-                        navigate('/Dashboard');
-                        break;
-                    case 'prestataire':
-                        navigate('/Annonces');
-                        break;
-                    default:
-                        navigate('/');
-                        break;
+                    toast.success("Connexion reussie ! Redirection...");
+
+                    switch (user.role) {
+                        case 'admin':
+                            navigate('/Dashboard');
+                            break;
+                        case 'prestataire':
+                            navigate('/Annonces');
+                            break;
+                        default:
+                            navigate('/');
+                            break;
+                    }
                 }
             } else {
                 setError('Login failed. Please try again.');
@@ -74,9 +80,6 @@ const Login = () => {
         } finally {
             setLoading(false);
         }
-    };
-    const handleGoogleClick = () => {
-        document.getElementById('google-login-button').click();
     };
 
     return (

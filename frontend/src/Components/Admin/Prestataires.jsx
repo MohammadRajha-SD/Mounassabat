@@ -21,7 +21,6 @@ const Prestataires = () => {
                 console.error('JWT token not found in local storage');
                 return;
             }
-
             const response = await axios.get('https://mounassabat.ma/api/getAllPrestataires', {
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,7 +74,7 @@ const Prestataires = () => {
                                 <td className="text-white font-medium font-serif">{prestataire.user.phone}</td>
                                 <td className="text-white font-medium font-serif">{format(new Date(prestataire.user.created_at), 'dd MMMM yyyy')}</td>
                                 <td>
-                                    <button onClick={() => openModal(prestataire.id)} className="text-white bg-red-600 font-medium font-serif px-5 py-1 rounded">BAN</button>
+                                    <button onClick={() => openModal(prestataire.id)} className="text-white bg-red-600 font-medium font-serif px-5 py-1 rounded">{prestataire.user.is_banned ? 'Unban' : 'Ban'}</button>
                                 </td>
                             </tr>
                         ))}
@@ -103,7 +102,7 @@ const Prestataires = () => {
                                 onClick={handleDelete}
                                 className="px-4 py-2 bg-red-600 text-white rounded"
                             >
-                                Delete
+                                ban 
                             </button>
                         </div>
                     </div>
