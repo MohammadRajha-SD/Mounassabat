@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
-import Carousel from '../Carousel/Index';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { format } from 'date-fns';
 
 const Posts = () => {
     const [annonces, setAnnonces] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [filteredAnnonces_, setFilteredAnnonces] = useState([]);
 
     useEffect(() => {
         fetchAllAnnonces(currentPage);
@@ -30,13 +32,12 @@ const Posts = () => {
                 }
             });
 
-            console.log(response.data);
-
             // Check if the response is successful
             if (response.status === 200) {
                 const data = response.data;
 
                 setAnnonces(data.data);
+                setFilteredAnnonces(data.data);
                 setTotalPages(data.last_page);
             } else {
                 console.error('Failed to fetch Annonces:', response.statusText);
@@ -127,6 +128,22 @@ const Posts = () => {
         }
     };
 
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
+    };
+    useEffect(() => {
+        if (selectedCategory === '') {
+            setFilteredAnnonces(annonces);
+        } else {
+            const filteredAnnonces = annonces.filter(
+                (annonce) => annonce.category === selectedCategory
+            );
+
+            setFilteredAnnonces(filteredAnnonces);
+        }
+    }, [selectedCategory]);
+
+
     return (
         <div className="flex">
             <Sidebar active="posts" />
@@ -145,6 +162,49 @@ const Posts = () => {
 
                 <div className="bg-white w-full h-[1px] mt-4"></div>
 
+                {/* Categories START */}
+                <div className=" rounded-lg shadow-md md:m-5 p-4">
+                    {/* sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 */}
+                    <div className="grid grid-cols-1 gap-6">
+
+                        {/* Category Dropdown */}
+                        <div className="relative w-full">
+                            <select
+                                className="w-full py-3 pl-10 pr-4 border md:h-12 h-12 border-gray-300 font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent text-sm"
+                                onChange={handleCategoryChange} value={selectedCategory}>
+                                <option value="">Tous les categories</option>
+                                {[
+                                    { id: 1, to: 'Marriage', name: 'Mariage' },
+                                    { id: 2, to: 'Anniversaire', name: 'Anniversaire' },
+                                    { id: 3, to: 'Fete+De+Naissance', name: 'Fête de naissance' },
+                                    { id: 4, to: 'BabyShower', name: 'BabyShower' },
+                                    { id: 5, to: 'Conférence', name: 'Conférence' }
+                                ].map((category) => (
+                                    <option key={category.id} value={category.name}>
+                                        {category.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* Search Button */}
+                        {/* <div className="relative w-full">
+                            <button
+                                className="w-full text-white bg-black px-8 py-3 rounded-md font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition duration-200 text-sm"
+                                onClick={() => filterButton()}
+                            >
+                                Rechercher
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
+                                    <path d="M21 21l-3.5-3.5M17 10a7 7 0 10-14 0 7 7 0 0014 0z"></path>
+                                </svg>
+                            </button>
+                        </div> */}
+                    </div>
+                </div>
+                {/* CATEGORIES END */}
+
+                <div className="bg-white w-full h-[1px] mt-4"></div>
+
                 <table className="w-full">
                     <thead className="text-white text-sm">
                         <tr>
@@ -153,21 +213,22 @@ const Posts = () => {
                             <th>DESCRIPTION</th>
                             <th>FULL NAME</th>
                             <th>PRICE</th>
-                            <th>CREATED DATE</th>
+                            {/* <th>CREATED DATE</th> */}
                             <th className="py-6">ACTION</th>
                         </tr>
                     </thead>
 
                     <tbody className="text-white text-md text-center">
-                        {annonces.map((annonce) => (
+                        {filteredAnnonces_.map((annonce, index) => (
                             <tr className="text-white" key={annonce.id}>
-                                <td className="text-white font-medium font-serif">{annonce.id}</td>
+                                <td className="text-white font-medium font-serif">{index + 1}</td>
                                 <td className="text-white font-medium font-serif">{annonce.title}</td>
                                 <td className="text-white font-medium font-serif">{annonce.description}</td>
                                 <td className="text-white font-medium font-serif">{annonce.user.firstName} {annonce.user.lastName}</td>
                                 <td className="text-white font-medium font-serif">{annonce.price} <span className="text-gray-500 font-serif font-bold">MAD</span></td>
+                                {/* <td className="text-white font-medium font-serif">{format(new Date(annonce.created_at), 'dd MMMM yyyy')}</td> */}
                                 <td>
-                                    <div className='flex items-start gap-1'>
+                                    <div className='flex items-end gap-1'>
                                         <button id="accepte" onClick={() => acceptAnnonce(annonce.id)} className="bg-blue-500 hover:bg-blue-600 duration-500  px-2 py-2 rounded-full">
                                             <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
@@ -188,7 +249,7 @@ const Posts = () => {
             {/* POSTS END */}
 
             {/* PAGINATION START */}
-            {annonces.length > 0 && totalPages > 1 && (
+            {filteredAnnonces_.length > 0 && totalPages > 1 && (
                 <div className="flex justify-between items-center mt-5">
                     <button
                         onClick={handlePrevPage}

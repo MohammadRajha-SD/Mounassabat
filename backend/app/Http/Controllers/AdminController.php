@@ -17,8 +17,8 @@ class AdminController extends Controller
     {
         // Validate the incoming request
         $validated = $request->validate([
-            'id' => 'required|exists:users,id', 
-            'is_banned' => 'required|boolean', 
+            'id' => 'required|exists:users,id',
+            'is_banned' => 'required|boolean',
         ]);
 
         try {
@@ -32,7 +32,6 @@ class AdminController extends Controller
                 'message' => 'User ban status updated successfully.',
                 'user' => $user,
             ], 200);
-
         } catch (\Exception $e) {
             // Return an error response in case of failure
             return response()->json([
@@ -62,7 +61,7 @@ class AdminController extends Controller
     public function getAllAnnonces()
     {
         $annonces = Annonce::whereNull('accepted_at')
-            ->with(['user', 'sub_Category'])
+            ->with(['user', 'sub_Category.category'])
             ->paginate(4);
 
         $formattedAnnonces = $annonces->getCollection()->map(function ($annonce) {
@@ -78,6 +77,7 @@ class AdminController extends Controller
                 'price' => $annonce->price,
                 'accepted_at' => $annonce->accepted_at,
                 'sub_name' => $annonce->sub_Category->name,
+                'category' => optional($annonce->sub_Category->category)->name,
             ];
         });
 

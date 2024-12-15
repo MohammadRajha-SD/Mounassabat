@@ -18,4 +18,9 @@ class Sub_Category extends Model
     {
         return $this->hasMany(Annonce::class, 'sub_category_id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }
