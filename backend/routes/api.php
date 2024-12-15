@@ -85,9 +85,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/checkIsAbleToAddAnnonce', [PrestataireController::class, 'checkIsAbleToAddAnnonce']);
     Route::get('/profile/user', [PrestataireController::class, 'show']);
     Route::put('/profile/user', [PrestataireController::class, 'update']);
-
+    Route::delete('/annonces/{id}', [PrestataireController::class, 'deleteAnnonce']);
+    Route::put('/annonces/{id}', [PrestataireController::class, 'updateAnnonce']);
     Route::get('verify-token', [AuthController::class, 'verifyToken']);
-
-
     Route::post('/user-banned', [AdminController::class, 'updateBannedStatus']);
 });

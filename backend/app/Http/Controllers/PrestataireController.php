@@ -11,6 +11,43 @@ use Illuminate\Support\Facades\Auth;
 class PrestataireController extends Controller
 {
 
+    public function updateAnnonce(Request $request, $id)
+    {
+        // Validate input
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        // Find the annonce by ID
+        $annonce = Annonce::find($id);
+
+        if (!$annonce) {
+            return response()->json(['message' => 'Annonce not found'], 404);
+        }
+
+        // Update the annonce
+        $annonce->update([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'price' => $validatedData['price'],
+        ]);
+
+        return response()->json(['message' => 'Annonce updated successfully', 'annonce' => $annonce], 200);
+    }
+
+    public function deleteAnnonce($id)
+    {
+        $annonce = Annonce::find($id);
+
+        if ($annonce) {
+            $annonce->delete();
+            return response()->json(['status' => 'success', 'message' => 'Annonce supprimée avec succès']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Annonce non trouvée'], 404);
+        }
+    }
     public function show()
     {
         return response()->json(Auth::user());
