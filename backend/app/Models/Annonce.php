@@ -16,12 +16,12 @@ class Annonce extends Model
 
     public function sub_Category()
     {
-        return $this->belongsTo(Sub_Category::class,'sub_category_id');
+        return $this->belongsTo(Sub_Category::class, 'sub_category_id');
     }
 
     public function sous_Category()
     {
-        return $this->belongsTo(Sous_Category::class,'sous_category_id');
+        return $this->belongsTo(Sous_Category::class, 'sous_category_id');
     }
 
     public function favoris()
@@ -41,4 +41,10 @@ class Annonce extends Model
         'sous_category_id',
         'type'
     ];
+
+    public function usersWhoLiked()
+    {
+        return $this->belongsToMany(User::class, 'likes')
+            ->withTimestamps(); 
+    }
 }

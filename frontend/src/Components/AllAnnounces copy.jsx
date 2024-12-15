@@ -188,6 +188,54 @@ const AllAnnounces = () => {
         setSearchQuery(event.target.value);
     };
 
+    const [liked, setLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
+
+    // useEffect(() => {
+    //     const fetchLikeStatus = async () => {
+    //         try {
+    //             const response = await axios.get(`https://mounassabat.ma/api/annonces/${annonceId}`);
+    //             setLiked(response.data.liked);
+    //             setLikeCount(response.data.likeCount);
+    //         } catch (error) {
+    //             console.error('Error fetching like status', error);
+    //         }
+    //     };
+
+    //     fetchLikeStatus();
+    // }, [annonceId]);
+
+    // Handle liking the post
+    const likeAnnonce = async (id) => {
+        try {
+            const response = await axios.post(`https://mounassabat.ma/api/annonces/${id}/like`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            setLiked(true);
+            setLikeCount(likeCount + 1);
+        } catch (error) {
+            console.error('Error liking the annonce', error);
+        }
+    };
+
+    // Handle unliking the post
+    const unlikeAnnonce = async (id) => {
+        try {
+            const response = await axios.delete(`https://mounassabat.ma/api/annonces/${id}/unlike`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            // setLiked(false);
+            // setLikeCount(likeCount - 1);
+        } catch (error) {
+            console.error('Error unliking the annonce', error);
+        }
+    };
     return (
         <>
             {loading ? (
@@ -290,6 +338,9 @@ const AllAnnounces = () => {
                                                 <p className="text-gray-500 font-serif font-medium">{annonce.sub_name}</p>
 
                                                 <div className="flex justify-center items-center gap-x-1">
+                                                    <button onClick={annonce.liked ? unlikeAnnonce(annonce.id) : likeAnnonce(annonce.id)} className={`${liked ? 'text-blue-400' : 'text-gray-600'}`}>
+                                                        ({likeCount})
+                                                    </button>
                                                     <div
                                                         id="details"
                                                         onClick={(e) => {

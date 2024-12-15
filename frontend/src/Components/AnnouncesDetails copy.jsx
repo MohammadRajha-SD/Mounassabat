@@ -11,34 +11,35 @@ const AnnouncesDetails = () => {
     const { id } = useParams();
     const [annonce, setAnnonce] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [liked, setLiked] = useState(null);
-    const [user, setUser] = useState(null);
-    const [likesCount, setLikesCount] = useState(0);
 
     useEffect(() => {
         const fetchAnnonceDetails = async () => {
             try {
-                const user_ = JSON.parse(localStorage.getItem('user'));
-                setUser(user_);
+                // const token = localStorage.getItem('token');
+                // if (!token) {
+                    // throw new Error('JWT token not found in local storage here');
+                // }
+
                 const response = await fetch(`https://mounassabat.ma/api/getAnnonceDetails/${id}`);
+                // {
+                //     headers: {
+                //         'Authorization': `Bearer ${token}`
+                //     }
+                // }
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch announcement details');
                 }
-                const data = await response.json();
 
+                const data = await response.json();
                 setAnnonce(data.annonce);
-                setLiked(data.annonce.likes.includes(user_.id));
-                setLikesCount(data.annonce.likes.length);
             } catch (error) {
                 console.error('Error fetching announcement details:', error);
             }
         };
 
         fetchAnnonceDetails();
-
     }, [id]);
-
-
 
     const goToPreviousSlide = () => {
         if (annonce && annonce.image && annonce.image.length > 0) {
@@ -54,59 +55,27 @@ const AnnouncesDetails = () => {
 
     const handleNewConversation = async (id) => {
         const token = localStorage.getItem('token');
+
         const payload = { user_id: id };
 
         try {
-            if (token) {
+            if(token){
+
                 const response = await axios.post(
                     'https://mounassabat.ma/api/new-conversation',
                     payload,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
+                
                 window.location.href = '/Chat';
-            } else {
-                toast.error('You have to log in');
+            }else{
+                toast.error('you have to login');
                 window.location.href = '/Login';
             }
         } catch (error) {
             console.error('Error sending message:', error);
         }
-    };
-
-    const handleLikeToggle = async () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            toast.error('You need to be logged in to like this annonce.');
-            return;
-        }
-
-        try {
-            if (liked) {
-                const response = await axios.post(
-                    `https://mounassabat.ma/api/annonces/${id}/unlike`,
-                    {},
-                    { headers: { Authorization: `Bearer ${token}` } }
-                );
-                if (response.status === 200) {
-                    setLiked(false);
-                    setLikesCount((prev) => prev > 0 ? prev - 1 : prev);
-                }
-            } else {
-                const response = await axios.post(
-                    `https://mounassabat.ma/api/annonces/${id}/like`,
-                    {},
-                    { headers: { Authorization: `Bearer ${token}` } }
-                );
-                if (response.status === 200) {
-                    setLiked(true);
-                    setLikesCount((prev) => prev + 1);
-                }
-            }
-        } catch (error) {
-            console.error('Error liking the annonce:', error);
-            toast.error('Error liking the annonce');
-        }
-    };
+    }
 
     if (!annonce) {
         return <div className="flex items-center justify-center h-screen">
@@ -185,12 +154,10 @@ const AnnouncesDetails = () => {
                                 Send Message
                             </button>
                         </div>
-
                         <div className="py-6">
                             <h1 className="text-black font-serif text-2xl italic py-2">Description</h1>
                             <p className="text-gray-500 text-sm">{annonce.description}</p>
                         </div>
-
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-10">
                             <div>
                                 <h1 className="text-black font-serif text-md">Category: <span className="px-2 text-gray-600 text-sm">{annonce.sub_name}</span></h1>
@@ -203,23 +170,12 @@ const AnnouncesDetails = () => {
                                 <h1 className="text-black font-serif text-md">Price: <span className="px-2 text-gray-600 text-sm">{annonce.price} Dhs</span></h1>
                             </div>
                         </div>
-
-                        {/* Like button */}
-                        <div className="flex items-center justify-start">
-                            <button
-                                onClick={handleLikeToggle}
-                                className={`px-5 flex  py-2 rounded-lg ${liked ? 'bg-red-500 text-white' : 'bg-gray-300 text-black'} transition`}
-                            > <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                                    <path d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z" />
-                                </svg> <span className='ml-2'>({likesCount})</span>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <Footer />
-        </div>
+        </div >
     );
 };
 

@@ -13,8 +13,37 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
+    public function like($annonceId)
+    {
+        $user = Auth::user(); // Get the authenticated user
+        $annonce = Annonce::findOrFail($annonceId);
 
+        // Check if the user has already liked the annonce
+        if ($user->likes()->where('annonce_id', $annonceId)->exists()) {
+            return response()->json(['message' => 'You have already liked this annonce.'], 400);
+        }
 
+        // Attach the like
+        $user->likes()->attach($annonceId);
+
+        return response()->json(['message' => 'Annonce liked successfully.'], 200);
+    }
+
+    public function unlike($annonceId)
+    {
+        $user = Auth::user(); // Get the authenticated user
+        $annonce = Annonce::findOrFail($annonceId);
+
+        // Check if the user has liked the annonce
+        if (!$user->likes()->where('annonce_id', $annonceId)->exists()) {
+            return response()->json(['message' => 'You have not liked this annonce.'], 400);
+        }
+
+        // Detach the like
+        $user->likes()->detach($annonceId);
+
+        return response()->json(['message' => 'Annonce unliked successfully.'], 200);
+    }
     public function reclamation(Request $request)
     {
         $user = Auth::user();
@@ -183,7 +212,7 @@ class ClientController extends Controller
             $allFormatedAnnoncesMarriage = $this->formatAnnonces($annoncesMarriage, $favoritedAnnonceIds);
             $allFormatedAnnoncesBabyshower = $this->formatAnnonces($annoncesBabyshower, $favoritedAnnonceIds);
             $allFormatedAnnoncesAnniversaire = $this->formatAnnonces($annoncesAnniversaire, $favoritedAnnonceIds);
-            
+
             return response()->json([
                 'normal' => $allFormatedAnnoncesNormal,
                 'vip' => $allFormatedAnnoncesVIP,
@@ -228,7 +257,8 @@ class ClientController extends Controller
     public function getAnnonceDetails($id)
     {
         try {
-            $annonce = Annonce::with(['user', 'sub_Category'])->findOrFail($id);
+            $annonce = Annonce::with(['user.likes', 'sub_Category'])->findOrFail($id);
+            $likesUserIds = $annonce->usersWhoLiked->pluck('id')->toArray();
 
             $formattedAnnonce = [
                 'id' => $annonce->id,
@@ -245,6 +275,7 @@ class ClientController extends Controller
                 'lastName' => $annonce->user->lastName,
                 'phone' => $annonce->user->phone,
                 'created_at' => $annonce->created_at,
+                'likes' => $likesUserIds
             ];
 
             return response()->json([

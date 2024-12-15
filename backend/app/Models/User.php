@@ -15,7 +15,11 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-
+    public function likes()
+    {
+        return $this->belongsToMany(Annonce::class, 'likes')
+                    ->withTimestamps(); 
+    }
     public function getJWTIdentifier()
     {
         return $this->getKey();

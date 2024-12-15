@@ -89,4 +89,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/annonces/{id}', [PrestataireController::class, 'updateAnnonce']);
     Route::get('verify-token', [AuthController::class, 'verifyToken']);
     Route::post('/user-banned', [AdminController::class, 'updateBannedStatus']);
+
+    Route::post('/annonces/{annonce}/like', [ClientController::class, 'like'])->name('annonces.like');
+    Route::post('/annonces/{annonce}/unlike', [ClientController::class, 'unlike'])->name('annonces.unlike');
 });
