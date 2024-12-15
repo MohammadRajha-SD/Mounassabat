@@ -175,7 +175,23 @@ class ClientController extends Controller
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
                 ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                ->where('categories.name', 'marriage')
+                ->where('categories.name', 'Mariage')
+                ->whereNotNull('annonces.accepted_at')
+                ->where('annonces.type', 'normal')->paginate(3);
+
+            $annoncesConference = Annonce::query()
+                ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
+                ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
+                ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
+                ->where('categories.name', 'Conférence')
+                ->whereNotNull('annonces.accepted_at')
+                ->where('annonces.type', 'normal')->paginate(3);
+
+            $annoncesFeteDeNaissance = Annonce::query()
+                ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
+                ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
+                ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
+                ->where('categories.name', 'Fete De Naissance')
                 ->whereNotNull('annonces.accepted_at')
                 ->where('annonces.type', 'normal')->paginate(3);
 
@@ -183,7 +199,7 @@ class ClientController extends Controller
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
                 ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                ->where('categories.name', 'babyshower')
+                ->where('categories.name', 'BabyShower')
                 ->whereNotNull('annonces.accepted_at')
                 ->where('annonces.type', 'normal')->paginate(3);
 
@@ -191,7 +207,7 @@ class ClientController extends Controller
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
                 ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                ->where('categories.name', 'anniversaire')
+                ->where('categories.name', 'Anniversaire')
                 ->whereNotNull('annonces.accepted_at')
                 ->where('annonces.type', 'normal')->paginate(3);
 
@@ -212,6 +228,8 @@ class ClientController extends Controller
             $allFormatedAnnoncesMarriage = $this->formatAnnonces($annoncesMarriage, $favoritedAnnonceIds);
             $allFormatedAnnoncesBabyshower = $this->formatAnnonces($annoncesBabyshower, $favoritedAnnonceIds);
             $allFormatedAnnoncesAnniversaire = $this->formatAnnonces($annoncesAnniversaire, $favoritedAnnonceIds);
+            $allFormatedAnnoncesConference = $this->formatAnnonces($annoncesConference, $favoritedAnnonceIds);
+            $allFormatedAnnoncesFeteDeNaissance = $this->formatAnnonces($annoncesFeteDeNaissance, $favoritedAnnonceIds);
 
             return response()->json([
                 'normal' => $allFormatedAnnoncesNormal,
@@ -219,6 +237,8 @@ class ClientController extends Controller
                 'marriage' => $allFormatedAnnoncesMarriage,
                 'babyshower' => $allFormatedAnnoncesBabyshower,
                 'anniversaire' => $allFormatedAnnoncesAnniversaire,
+                'conference' => $allFormatedAnnoncesConference,
+                'feteDeNaissance' => $allFormatedAnnoncesFeteDeNaissance,
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);

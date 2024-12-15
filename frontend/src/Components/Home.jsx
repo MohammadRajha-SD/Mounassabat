@@ -37,6 +37,8 @@ const Home = () => {
     const [marriageAnnonces, setMarriageAnnonces] = useState([]);
     const [babyshowerAnnonces, setBabyshowerAnnonces] = useState([]);
     const [anniversaireAnnonces, setAnniversaireAnnonces] = useState([]);
+    const [conferenceAnnonces, setConferenceAnnonces] = useState([]);
+    const [feteDeNaissanceAnnonces, setFeteDeNaissanceAnnonces] = useState([]);
 
     // Fetch categories from the API
     useEffect(() => {
@@ -119,7 +121,6 @@ const Home = () => {
             });
 
         fetchData();
-
         fetchAllAnnonces(1);
     }, []);
 
@@ -132,14 +133,6 @@ const Home = () => {
     const handleCitySelection = (cityName) => {
         setSelectedCity(cityName);
         setShowCities(false);
-    };
-
-    const imageMap = {
-        1: marriage,
-        2: feteDeNaissance,
-        3: babyShower,
-        4: anniversaire,
-        5: conference,
     };
 
     const fetchAllAnnonces = async (page) => {
@@ -163,6 +156,8 @@ const Home = () => {
                 setMarriageAnnonces(response.data.marriage);
                 setBabyshowerAnnonces(response.data.babyshower);
                 setAnniversaireAnnonces(response.data.anniversaire);
+                setConferenceAnnonces(response.data.conference);
+                setFeteDeNaissanceAnnonces(response.data.feteDeNaissance);
             } else {
                 console.error('Failed to fetch annonces:', response.statusText);
             }
@@ -268,11 +263,33 @@ const Home = () => {
                 return annonce;
             });
 
+            const updatedconferenceAnnonces = conferenceAnnonces.map(annonce => {
+                if (annonce.id === annonceId) {
+                    return {
+                        ...annonce,
+                        isFavorited: !annonce.isFavorited
+                    };
+                }
+                return annonce;
+            });
+
+            const updatedfeteDeNaissanceAnnonces = feteDeNaissanceAnnonces.map(annonce => {
+                if (annonce.id === annonceId) {
+                    return {
+                        ...annonce,
+                        isFavorited: !annonce.isFavorited
+                    };
+                }
+                return annonce;
+            });
+
             setNormalAnnonces(updatednormalAnnonces);
             setVipAnnonces(updatedvipAnnonces);
-            setMarriageAnnonces(updatedmarriageAnnonces)
-            setBabyshowerAnnonces(updatedbabyshowerAnnonces)
-            setAnniversaireAnnonces(updatedanniversaireAnnonces)
+            setMarriageAnnonces(updatedmarriageAnnonces);
+            setBabyshowerAnnonces(updatedbabyshowerAnnonces);
+            setAnniversaireAnnonces(updatedanniversaireAnnonces);
+            setFeteDeNaissanceAnnonces(updatedfeteDeNaissanceAnnonces);
+            setConferenceAnnonces(updatedconferenceAnnonces);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -287,7 +304,7 @@ const Home = () => {
 
                     {/* Text Image */}
                     <div className="px-4 mt-2">
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium font-serif leading-tight">
+                        <h1 className="text-5xl md:text-7xl lg:text-7xl font-medium font-serif leading-tight mt-10">
                             {/* Événements */}
                             Un Clic, <span style={{ color: '#e6cf8c' }}>Your Events</span> Bine Yedik
                         </h1>
@@ -361,13 +378,13 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center flex-wrap justify-center gap-6 py-10 mb-36">
+                    <div className="flex items-center flex-wrap justify-center gap-6 py-10 mb-56">
                         {[
                             { to: 'Marriage', src: marriage, title: 'Mariage' },
                             { to: 'Anniversaire', src: anniversaire, title: 'Anniversaire' },
-                            { to: 'Fete+De+Naissance', src: feteDeNaissance, title: 'FÃªte de naissance' },
+                            { to: 'Fete+De+Naissance', src: feteDeNaissance, title: 'Fête de naissance' },
                             { to: 'BabyShower', src: babyShower, title: 'BabyShower' },
-                            { to: 'Conférence', src: conference, title: 'ConfÃ©rence' }
+                            { to: 'Conférence', src: conference, title: 'Conférence' }
                         ].map(item => (
                             <div
                                 key={item.title}
@@ -383,12 +400,14 @@ const Home = () => {
 
                     {/* Main 5 Sections */}
                     <div className="container  px-3  mx-auto">
-                        <h1 className="text-center font-serif text-white font-semibold text-md bg-zinc-400 px-6 py-4  rounded-md">DÃ©couvrez les nouveautÃ©s</h1>
+                        <h1 className="text-center font-serif text-white font-semibold text-md bg-zinc-400 px-6 py-4  rounded-md">Découvrez les nouveautés</h1>
 
                         <AnnouncementSection title="VIP" annonces={vipAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
                         <AnnouncementSection title="Mariage" annonces={marriageAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
+                        <AnnouncementSection title="Fête de naissance" annonces={feteDeNaissanceAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
                         <AnnouncementSection title="Baby Shower" annonces={babyshowerAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
                         <AnnouncementSection title="Anniversaire" annonces={anniversaireAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
+                        <AnnouncementSection title="Conférence" annonces={conferenceAnnonces} handleDetailsClick={handleDetailsClick} handleFavoritsClick={handleFavoritsClick} />
                     </div>
 
                     <div className="py-10 px-2">
