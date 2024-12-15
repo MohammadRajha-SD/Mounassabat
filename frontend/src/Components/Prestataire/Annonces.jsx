@@ -181,7 +181,7 @@ const Annonces = () => {
                                     </div>
                                     <div className="flex items-center gap-2 mb-4">
                                         <svg
-                                            className="w-5 h-5 bg-[#e6cf8c]"
+                                            className="w-5 h-5 text-[#e6cf8c]"
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
                                             viewBox="0 0 24 24"
@@ -204,7 +204,7 @@ const Annonces = () => {
                                     </div>
                                     <p className="text-md text-gray-600 mb-4">{annonce.sub_name}</p>
                                     <div className="flex justify-between items-center">
-                                        <p className="bg-[#e6cf8c] font-medium">
+                                        <p className="text-[#e6cf8c] font-medium">
                                             {annonce.accepted_at ? 'Accepted' : 'Not accepted yet'}
                                         </p>
 
@@ -246,7 +246,16 @@ const Annonces = () => {
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                     <div className="bg-white py-6 px-2 rounded-lg shadow-lg w-full max-w-lg">
-                        <h2 className="text-lg font-semibold mb-4">Edit Annonce</h2>
+                        <div className='flex justify-between items-center px-2 border-[#e6cf8c]'>
+                            <h2 className="text-lg font-semibold mb-4 ">Modifier l'annonce</h2>
+                            <button
+                                type="button"
+                                onClick={closeModal}
+                                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded mr-2"
+                            >
+                                Annuler
+                            </button>
+                        </div>
                         <div style={{ maxHeight: '80vh', overflowY: 'auto' }}>
                             <form className='p-3' onSubmit={handleUpdateAnnonce}>
                                 <div className='gap-5 items-center flex'>
@@ -310,7 +319,7 @@ const Annonces = () => {
                                         type='submit'
                                         className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
                                     >
-                                        mise à jour
+                                        Mise à jour
                                     </button>
                                 </div>
                             </form>
