@@ -73,10 +73,10 @@ const Login = () => {
                     }
                 }
             } else {
-                setError('Login failed. Please try again.');
+                setError("Échec de la connexion. Veuillez réessayer.");
             }
         } catch (err) {
-            setError('Invalid credentials');
+            setError('L\'adresse e-mail ou le mot de passe est incorrect.');
         } finally {
             setLoading(false);
         }

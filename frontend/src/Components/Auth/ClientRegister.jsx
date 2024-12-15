@@ -78,8 +78,11 @@ const ClientRegister = () => {
         navigate('/login');
         toast.success('Inscription réussie, veuillez vous connecter');
       }
+      else if (response.status === 409) {
+        toast.error('L\'adresse e-mail est déjà enregistrée.');
+      }
     } catch (error) {
-      console.error('Error registering user:', error.response ? error.response.data : error.message);
+      toast.error('L\'adresse e-mail est déjà enregistrée.');
     } finally {
       setLoading(false);
     }
@@ -102,7 +105,7 @@ const ClientRegister = () => {
             <div className="py-10">
               <div className="max-w-lg mx-2 md:mx-auto bg-white py-10 px-3 rounded-lg shadow-lg">
                 <h1 className="text-3xl font-serif font-bold tracking-wider text-black capitalize text-center">
-                INSCRIVEZ-VOUS EN TANT QUE CLIENT
+                  INSCRIVEZ-VOUS EN TANT QUE CLIENT
                 </h1>
 
                 <div className="flex justify-end mt-3  px-4">

@@ -18,20 +18,29 @@ class AuthController extends Controller
 {
     public function addUser(Request $request)
     {
-
+        // Validate the request data
         $validator = Validator::make($request->all(), [
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'role' => 'required|string|in:admin,client,prestataire',
+            'role' => 'required|string|in:client,prestataire',
         ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+    
+        // Check if the email exists and return a custom error message
+        if (User::where('email', $request->email)->exists()) {
+            return response()->json([
+                'error' => 'errror',
+                'status' => 409
+            ], 409); 
         }
-
+    
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+    
+        // Create the user
         $user = User::create([
             'firstName' => $request->firstName,
             'lastName' => $request->lastName,
@@ -40,11 +49,9 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
+    
+        // Create role-specific record
         switch ($request->role) {
-            case 'admin':
-                Admin::create(['user_id' => $user->id]);
-                break;
             case 'client':
                 Client::create(['user_id' => $user->id]);
                 break;
@@ -52,9 +59,10 @@ class AuthController extends Controller
                 Prestataire::create(['user_id' => $user->id]);
                 break;
         }
-
-        return response()->json(compact('user'), 201);
+    
+        return response()->json(['user' => $user], 201); // 201 Created
     }
+    
 
 
     public function login(Request $request)
