@@ -58,7 +58,7 @@ const Login = () => {
                     localStorage.setItem('token', token);
                     localStorage.setItem('user', JSON.stringify(user));
 
-                    toast.success("Connexion reussie ! Redirection...");
+                    toast.success("Connexion réussie ! Redirection...");
 
                     switch (user.role) {
                         case 'admin':

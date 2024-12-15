@@ -87,8 +87,8 @@ const AnnouncesDetails = () => {
         <div>
             <NavBar />
 
-            <div className="container px-3 py-16 mx-auto">
-                <div className="border-b pb-2 flex items-center justify-between">
+            <div className="container px-3 py-16 mx-auto mb-4">
+                <div className="border-b pb-2 flex items-center justify-between mb-5">
                     <h1 className="text-4xl">Announces Details </h1>
                     <a href='/AllAnnounces' className="bg-[#e6cf8c] text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
                 </div>

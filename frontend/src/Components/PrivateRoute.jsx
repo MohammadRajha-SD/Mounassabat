@@ -13,7 +13,9 @@ const PrivateRoute = ({ children, roles }) => {
 
     useEffect(() => {
         const verifyToken = async () => {
-            if (!token) {
+            if (!token || !user) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
                 setIsLoading(false);
                 setIsValidToken(false);
                 return;
@@ -31,16 +33,16 @@ const PrivateRoute = ({ children, roles }) => {
                 if (response.status === 200 && valid) {
                     setIsValidToken(true);
                 } else {
-                    setIsValidToken(false); 
-                    toast.error(message || 'Votre session a expiré. Veuillez vous reconnecter.');
+                    setIsValidToken(false);
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
+                    toast.error(message || 'Votre session a expiré. Veuillez vous reconnecter.');
                 }
             } catch (error) {
                 setIsValidToken(false);
-                toast.error('Votre session a expiré.');
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
+                toast.error('Votre session a expiré.');
             }
 
             setIsLoading(false);
@@ -58,9 +60,16 @@ const PrivateRoute = ({ children, roles }) => {
     }
 
     if (roles && user && !roles.includes(user.role)) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        return <Navigate to="/" />;
+        if (roles.includes('prestataire')) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            toast.error('Vous êtes actuellement connecté en tant que visiteur. Pour créer ou publier une annonce, merci de vous inscrire en tant que prestataire.');
+            return <Navigate to="/PrestataireRegister" />;
+        } else {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            return <Navigate to="/" />;
+        }
     }
 
     return children;

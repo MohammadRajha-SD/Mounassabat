@@ -8,7 +8,7 @@ const Logo = () => {
             <Link to="/" className="header-logo text-left">
                 <img
                     src={logo}
-                    className="w-auto h-[50px] max-h-[50px] max-[1199px]:h-[50px] max-[991px]:h-[50px] max-[767px]:h-[50px] max-[575px]:h-[50px]"
+                    className="w-auto h-[40px] max-h-[40px] max-[1199px]:h-[40px] max-[991px]:h-[40px] max-[767px]:h-[40px] max-[575px]:h-[40px]"
                     alt="Site Logo"
                 />
             </Link>

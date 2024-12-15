@@ -112,7 +112,7 @@ const AnnouncementSection = ({ title, annonces, handleFavoritsClick, handleDetai
                     </div>
                 </div>
             ) : (
-                <p className="text-center w-full text-gray-700 dark:text-gray-200">
+                <p className="text-center w-full text-gray-700 dark:text-gray-200 mb-10">
                     Aucune annonce {title} disponible
                 </p>
             )}
