@@ -89,7 +89,36 @@ class AdminController extends Controller
             'total' => $annonces->total(),
         ]);
     }
+    public function getAllPosts()
+    {
+        $annonces = Annonce::with(['user', 'sub_Category.category'])
+            ->paginate(4);
 
+        $formattedAnnonces = $annonces->getCollection()->map(function ($annonce) {
+            return [
+                'user' => $annonce->user,
+                'id' => $annonce->id,
+                'title' => $annonce->title,
+                'description' => $annonce->description,
+                'location' => $annonce->location,
+                'sub_category_id' => $annonce->sub_category_id,
+                'sous_category_id' => $annonce->sous_category_id,
+                'image' => json_decode($annonce->image),
+                'price' => $annonce->price,
+                'accepted_at' => $annonce->accepted_at,
+                'sub_name' => $annonce->sub_Category->name,
+                'category' => optional($annonce->sub_Category->category)->name,
+            ];
+        });
+
+        // Return both the formatted annonces and pagination meta data
+        return response()->json([
+            'data' => $formattedAnnonces,
+            'current_page' => $annonces->currentPage(),
+            'last_page' => $annonces->lastPage(),
+            'total' => $annonces->total(),
+        ]);
+    }
     public function banUsers()
     {
         $now = Carbon::now();

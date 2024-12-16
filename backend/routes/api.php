@@ -67,6 +67,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getAllPrestataires', [AdminController::class, 'getAllPrestataires']);
     Route::get('/getAllClients', [AdminController::class, 'getAllClients']);
     Route::get('/getAllReclamations', [AdminController::class, 'getAllReclamations']);
+    Route::get('/getAllPosts', [AdminController::class, 'getAllPosts']);
     Route::get('/getAllAnnonces', [AdminController::class, 'getAllAnnonces']);
     Route::get('/getLatestPrestataires', [AdminController::class, 'getLatestPrestataires']);
     Route::get('/getLatestClients', [AdminController::class, 'getLatestClients']);

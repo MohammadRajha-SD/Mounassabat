@@ -39,7 +39,7 @@ const Sidebar = ({active}) => {
                     } lg:relative lg:flex`}
             >
                 <a href="#" className="mx-auto">
-                    <img className="w-32 h-28 py-2" src={logo} alt="" />
+                    <img className="w-full h-28 py-2" src={logo} alt="" />
                 </a>
 
                 <div className="flex flex-col items-center mb-2 ">
@@ -85,6 +85,13 @@ const Sidebar = ({active}) => {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z" />
                             </svg>
                             <span className="mx-4 font-medium">Annonces</span>
+                        </Link>
+
+                        <Link to="/AllPosts" className={` ${active == 'allposts' ? 'text-yellow-600' : ''} flex items-center px-4 py-2 mt-5 text-gray-300 hover:text-yellow-600 transition-colors duration-300 transform rounded-lg`}>
+                            <svg className="w-5 h-5 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z" />
+                            </svg>
+                            <span className="mx-4 font-medium">All Annonces</span>
                         </Link>
 
                         <a className={`flex items-center px-4 py-2 mt-5 text-gray-300 hover:text-yellow-600 transition-colors duration-300 transform rounded-lg  `} href="#" onClick={handleLogout}>

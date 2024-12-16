@@ -17,6 +17,7 @@ import PrivateRoute from './Components/PrivateRoute.jsx';
 import Clients from './Components/Admin/Clients.jsx';
 import Prestataires from './Components/Admin/Prestataires.jsx';
 import Posts from './Components/Admin/Posts.jsx';
+import AllPosts from './Components/Admin/AllPosts.jsx';
 import Reclamations from './Components/Admin/Reclamations.jsx';
 import AnnounceForm from "./Components/Prestataire/AnnounceForm.jsx";
 import AnnounceForm2 from "./Components/Prestataire/AnnounceForm2.jsx";
@@ -119,6 +120,11 @@ function App() {
                 <Route path="Posts" element={
                     <PrivateRoute roles={['admin']}>
                         <Posts />
+                    </PrivateRoute>
+                } />
+                  <Route path="AllPosts" element={
+                    <PrivateRoute roles={['admin']}>
+                        <AllPosts />
                     </PrivateRoute>
                 } />
 
