@@ -213,6 +213,12 @@ const AnnounceForm = () => {
 
     const handleChangeTypeAnnonce = (event) => {
         setSelectedTypeAnnonce(event.target.value);
+
+        if (event.target.value === 'vip') {
+            setVisiblePaymentForm(true);
+        }else{
+            setVisiblePaymentForm(false);
+        }
     };
 
     useEffect(() => {
@@ -236,18 +242,15 @@ const AnnounceForm = () => {
                 }
             });
 
+            console.log(response.data);
             setCanAdd(response.data.canAdd);
 
             if (response.data.canAdd) {
                 setSelectedTypeAnnonce('normal');
+                setVisiblePaymentForm(false);
             } else {
                 setSelectedTypeAnnonce('vip');
-            }
-
-            if (canAdd === 'vip') {
                 setVisiblePaymentForm(true);
-            } else {
-                setVisiblePaymentForm(false);
             }
         } catch (error) {
             if (error.response) {
