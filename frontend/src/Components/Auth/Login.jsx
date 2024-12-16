@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import NavBar from "../Navbar/NavBar.jsx";
 import backgroundQuiSommesNous from "../../assets/QuiSommeNous1.jpg";
-import facebook from "../../assets/facebook.png";
+// import facebook from "../../assets/facebook.png";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import LoginButtonGmail from './LoginButtonGmail.jsx';
 import Loader from '../Loader/Index.jsx';
-import google from '../../assets/google.png';
+// import google from '../../assets/google.png';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -98,7 +98,7 @@ const Login = () => {
                             <div className="mx-2 md:mx-32 bg-white rounded-lg shadow-lg">
                                 <div className="py-5 text-center">
                                     {/* <h1 className="text-3xl font-serif font-bold text-yellow-600  mb-6">Bienvenue sur notre plateforme</h1> */}
-                                    <h1 className="text-3xl font-serif font-bold text-yellow-600  mb-6">sur Mounassabat.ma</h1>
+                                    <h1 className="text-3xl font-serif font-bold text-[#e6cf8c] mb-6">sur Mounassabat.ma</h1>
                                     {/* <p className="text-lg text-gray-700 mb-8">Connectez-vous pour continuer ou créez un nouveau compte</p> */}
 
                                     <div className="px-2 md:px-12">
@@ -137,7 +137,7 @@ const Login = () => {
 
                                             <div className="flex justify-between lg:flex-row flex-col mb-6">
                                                 <Link to="/ClientRegister" className="font-serif font-medium text-black text-lg hover:underline cursor-pointer">Creer un nouveau compte</Link>
-                                                <h1 className="font-serif font-medium text-yellow-500 text-lg cursor-pointer hover:underline">Mot de passe oublie ?</h1>
+                                                <Link to="/ForgetPassword" className="font-serif font-medium text-[#e6cf8c] text-lg cursor-pointer hover:underline">Mot de passe oublie ?</Link>
                                             </div>
 
                                             {error && <p className="text-red-500 mb-4">{error}</p>}

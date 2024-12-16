@@ -99,8 +99,8 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
-            'expire' => 60, // Link expiration in minutes
-            'throttle' => 60, // Throttle time in seconds
+            'expire' => 900, // Link expiration in minutes
+            'throttle' => 300, // Throttle time in seconds
         ],
     ],
 

@@ -11,6 +11,7 @@ import Annonces from "./Components/Prestataire/Annonces.jsx";
 import Favorites from "./Components/Prestataire/Favorites.jsx";
 import Login from "./Components/Auth/Login.jsx";
 import ClientRegister from "./Components/Auth/ClientRegister.jsx";
+import ForgetPassword from "./Components/Auth/ForgetPassword.jsx";
 import PrestataireRegister from "./Components/Auth/PrestataireRegister.jsx";
 import Dashboard from './Components/Admin/Dashboard.jsx';
 import PrivateRoute from './Components/PrivateRoute.jsx';
@@ -91,7 +92,8 @@ function App() {
                 <Route path="Login" element={<Login />} />
                 <Route path="ClientRegister" element={<ClientRegister />} />
                 <Route path="PrestataireRegister" element={<PrestataireRegister />} />
-
+                <Route path="ForgetPassword" element={<ForgetPassword />} />
+                
                 {/* Admin routes */}
                 <Route path="Dashboard" element={
                     <PrivateRoute roles={['admin']}>
