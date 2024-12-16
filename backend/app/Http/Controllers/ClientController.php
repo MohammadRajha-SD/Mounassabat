@@ -356,6 +356,7 @@ class ClientController extends Controller
                     'type' => $annonce->type,
                     'location' => $annonce->location,
                     'sub_category' => $annonce->sub_category->name,
+                    'category' => optional($annonce->sub_Category->category)->name,
                     'isFavorited' => in_array($annonce->id, $favoritedAnnonceIds),
                     'images' => json_decode($annonce->image),
                 ];
@@ -396,7 +397,7 @@ class ClientController extends Controller
     public function getAllAnnoncesNoLogin()
     {
         try {
-            $annonces = Annonce::with(['user', 'sub_Category'])->paginate(6);
+            $annonces = Annonce::with(['user', 'sub_Category.category'])->paginate(6);
 
             // Check if the user has favorited any annonces
 
@@ -416,7 +417,9 @@ class ClientController extends Controller
                     'lastName' => $annonce->user->lastName,
                     'phone' => $annonce->user->phone,
                     'created_at' => $annonce->created_at,
-                    'isFavorited' => in_array($annonce->id, []), // Check if this annonce is favorited
+                    'isFavorited' => in_array($annonce->id, []),
+                    'category' => optional($annonce->sub_Category->category)->name,
+
                 ];
             });
 

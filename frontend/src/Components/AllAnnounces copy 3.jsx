@@ -294,6 +294,7 @@ const AllAnnounces = () => {
                                         <div className="p-5">
                                             <h2 className="text-xl font-semibold text-gray-800">{annonce.title}</h2>
                                             <p className="text-gray-700 dark:text-gray-400">{annonce.description}</p>
+                                            <p className="text-gray-700 dark:text-gray-400">Category: {annonce.category}</p>
 
                                             <div className="flex items-center">
                                                 <svg

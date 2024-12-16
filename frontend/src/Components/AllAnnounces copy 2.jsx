@@ -9,6 +9,7 @@ import Loader from './Loader/Index.jsx';
 import { useAnnonces } from './AnnonceContext';
 
 const AllAnnounces = () => {
+    const [city, setCity] = useState(null);
     const [cities, setCities] = useState([]);
     const [annonces_, setAnnonces_] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,11 +17,12 @@ const AllAnnounces = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState('');
+    const { filterAnnonces, annonces } = useAnnonces();
     const [showCities, setShowCities] = useState(false);
     const [selectedCity, setSelectedCity] = useState('');
     const [filteredCities, setFilteredCities] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const { filterAnnonces2, annonces } = useAnnonces();
+
 
     useEffect(() => {
         fetchAllAnnonces(currentPage);
@@ -33,7 +35,6 @@ const AllAnnounces = () => {
     }, [searchQuery, cities]);
 
     const fetchAllAnnonces = async (page) => {
-        setLoading(true);
         try {
             const token = localStorage.getItem('token');
 
@@ -66,8 +67,6 @@ const AllAnnounces = () => {
             }
         } catch (error) {
             console.error('Error fetching annonces:', error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -161,48 +160,28 @@ const AllAnnounces = () => {
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
     };
-
-    const filterButton = () => {
+    useEffect(() => {
         if (selectedCategory == '' && selectedCity == '') {
             fetchAllAnnonces(1);
-            return;
+            setAnnonces_(annonces);
+            console.log(annonces);
         }
         else if (selectedCategory != '' && selectedCity == '') {
-            filterAnnonces2(selectedCategory);
+            filterAnnonces(selectedCategory);
             setAnnonces_(annonces);
-            return;
+            console.log(annonces);
         }
         else if (selectedCategory == '' && selectedCity != '') {
-            filterAnnonces2(null, selectedCity);
+            filterAnnonces(null, null, null, selectedCity);
             setAnnonces_(annonces);
-            return;
+            console.log(selectedCity);
+            console.log(annonces);
         }
         else {
-            filterAnnonces2(selectedCategory, selectedCity);
+            filterAnnonces(selectedCategory, null, null, selectedCity);
             setAnnonces_(annonces);
-            return;
+            console.log(annonces);
         }
-    };
-
-    useEffect(() => {
-        // if (selectedCategory == '' && selectedCity == '') {
-        //     fetchAllAnnonces(1);
-        // }
-        // else if (selectedCategory != '' && selectedCity == '') {
-        //     filterAnnonces2(selectedCategory);
-        //     setAnnonces_(annonces);
-        // }
-        // else if (selectedCategory == '' && selectedCity != '') {
-        //     filterAnnonces2(null, selectedCity);
-        //     setAnnonces_(annonces);
-        // }
-        // else {
-        //     filterAnnonces2(selectedCategory, selectedCity);
-        //     setAnnonces_(annonces);
-        // }
-
-        filterButton();
-
     }, [selectedCategory, selectedCity]);
 
     const handleCitySelection = (cityName) => {
@@ -228,7 +207,7 @@ const AllAnnounces = () => {
 
                     {/* Categories START */}
                     <div className="bg-white rounded-lg shadow-md md:m-5 p-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                             {/* Category Dropdown */}
                             <div className="relative w-full">
                                 <select
@@ -263,8 +242,8 @@ const AllAnnounces = () => {
                                 </svg>
                             </div>
 
-                            {/* Search Button */}
-                            <div className="w-full">
+                              {/* Search Button */}
+                              <div className="w-full">
                                 <button
                                     className="w-full text-white bg-black px-8 py-3 rounded-md font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition duration-200 text-sm"
                                     onClick={() => filterButton()}
@@ -332,7 +311,7 @@ const AllAnnounces = () => {
                                                     <div
                                                         id="details"
                                                         onClick={(e) => {
-                                                            e.stopPropagation();
+                                                            e.stopPropagation(); // Prevents triggering the card click event
                                                             handleDetailsClick(annonce.id);
                                                         }}
                                                         className="border-gray-400 border px-1 py-1 rounded-full hover:border-yellow-500 duration-500"
@@ -361,7 +340,7 @@ const AllAnnounces = () => {
                                                     <div
                                                         id="favorits"
                                                         onClick={(e) => {
-                                                            e.stopPropagation();
+                                                            e.stopPropagation(); // Prevents triggering the card click event
                                                             handleFavoritsClick(annonce.id);
                                                         }}
                                                         className={`border border-gray-400 px-1 py-1 rounded-full cursor-pointer transition duration-300 ${annonce.isFavorited ? 'bg-[#e6cf8c] hover:bg-white' : 'text-gray-900'}  hover:text-yellow-500 hover:border-yellow-500`}
@@ -449,7 +428,7 @@ const AllAnnounces = () => {
                                 </div>
                                 {/* start cities */}
                                 <div className='flex flex-col p-4 overflow-y-auto' style={{ maxHeight: '100vh' }}>
-                                    <div onClick={() => handleCitySelection('')} className='cursor-pointer flex items-center justify-between'>
+                                    <div onClick={() => setSelectedCity('')} className='cursor-pointer flex items-center justify-between'>
                                         <h1 className='text-lg font-medium p-4'>-- Select --</h1>
                                     </div>
                                     {filteredCities.map(city => (
@@ -462,7 +441,7 @@ const AllAnnounces = () => {
                         </>
                     )}
                     {/* Show Cities End */}
-                </div >
+                </div>
             )}
         </>
     );
