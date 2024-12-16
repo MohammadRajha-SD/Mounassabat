@@ -39,13 +39,13 @@ class PrestataireController extends Controller
 
     public function deleteAnnonce($id)
     {
-        $annonce = Annonce::find($id);
+        $annonce = Annonce::findOrFail($id);
 
         if ($annonce) {
             $annonce->delete();
-            return response()->json(['status' => 'success', 'message' => 'Annonce supprimée avec succès']);
+            return response()->json(['status' => 'success'],201);
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Annonce non trouvée'], 404);
+            return response()->json(['status' => 'error'], 404);
         }
     }
     public function show()

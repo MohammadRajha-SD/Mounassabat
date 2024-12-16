@@ -83,15 +83,11 @@ const Annonces = () => {
                 },
             });
 
-            if (response.data.status === 'success') {
-                toast.success('Annonce supprimée avec succès');
+            toast.success('Annonce supprimée avec succès');
 
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
-            } else {
-                console.error('Error deleting annonce:', response.data.message);
-            }
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
         } catch (error) {
             console.error('Error deleting annonce:', error);
         } finally {
