@@ -5,6 +5,7 @@ import backgroundQuiSommesNous from "../../assets/QuiSommeNous1.jpg";
 import axios from 'axios';
 import Loader from '../Loader/Index.jsx';
 import { toast } from 'react-toastify';
+import RegisterProviderButtonGmail from './RegisterPrestataireButtonGmail.jsx';
 
 const validate = (formData) => {
     let errors = {};
@@ -185,6 +186,16 @@ const PrestataireRegister = () => {
                                         </svg>
                                     </button>
                                 </form>
+
+                                <div className="flex justify-center gap-3 px-2 items-center py-7">
+                                    <div className="border-2 w-full border-dashed border-gray-400"></div>
+                                    <h1 className="font-serif">ou</h1>
+                                    <div className="border-2 w-full border-dashed border-gray-400"></div>
+                                </div>
+
+                                <div className="px-2 md:px-12">
+                                    <RegisterProviderButtonGmail />
+                                </div>
                             </div>
                         </div>
                     </div>

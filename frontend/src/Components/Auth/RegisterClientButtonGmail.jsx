@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const clientId = "185183656415-e7hnjo56pe6rjmr7fdqbgp2ci6qa73hn.apps.googleusercontent.com";
 
-const LoginButtonGmail = () => {
+const RegisterClientButtonGmail = () => {
   const navigate = useNavigate();
 
   const onSuccess = async (credentialResponse) => {
@@ -18,9 +18,10 @@ const LoginButtonGmail = () => {
 
       const decodedToken = jwtDecode(credentialResponse.credential);
 
-      const response = await axios.post("https://mounassabat.ma/api/auth/google-login", {
+      const response = await axios.post("https://mounassabat.ma/api/auth/google-client-register", {
         email: decodedToken.email,
-        name: decodedToken.name,
+        firstName: decodedToken.given_name,
+        lastName: decodedToken.family_name,
         google_id: decodedToken.sub,
       });
 
@@ -31,11 +32,15 @@ const LoginButtonGmail = () => {
         toast.success("Connexion réussie ! Redirection...");
         navigate("/");
       } else {
-        toast.error("L'utilisateur n'est pas inscrit.");
+        toast.error(response.data.message || "L'utilisateur n'est pas inscrit.");
       }
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("Une erreur est survenue.");
+      if (error.response) {
+        toast.error(error.response.data.message || "Une erreur est survenue.");
+      } else {
+        toast.error("Connexion échouée. Veuillez réessayer.");
+      }
     }
   };
 
@@ -55,4 +60,4 @@ const LoginButtonGmail = () => {
   );
 };
 
-export default LoginButtonGmail;
+export default RegisterClientButtonGmail;

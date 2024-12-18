@@ -25,6 +25,7 @@ use App\Http\Controllers\Auth\PasswordResetController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 
@@ -44,9 +45,9 @@ Route::get('/categoriesWithAnnoncesCounted', [ClientController::class, 'getCateg
 Route::get('/getAllAcceptedAnnoncesHomePage', [ClientController::class, 'getAllAcceptedAnnonces']);
 Route::get('/getAllAnnoncesNoLogin', [ClientController::class, 'getAllAnnoncesNoLogin']);
 
-Route::middleware('guest')->group(function () {
-    Route::post('/auth/google-login', [AuthController::class, 'googleLogin']);
-});
+Route::post('/auth/google-login', [AuthController::class, 'googleLogin']);
+Route::post('/auth/google-client-register', [AuthController::class, 'googleClientLogin']);
+Route::post('/auth/google-provider-register', [AuthController::class, 'googleProviderLogin']);
 
 Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
 

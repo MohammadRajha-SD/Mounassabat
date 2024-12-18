@@ -5,7 +5,7 @@ import axios from 'axios';
 import NavBar from "../Navbar/NavBar.jsx";
 import Loader from '../Loader/Index.jsx';
 import { toast } from 'react-toastify';
-
+import RegisterClientButtonGmail from './RegisterClientButtonGmail.jsx';
 const validate = (formData) => {
   let errors = {};
   const nameRegex = /^[A-Za-z]{1,30}$/;
@@ -180,6 +180,16 @@ const ClientRegister = () => {
                     </svg>
                   </button>
                 </form>
+
+                <div className="flex justify-center gap-3 px-2 items-center py-7">
+                  <div className="border-2 w-full border-dashed border-gray-400"></div>
+                  <h1 className="font-serif">ou</h1>
+                  <div className="border-2 w-full border-dashed border-gray-400"></div>
+                </div>
+
+                <div className="px-2 md:px-12">
+                  <RegisterClientButtonGmail />
+                </div>
               </div>
             </div>
           </div>
