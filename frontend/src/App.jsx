@@ -12,6 +12,7 @@ import Favorites from "./Components/Prestataire/Favorites.jsx";
 import Login from "./Components/Auth/Login.jsx";
 import ClientRegister from "./Components/Auth/ClientRegister.jsx";
 import ForgetPassword from "./Components/Auth/ForgetPassword.jsx";
+import ResetPassword from "./Components/Auth/ResetPassword.jsx";
 import PrestataireRegister from "./Components/Auth/PrestataireRegister.jsx";
 import Dashboard from './Components/Admin/Dashboard.jsx';
 import PrivateRoute from './Components/PrivateRoute.jsx';
@@ -93,6 +94,7 @@ function App() {
                 <Route path="ClientRegister" element={<ClientRegister />} />
                 <Route path="PrestataireRegister" element={<PrestataireRegister />} />
                 <Route path="ForgetPassword" element={<ForgetPassword />} />
+                <Route path="reset-password/{:token}" element={<ResetPassword />} />
                 
                 {/* Admin routes */}
                 <Route path="Dashboard" element={
