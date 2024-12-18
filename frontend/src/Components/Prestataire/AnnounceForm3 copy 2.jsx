@@ -17,6 +17,8 @@ const AnnounceForm = () => {
     const [selectedOption, setSelectedOption] = useState(null);
     const [token, setToken] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedTypeAnnonce, setSelectedTypeAnnonce] = useState(null);
+    const [canAdd, setCanAdd] = useState(false);
 
     const navigate = useNavigate();
 
@@ -32,18 +34,6 @@ const AnnounceForm = () => {
         setSelectedOption(selected);
     };
 
-    // get annonce type
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-        const annonceType = localStorage.getItem('annonce_type');
-
-        if (annonceType === 'vip') {
-            setVisiblePaymentForm(true);
-        } else {
-            setVisiblePaymentForm(false);
-        }
-    }, []);
-
     // Create annonce function
     const createAnnonce = async (payment_method) => {
         try {
@@ -55,7 +45,7 @@ const AnnounceForm = () => {
             formData.append('sub_category_id', localStorage.getItem('sub_category_id'));
             formData.append('sous_category_id', localStorage.getItem('sous_category_id'));
             formData.append('price', localStorage.getItem('price'));
-            formData.append('annonce_type', localStorage.getItem('annonce_type'));
+            formData.append('annonce_type', selectedTypeAnnonce);
             formData.append('payment_method', payment_method);
             formData.append('annonce_duration', selectedOption.days);
             formData.append('amount', selectedOption.price);
@@ -98,7 +88,6 @@ const AnnounceForm = () => {
                 const sub_category_id = localStorage.getItem('sub_category_id');
                 const sous_category_id = localStorage.getItem('sous_category_id');
                 const price = localStorage.getItem('price');
-                const annonce_type = localStorage.getItem('annonce_type');
 
                 const formData = new FormData();
                 formData.append('title', title);
@@ -107,19 +96,17 @@ const AnnounceForm = () => {
                 formData.append('sub_category_id', sub_category_id);
                 formData.append('sous_category_id', sous_category_id);
                 formData.append('price', price);
-                formData.append('annonce_type', annonce_type);
+                formData.append('annonce_type', selectedTypeAnnonce);
 
                 images.forEach((image) => {
                     formData.append('image[]', image.file);
                 });
 
-                let token_ = localStorage.getItem('token');
-
-                if (token_) {
+                if (token) {
                     setIsLoading(true);
                     axios.post('https://mounassabat.ma/api/annonce/create', formData, {
                         headers: {
-                            'Authorization': `Bearer ${token_}`,
+                            'Authorization': `Bearer ${token}`,
                             'Content-Type': 'multipart/form-data',
                         },
                     })
@@ -185,8 +172,6 @@ const AnnounceForm = () => {
             setModalOpen(true)
         }
     }
-    // STRIPE START
-    const stripePromise = loadStripe('pk_test_51OdOFNKPwcneq4cfGY5dJmtpoZCmPivYiWVOcfKiWGEv6dsh8x2kSl0STrr9giYpVeXZbU0DxHJA99yArGXN7yvF00y0YQCe17');
 
     const Modal = ({ isOpen, onClose }) => {
         if (!isOpen) return null;
@@ -226,6 +211,60 @@ const AnnounceForm = () => {
         );
     };
 
+    const handleChangeTypeAnnonce = (event) => {
+        setSelectedTypeAnnonce(event.target.value);
+
+        if (event.target.value === 'vip') {
+            setVisiblePaymentForm(true);
+        }else{
+            setVisiblePaymentForm(false);
+        }
+    };
+
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+        fetchAllAnnonces();
+    }, []);
+
+    const fetchAllAnnonces = async () => {
+        try {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                console.error('JWT token not found in local storage');
+                return;
+            }
+
+            const response = await axios.get('https://mounassabat.ma/api/checkIsAbleToAddAnnonce', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log(response.data);
+            setCanAdd(response.data.canAdd);
+
+            if (response.data.canAdd) {
+                setSelectedTypeAnnonce('normal');
+                setVisiblePaymentForm(false);
+            } else {
+                setSelectedTypeAnnonce('vip');
+                setVisiblePaymentForm(true);
+            }
+        } catch (error) {
+            if (error.response) {
+                console.error('Failed to fetch annonces:', error.response.statusText, error.response.data);
+            } else if (error.request) {
+                console.error('No response received from server:', error.request);
+            } else {
+                console.error('Error:', error.message);
+            }
+        }
+    };
+
+    // STRIPE START
+    const stripePromise = loadStripe('pk_test_51OdOFNKPwcneq4cfGY5dJmtpoZCmPivYiWVOcfKiWGEv6dsh8x2kSl0STrr9giYpVeXZbU0DxHJA99yArGXN7yvF00y0YQCe17');
 
     const PaymentForm = () => {
         const stripe = useStripe();
@@ -316,7 +355,7 @@ const AnnounceForm = () => {
                 )}
 
                 {paymentMethod === 'paypal' && (
-                    <PayPalScriptProvider options={{ "client-id": "AahRV7_zzBPjVUqGyzGAYvL8toJQsblEL1jZZj2MzurH8Fr0SwGDEzNpM21wxLpcCRn5aizDp9_Slt-M" }}>
+                    <PayPalScriptProvider options={{ "client-id": "AYXjOmFXvDTfxT7SXSVfnb2YNglIjPUXmfndHC5soxBuDxrp16nM26d2MvhDJOMcnSCRTU-RfGK2xJPr" }}>
                         <PayPalButtons
                             createOrder={async (data, actions) => {
                                 try {
@@ -395,6 +434,7 @@ const AnnounceForm = () => {
     return (
         <>
             {isLoading && (<Loader />)}
+
             <div className='min-h-screen  bg-gray-100 '>
                 <Header3 />
                 <div className="flex flex-col md:flex-row pt-32 pb-20 md:py-20  gap-5 mx-2  lg:mx-10">
@@ -456,6 +496,41 @@ const AnnounceForm = () => {
                                         <p className="text-yellow-700 font-medium text-sm ml-2">Réorganisez les photos pour modifier la couverture.</p>
                                     </div>
 
+
+                                    <div className="flex items-center space-x-4 my-5">
+                                        <h2 className="text-lg font-medium">Sélectionnez un type d'annonce :</h2>
+
+                                        <div className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                id="normal"
+                                                name="normal"
+                                                value="normal"
+                                                checked={selectedTypeAnnonce === "normal"}
+                                                onChange={handleChangeTypeAnnonce}
+                                                disabled={!canAdd}
+                                                className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                            />
+                                            <label htmlFor="normal" className="ml-2 text-sm font-medium text-gray-700">
+                                                Normal Announce
+                                            </label>
+                                        </div>
+
+                                        <div className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                id="vip"
+                                                name="vip"
+                                                value="vip"
+                                                checked={selectedTypeAnnonce === "vip"}
+                                                onChange={handleChangeTypeAnnonce}
+                                                className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                            />
+                                            <label htmlFor="vip" className="ml-2 text-sm font-medium text-gray-700">
+                                                VIP Announce
+                                            </label>
+                                        </div>
+                                    </div>
                                     {successMessage && (
                                         <div className="fixed bottom-24 left-0 z-10 w-full flex justify-center">
                                             <div className="bg-green-500 text-white py-2 px-4 rounded-lg">{successMessage}</div>
