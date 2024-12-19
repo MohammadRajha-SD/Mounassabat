@@ -231,7 +231,7 @@ const AnnounceForm = () => {
         const stripe = useStripe();
         const elements = useElements();
         const [isLoading, setIsLoading] = useState(false);
-        const [paymentMethod, setPaymentMethod] = useState('card');
+        const [paymentMethod, setPaymentMethod] = useState('paypal');
 
         const handleSubmit = async (event) => {
             event.preventDefault();
