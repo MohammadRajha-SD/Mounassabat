@@ -6,12 +6,14 @@ import { toast } from 'react-toastify';
 
 const Clients = () => {
     const [clients, setClients] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        fetchAllClients();
-    }, []);
+        fetchAllClients(currentPage);
+    }, [currentPage]);
 
-    const fetchAllClients = async () => {
+    const fetchAllClients = async (page) => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -19,22 +21,36 @@ const Clients = () => {
                 return;
             }
 
-            const response = await axios.get('https://mounassabat.ma/api/getAllClients', {
+            const response = await axios.get(`https://mounassabat.ma/api/getAllClients?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
             });
 
+            console.log(response.data);
             // Check if the response is successful
             if (response.status === 200) {
                 const data = response.data;
-                setClients(data); // Assuming setClients is used to update state
+                setClients(data.clients.data);
+                setTotalPages(data.last_page);
             } else {
                 console.error('Failed to fetch clients:', response.statusText);
             }
         } catch (error) {
             console.error('Error fetching clients:', error);
+        }
+    };
+    // pagination 
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
         }
     };
 
@@ -121,7 +137,27 @@ const Clients = () => {
                         ))}
                     </tbody>
                 </table>
+
+                {/* PAGINATION START */}
+                {clients.length > 0 && totalPages > 1 && (
+                    <div className="flex justify-between items-center mt-5">
+                        <button
+                            onClick={handlePrevPage}
+                            disabled={currentPage === 1}
+                            className={`px-8 py-3 mx-2 text-sm font-medium text-white bg-yellow-600 rounded-md ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}>
+                            Previous
+                        </button>
+                        <button
+                            onClick={handleNextPage}
+                            disabled={currentPage === totalPages}
+                            className={`px-8 py-3 mx-2 text-sm font-medium text-white bg-yellow-600 rounded-md ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}>
+                            Next
+                        </button>
+                    </div>
+                )}
+                {/* PAGINATION END */}
             </section>
+
         </div>
     );
 };

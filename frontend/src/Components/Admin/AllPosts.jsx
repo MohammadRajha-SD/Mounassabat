@@ -35,9 +35,8 @@ const Posts = () => {
             // Check if the response is successful
             if (response.status === 200) {
                 const data = response.data;
-
                 setAnnonces(data.data);
-                setFilteredAnnonces(data.data);
+                // setFilteredAnnonces(data.data);
                 setTotalPages(data.last_page);
             } else {
                 console.error('Failed to fetch Annonces:', response.statusText);
@@ -64,18 +63,32 @@ const Posts = () => {
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
     };
+
     useEffect(() => {
         if (selectedCategory === '') {
-            setFilteredAnnonces(annonces);
+            fetchAllAnnonces(1);
         } else {
-            const filteredAnnonces = annonces.filter(
-                (annonce) => annonce.category === selectedCategory
-            );
-
-            setFilteredAnnonces(filteredAnnonces);
+            filteringAnnonces(selectedCategory);
         }
     }, [selectedCategory]);
 
+    const filteringAnnonces = async (category = null, city = null) => {
+        try {
+            const response = await axios.get('https://mounassabat.ma/api/filter-all-annonces2', {
+                params: {
+                    category,
+                },
+            });
+
+            if (response.data.status === 'success') {
+                setAnnonces(response.data.annonces);
+                // console.log(response.data)
+            }
+        } catch (error) {
+            console.error('Error fetching filtered annonces:', error);
+            return [];
+        }
+    };
 
     return (
         <div className="flex">
@@ -130,7 +143,7 @@ const Posts = () => {
                         <tr>
                             <th>ID</th>
                             <th>TITLE</th>
-                            <th>DESCRIPTION</th>
+                            <th>CATEGORY</th>
                             <th>FULL NAME</th>
                             <th>PRICE</th>
                             <th>STATUS</th>
@@ -138,11 +151,11 @@ const Posts = () => {
                     </thead>
 
                     <tbody className="text-white text-md text-center">
-                        {filteredAnnonces_.map((annonce, index) => (
+                        {annonces.map((annonce, index) => (
                             <tr className="text-white" key={annonce.id}>
                                 <td className="text-white font-medium font-serif">{index + 1}</td>
                                 <td className="text-white font-medium font-serif">{annonce.title}</td>
-                                <td className="text-white font-medium font-serif">{annonce.description}</td>
+                                <td className="text-white font-medium font-serif">{annonce.category}</td>
                                 <td className="text-white font-medium font-serif">{annonce.user.firstName} {annonce.user.lastName}</td>
                                 <td className="text-white font-medium font-serif">{annonce.price} <span className="text-gray-500 font-serif font-bold">MAD</span></td>
                                 <td className="text-white font-medium font-serif">{annonce.accepted_at === null ? 'Pending' : 'Approved'}</td>
@@ -151,7 +164,7 @@ const Posts = () => {
                     </tbody>
                 </table>
                 {/* PAGINATION START */}
-                {filteredAnnonces_.length > 0 && totalPages > 1 && (
+                {annonces.length > 0 && totalPages > 1 && (
                     <div className="flex justify-between items-center mt-5">
                         <button
                             onClick={handlePrevPage}

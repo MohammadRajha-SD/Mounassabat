@@ -51,6 +51,7 @@ Route::post('/auth/google-provider-register', [AuthController::class, 'googlePro
 
 Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
 Route::get('filter-all-annonces', [ClientController::class, 'filterAllAnnonces']);
+Route::get('filter-all-annonces2', [ClientController::class, 'filterAllAnnonces2']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/paypal/payment', [PaypalController::class, 'payment']);

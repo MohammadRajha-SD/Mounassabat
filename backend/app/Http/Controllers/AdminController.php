@@ -49,8 +49,13 @@ class AdminController extends Controller
     }
     public function getAllClients()
     {
-        $clients = Client::with('user')->get();
-        return response()->json($clients);
+        $clients = Client::with('user')->paginate(4);
+        return response()->json([
+            'clients' => $clients,
+            'current_page' => $clients->currentPage(),
+            'last_page' => $clients->lastPage(),
+            'total' => $clients->total(),
+        ],200);
     }
 
     public function getAllReclamations()
@@ -89,6 +94,7 @@ class AdminController extends Controller
             'total' => $annonces->total(),
         ]);
     }
+
     public function getAllPosts()
     {
         $annonces = Annonce::with(['user', 'sub_Category.category'])
