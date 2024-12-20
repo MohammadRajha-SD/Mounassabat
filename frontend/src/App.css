@@ -1,12 +1,5 @@
-/* Define Nerd Font */
-@font-face {
-    font-family: 'NerdFont';
-    src: url('/public/ArimoNerdFont-Regular.ttf') format('truetype');
-}
-
-/* Apply Nerd Font globally */
 body {
-    font-family: 'NerdFont', sans-serif;
+    font-family:  sans-serif;
 }
 
 ul li {
@@ -15,22 +8,22 @@ ul li {
 }
 
 h1 {
-    font-family: 'NerdFont', sans-serif;
+    font-family:  sans-serif;
     font-weight: 700;
     letter-spacing: 0.01rem;
 }
 
 .font-manrope {
-    font-family: 'NerdFont', sans-serif;
+    font-family:  sans-serif;
 }
 
 .font-Poppins {
-    font-family: 'NerdFont', sans-serif;
+    font-family:  sans-serif;
 
 }
 
 .font-Montserrat {
-    font-family: 'NerdFont', sans-serif;
+    font-family:  sans-serif;
 
 }
 
@@ -39,7 +32,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'NerdFont', sans-serif;
+    font-family:  sans-serif;
 
     font-weight: 400;
     letter-spacing: 0.01rem;

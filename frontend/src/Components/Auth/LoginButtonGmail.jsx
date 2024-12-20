@@ -50,6 +50,7 @@ const LoginButtonGmail = () => {
         onSuccess={onSuccess}
         onError={onFailure}
         size="large"
+        style={{ width: "100%" }}
       />
     </GoogleOAuthProvider>
   );

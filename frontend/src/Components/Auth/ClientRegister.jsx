@@ -95,12 +95,10 @@ const ClientRegister = () => {
       ) : (
         <div>
           <NavBar />
-
+         
           <div
             className="w-full mx-auto bg-cover bg-no-repeat"
-            style={{
-              backgroundImage: `url(${backgroundQuiSommesNous})`,
-            }}
+           
           >
             <div className="py-10">
               <div className="max-w-lg mx-2 md:mx-auto bg-white py-10 px-3 rounded-lg shadow-lg">
@@ -131,7 +129,7 @@ const ClientRegister = () => {
                   </Link>
                 </div>
 
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2  px-4">
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-1  px-4">
                   {[
                     { label: "Prenom", name: "firstName", type: "text" },
                     { label: "Nom de famille", name: "lastName", type: "text" },
@@ -165,7 +163,7 @@ const ClientRegister = () => {
                     type="submit"
                     className="flex items-center justify-between w-full px-6 h-12 mt-7 text-sm text-white bg-black rounded-lg hover:bg-gray-900 transition-colors duration-300"
                   >
-                    <span>Sinscrire</span>
+                    <span>S'inscrire</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5"
