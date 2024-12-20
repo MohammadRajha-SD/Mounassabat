@@ -11,7 +11,13 @@ const AnnouncementSection = ({ title, annonces, handleFavoritsClick, handleDetai
             </div>
 
             {annonces.length > 0 ? (
-                <div className="overflow-x-auto whitespace-nowrap py-4">
+                <div
+                    className="overflow-x-auto whitespace-nowrap py-4"
+                    style={{
+                        scrollbarWidth: 'none', // For Firefox
+                        msOverflowStyle: 'none', // For Internet Explorer and Edge
+                    }}
+                >
                     <div className="inline-flex gap-5">
                         {annonces.map((annonce, index) => (
                             <div
@@ -83,7 +89,7 @@ const AnnouncementSection = ({ title, annonces, handleFavoritsClick, handleDetai
                                         <div
                                             id="favorits"
                                             onClick={(e) => {
-                                                e.stopPropagation(); // Prevent card click from triggering when clicking favorite
+                                                e.stopPropagation();
                                                 handleFavoritsClick(annonce.id);
                                             }}
                                             className={`border border-gray-400 px-1 py-1 rounded-full cursor-pointer transition duration-300 ${annonce.isFavorited ? 'bg-[#e6cf8c] hover:bg-white' : 'text-gray-900'

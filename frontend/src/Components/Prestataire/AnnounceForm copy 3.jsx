@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Header from './Header.jsx';
 import RightSide from './RightSide.jsx';
 import axios from 'axios'
-const AnnounceForm = () => {
-    const [selectedTypeAnnonce, setSelectedTypeAnnonce] = useState('normal');
-    const [canAdd, setCanAdd] = useState(false);
 
+const AnnounceForm = () => {
     const [showCategories, setShowCategories] = useState(false);
     const [showCities, setShowCities] = useState(false);
     const [subValue, setsubValue] = useState('');
@@ -34,42 +31,6 @@ const AnnounceForm = () => {
     const [isDropdownEvenementProfessionnel, setIsDropdownEvenementProfessionnel] = useState(false);
     const [isDropdownSeminaire, setIsDropdownSeminaire] = useState(false);
 
-    useEffect(() => {
-        fetchAllAnnonces();
-    }, []);
-
-
-    const fetchAllAnnonces = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('JWT token not found in local storage');
-                return;
-            }
-
-            const response = await axios.get('https://mounassabat.ma/api/checkIsAbleToAddAnnonce', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            setCanAdd(response.data.canAdd);
-
-            if (response.data.candAdd === false) {
-                setSelectedTypeAnnonce('vip');
-            }
-            // console.log(response.data);
-        } catch (error) {
-            if (error.response) {
-                console.error('Failed to fetch annonces:', error.response.statusText, error.response.data);
-            } else if (error.request) {
-                console.error('No response received from server:', error.request);
-            } else {
-                console.error('Error:', error.message);
-            }
-        }
-    };
     const toggleDropdownAniversaire = () => {
         setIsDropdownAniversaire(!isDropdownAniversaire);
     };
@@ -123,9 +84,6 @@ const AnnounceForm = () => {
         setsubValue(subValue);
 
     };
-    const handleChangeTypeAnnonce = (event) => {
-        setSelectedTypeAnnonce(event.target.value);
-    };
 
     const handleSous = (event) => {
         const selectedCat = event.target.textContent;
@@ -134,6 +92,7 @@ const AnnounceForm = () => {
         setSelectedCat(selectedCat);
         setShowCategories(false);
     };
+
     const handleContinueClick = () => {
         // Check if any required fields are empty
         if (!selectedCity || !phoneNumber) {
@@ -149,10 +108,10 @@ const AnnounceForm = () => {
             localStorage.setItem("sub_category_id", subValue);
             localStorage.setItem("sous_category_id", sousValue);
             localStorage.setItem("category", selectedCat);
-            localStorage.setItem("annonce_type", selectedTypeAnnonce);
             navigate('/AnnounceForm2');
         }
     };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -288,40 +247,8 @@ const AnnounceForm = () => {
                                             </div>
                                         </div>
                                     )}</div>
-                                <div className="flex items-center space-x-4 my-5">
-                                    <h2 className="text-lg font-medium">Sélectionnez un type d'annonce :</h2>
 
-                                    <div className="flex items-center">
-                                        <input
-                                            type="radio"
-                                            id="normal"
-                                            name="normal"
-                                            value="normal"
-                                            checked={selectedTypeAnnonce === "normal"}
-                                            onChange={handleChangeTypeAnnonce}
-                                            disabled={!canAdd}
-                                            className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
-                                        />
-                                        <label htmlFor="normal" className="ml-2 text-sm font-medium text-gray-700">
-                                            Normal Announce
-                                        </label>
-                                    </div>
-
-                                    <div className="flex items-center">
-                                        <input
-                                            type="radio"
-                                            id="vip"
-                                            name="vip"
-                                            value="vip"
-                                            checked={selectedTypeAnnonce === "vip"}
-                                            onChange={handleChangeTypeAnnonce}
-                                            className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
-                                        />
-                                        <label htmlFor="vip" className="ml-2 text-sm font-medium text-gray-700">
-                                            VIP Announce
-                                        </label>
-                                    </div>
-                                </div>
+                                {/* HERE OLD TYOE ANNOUNCE */}
                             </form>
                         </section>
                     </div>

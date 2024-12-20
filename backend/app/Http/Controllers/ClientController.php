@@ -129,8 +129,10 @@ class ClientController extends Controller
     {
         try {
             $userId = auth()->id();
-            $annonces = Annonce::with(['user', 'sub_Category'])->paginate(6);
-
+            // $annonces = Annonce::with(['user', 'sub_Category'])->paginate(6);
+            $annonces = Annonce::with(['user', 'sub_Category.category'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(6);
             // Check if the user has favorited any annonces
             $favoritedAnnonceIds = $userId ? Favoris::where('user_id', $userId)->pluck('annonce_id')->toArray() : [];
 
@@ -177,7 +179,7 @@ class ClientController extends Controller
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
                 ->where('categories.name', 'Mariage')
                 ->whereNotNull('annonces.accepted_at')
-                ->where('annonces.type', 'normal')->paginate(3);
+                ->where('annonces.type', 'normal')->paginate(5);
 
             $annoncesConference = Annonce::query()
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
@@ -185,7 +187,7 @@ class ClientController extends Controller
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
                 ->where('categories.name', 'Conférence')
                 ->whereNotNull('annonces.accepted_at')
-                ->where('annonces.type', 'normal')->paginate(3);
+                ->where('annonces.type', 'normal')->paginate(5);
 
             $annoncesFeteDeNaissance = Annonce::query()
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
@@ -193,7 +195,7 @@ class ClientController extends Controller
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
                 ->where('categories.name', 'Fete De Naissance')
                 ->whereNotNull('annonces.accepted_at')
-                ->where('annonces.type', 'normal')->paginate(3);
+                ->where('annonces.type', 'normal')->paginate(5);
 
             $annoncesBabyshower = Annonce::query()
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
@@ -201,7 +203,7 @@ class ClientController extends Controller
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
                 ->where('categories.name', 'BabyShower')
                 ->whereNotNull('annonces.accepted_at')
-                ->where('annonces.type', 'normal')->paginate(3);
+                ->where('annonces.type', 'normal')->paginate(5);
 
             $annoncesAnniversaire = Annonce::query()
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
@@ -209,17 +211,17 @@ class ClientController extends Controller
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
                 ->where('categories.name', 'Anniversaire')
                 ->whereNotNull('annonces.accepted_at')
-                ->where('annonces.type', 'normal')->paginate(3);
+                ->where('annonces.type', 'normal')->paginate(5);
 
             $annoncesNormal = Annonce::whereNotNull('accepted_at')
                 ->where('type', 'normal')
                 ->with(['user', 'sub_Category'])
-                ->paginate(3);
+                ->paginate(5);
 
             $annoncesVip = Annonce::whereNotNull('accepted_at')
                 ->where('type', 'vip')
                 ->with(['user', 'sub_Category'])
-                ->paginate(3);
+                ->paginate(5);
 
             $favoritedAnnonceIds = $userId ? Favoris::where('user_id', $userId)->pluck('annonce_id')->toArray() : [];
 
@@ -370,6 +372,54 @@ class ClientController extends Controller
             return response()->json(['error' => 'An error occurred while fetching annonces.'], 500);
         }
     }
+    public function filterAllAnnonces(Request $request)
+    {
+        try {
+            $userId = auth()->id();
+
+            $category = $request->query('category');
+            $city = $request->query('city');
+
+            $query = Annonce::query()
+                ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
+                ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
+                ->join('categories', 'sub_categories.category_id', '=', 'categories.id');
+
+            if ($category) {
+                $query->where('categories.name', $category);
+            }
+
+            if ($city) {
+                $query->where('location', 'like', '%' . $city . '%');
+            }
+
+            $favoritedAnnonceIds = $userId ? Favoris::where('user_id', $userId)->pluck('annonce_id')->toArray() : [];
+
+            $annonces = $query->get();
+
+            $formattedAnnonces = $annonces->map(function ($annonce) use ($favoritedAnnonceIds) {
+                return [
+                    'id' => $annonce->id,
+                    'title' => $annonce->title,
+                    'description' => $annonce->description,
+                    'price' => $annonce->price,
+                    'type' => $annonce->type,
+                    'location' => $annonce->location,
+                    'sub_category' => $annonce->sub_category->name,
+                    'category' => optional($annonce->sub_Category->category)->name,
+                    'isFavorited' => in_array($annonce->id, $favoritedAnnonceIds),
+                    'images' => json_decode($annonce->image),
+                ];
+            });
+
+            return response()->json([
+                'status' => 'success',
+                'annonces' => $formattedAnnonces,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while fetching annonces.'], 500);
+        }
+    }
 
     public function getAllCategories()
     {
@@ -397,7 +447,10 @@ class ClientController extends Controller
     public function getAllAnnoncesNoLogin()
     {
         try {
-            $annonces = Annonce::with(['user', 'sub_Category.category'])->paginate(6);
+            // $annonces = Annonce::with(['user', 'sub_Category.category'])->paginate(6);
+            $annonces = Annonce::with(['user', 'sub_Category.category'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(6);
 
             // Check if the user has favorited any annonces
 

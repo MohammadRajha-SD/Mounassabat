@@ -6,7 +6,6 @@ import axios from 'axios';
 import Carousel from './Carousel/Index.jsx'
 import { Link } from 'react-router-dom';
 import Loader from './Loader/Index.jsx';
-import { useAnnonces } from './AnnonceContext';
 
 const AllAnnounces = () => {
     const [cities, setCities] = useState([]);
@@ -20,7 +19,6 @@ const AllAnnounces = () => {
     const [selectedCity, setSelectedCity] = useState('');
     const [filteredCities, setFilteredCities] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const { filterAnnonces2, annonces } = useAnnonces();
 
     useEffect(() => {
         fetchAllAnnonces(currentPage);
@@ -31,6 +29,20 @@ const AllAnnounces = () => {
             cities.filter(city => city.asciiname.toLowerCase().includes(searchQuery.toLowerCase()))
         );
     }, [searchQuery, cities]);
+
+
+    // route filter-all-annonces
+    useEffect(() => {
+        if (selectedCategory === '' && selectedCity === '') {
+            fetchAllAnnonces(1);
+        } else if (selectedCategory !== '' && selectedCity === '') {
+            filteringAnnonces(selectedCategory, null);
+        } else if (selectedCity !== '' && selectedCategory === '') {
+            filteringAnnonces(null, selectedCity);
+        } else {
+            filteringAnnonces(selectedCategory, selectedCity);
+        }
+    }, [selectedCategory, selectedCity]);
 
     const fetchAllAnnonces = async (page) => {
         setLoading(true);
@@ -162,48 +174,25 @@ const AllAnnounces = () => {
         setSelectedCategory(event.target.value);
     };
 
-    const filterButton = () => {
-        if (selectedCategory == '' && selectedCity == '') {
-            fetchAllAnnonces(1);
-            return;
-        }
-        else if (selectedCategory != '' && selectedCity == '') {
-            filterAnnonces2(selectedCategory);
-            setAnnonces_(annonces);
-            return;
-        }
-        else if (selectedCategory == '' && selectedCity != '') {
-            filterAnnonces2(null, selectedCity);
-            setAnnonces_(annonces);
-            return;
-        }
-        else {
-            filterAnnonces2(selectedCategory, selectedCity);
-            setAnnonces_(annonces);
-            return;
+    const filteringAnnonces = async (category = null, city = null) => {
+        try {
+            const response = await axios.get('https://mounassabat.ma/api/filter-all-annonces', {
+                params: {
+                    category,
+                    city,
+                },
+            });
+
+            if (response.data.status === 'success') {
+                setAnnonces_(response.data.annonces);
+            }else{
+                console.log(response);
+            }
+        } catch (error) {
+            console.error('Error fetching filtered annonces:', error);
+            return [];
         }
     };
-
-    useEffect(() => {
-        // if (selectedCategory == '' && selectedCity == '') {
-        //     fetchAllAnnonces(1);
-        // }
-        // else if (selectedCategory != '' && selectedCity == '') {
-        //     filterAnnonces2(selectedCategory);
-        //     setAnnonces_(annonces);
-        // }
-        // else if (selectedCategory == '' && selectedCity != '') {
-        //     filterAnnonces2(null, selectedCity);
-        //     setAnnonces_(annonces);
-        // }
-        // else {
-        //     filterAnnonces2(selectedCategory, selectedCity);
-        //     setAnnonces_(annonces);
-        // }
-
-        filterButton();
-
-    }, [selectedCategory, selectedCity]);
 
     const handleCitySelection = (cityName) => {
         setSelectedCity(cityName);
@@ -223,12 +212,12 @@ const AllAnnounces = () => {
                     <NavBar />
                     <div className="border-b m-2 p-2 flex items-center justify-between">
                         <h1 className="text-4xl">Toutes les annonces</h1>
-                        <a href='/' className="bg-[#e6cf8c] text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
+                        <a href='/AllAnnounces' className="bg-[#e6cf8c] text-white px-5 font-semibold pt-1 pb-2 rounded-lg">Retour</a>
                     </div>
 
                     {/* Categories START */}
                     <div className="bg-white rounded-lg shadow-md md:m-5 p-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                             {/* Category Dropdown */}
                             <div className="relative w-full">
                                 <select
@@ -264,7 +253,7 @@ const AllAnnounces = () => {
                             </div>
 
                             {/* Search Button */}
-                            <div className="w-full">
+                            {/* <div className="w-full">
                                 <button
                                     className="w-full text-white bg-black px-8 py-3 rounded-md font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition duration-200 text-sm"
                                     onClick={() => filterButton()}
@@ -274,7 +263,7 @@ const AllAnnounces = () => {
                                         <path d="M21 21l-3.5-3.5M17 10a7 7 0 10-14 0 7 7 0 0014 0z"></path>
                                     </svg>
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     {/* CATEGORIES END */}
