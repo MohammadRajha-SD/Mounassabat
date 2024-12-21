@@ -13,7 +13,7 @@ export const AnnonceProvider = ({ children }) => {
             //     return;
             // }
 
-            let url = 'https://mounassabat.ma/api/getFiltredAnnonces';
+            let url = 'http://127.0.0.1:8000/api/getFiltredAnnonces';
 
             const urlObj = new URL(url);
             const params = new URLSearchParams();
@@ -61,7 +61,7 @@ export const AnnonceProvider = ({ children }) => {
 
     const filterAnnonces2 = async (category = null, city = null) => {
         try {
-            let url = 'https://mounassabat.ma/api/getFiltredAnnonces';
+            let url = 'http://127.0.0.1:8000/api/getFiltredAnnonces';
 
             const urlObj = new URL(url);
             const params = new URLSearchParams();

@@ -32,14 +32,13 @@ const Chat = () => {
         axios.get(`https://mounassabat.ma/api/myConversations`, { headers: { Authorization: `Bearer ${token}` } })
             .then(response => {
                 setConversations(response.data);
-                // console.log(response.data);
             })
             .catch(error => console.error('Error fetching conversations:', error));
         return;
     }, []);
 
     useEffect(() => {
-        const pusher = new Pusher('3470f87625076b579c92', {
+        const pusher = new Pusher('53b366b62e5b778de020', {
             cluster: 'mt1'
         });
 
@@ -73,6 +72,7 @@ const Chat = () => {
         try {
             const response = await axios.post(
                 'https://mounassabat.ma/api/send-message',
+                // 'https://mounassabat.ma/api/send-message',
                 payload,
                 { headers: { Authorization: `Bearer ${token}` } }
             );

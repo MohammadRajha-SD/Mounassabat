@@ -22,7 +22,7 @@ const Prestataires = () => {
                 console.error('JWT token not found in local storage');
                 return;
             }
-            const response = await axios.get('https://mounassabat.ma/api/getAllPrestataires', {
+            const response = await axios.get('http://127.0.0.1:8000/api/getAllPrestataires', {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -45,7 +45,7 @@ const Prestataires = () => {
             }
 
             const response = await axios.post(
-                'https://mounassabat.ma/api/user-banned',
+                'http://127.0.0.1:8000/api/user-banned',
                 { id, is_banned },
                 {
                     headers: {

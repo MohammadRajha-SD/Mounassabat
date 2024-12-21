@@ -39,7 +39,7 @@ const AllAnnounces = () => {
             const token = localStorage.getItem('token');
 
             if (token) {
-                const response = await axios.get('https://mounassabat.ma/api/getAnnonces', {
+                const response = await axios.get('http://127.0.0.1:8000/api/getAnnonces', {
                     params: { page },
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -52,7 +52,7 @@ const AllAnnounces = () => {
                     console.error('Failed to fetch annonces:', response.statusText);
                 }
             } else {
-                const response = await axios.get(`https://mounassabat.ma/api/getAllAnnoncesNoLogin`, {
+                const response = await axios.get(`http://127.0.0.1:8000/api/getAllAnnoncesNoLogin`, {
                     params: { page },
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -94,7 +94,7 @@ const AllAnnounces = () => {
                 return;
             }
 
-            const response = await axios.post('https://mounassabat.ma/api/favoris',
+            const response = await axios.post('http://127.0.0.1:8000/api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {

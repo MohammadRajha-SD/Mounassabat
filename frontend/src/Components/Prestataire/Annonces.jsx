@@ -30,7 +30,7 @@ const Annonces = () => {
                 return;
             }
 
-            const response = await axios.get('https://mounassabat.ma/api/getMyAnnonces', {
+            const response = await axios.get('http://127.0.0.1:8000/api/getMyAnnonces', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ const Annonces = () => {
             }
 
             // Send DELETE request to Laravel API
-            const response = await axios.delete(`https://mounassabat.ma/api/annonces/${annonceToDelete}`, {
+            const response = await axios.delete(`http://127.0.0.1:8000/api/annonces/${annonceToDelete}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ const Annonces = () => {
                     console.error('JWT token not found in local storage');
                     return;
                 }
-                const response = await axios.put(`https://mounassabat.ma/api/annonces/${id}`,
+                const response = await axios.put(`http://127.0.0.1:8000/api/annonces/${id}`,
                     {
                         title,
                         description,

@@ -63,7 +63,7 @@ const AnnounceForm = () => {
             images.forEach((image) => { formData.append('image[]', image.file); });
 
             const response = await axios.post(
-                'https://mounassabat.ma/api/annonce/create',
+                'http://127.0.0.1:8000/api/annonce/create',
                 formData,
                 {
                     headers: {
@@ -117,7 +117,7 @@ const AnnounceForm = () => {
 
                 if (token_) {
                     setIsLoading(true);
-                    axios.post('https://mounassabat.ma/api/annonce/create', formData, {
+                    axios.post('http://127.0.0.1:8000/api/annonce/create', formData, {
                         headers: {
                             'Authorization': `Bearer ${token_}`,
                             'Content-Type': 'multipart/form-data',
@@ -240,7 +240,7 @@ const AnnounceForm = () => {
             if (paymentMethod === 'card') {
                 try {
                     const token = localStorage.getItem('token');
-                    const { data } = await axios.post('https://mounassabat.ma/api/pay-by-creditcard', {
+                    const { data } = await axios.post('http://127.0.0.1:8000/api/pay-by-creditcard', {
                         amount: selectedOption.price,
                         payment_method: 'card'
                     }, { headers: { Authorization: `Bearer ${token}` } });
@@ -321,7 +321,7 @@ const AnnounceForm = () => {
                             createOrder={async (data, actions) => {
                                 try {
                                     const response = await axios.post(
-                                        'https://mounassabat.ma/api/paypal/payment',
+                                        'http://127.0.0.1:8000/api/paypal/payment',
                                         { price: selectedOption.price },
                                         { headers: { Authorization: `Bearer ${token}` } }
                                     );
@@ -341,7 +341,7 @@ const AnnounceForm = () => {
                             onApprove={async (data, actions) => {
                                 try {
                                     const response = await axios.get(
-                                        `https://mounassabat.ma/api/paypal/success`,
+                                        `http://127.0.0.1:8000/api/paypal/success`,
                                         {
                                             params: { token: data.orderID },
                                             headers: { Authorization: `Bearer ${token}` },

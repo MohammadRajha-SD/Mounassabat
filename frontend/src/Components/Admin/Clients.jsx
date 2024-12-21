@@ -21,7 +21,7 @@ const Clients = () => {
                 return;
             }
 
-            const response = await axios.get(`https://mounassabat.ma/api/getAllClients?page=${page}`, {
+            const response = await axios.get(`http://127.0.0.1:8000/api/getAllClients?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ const Clients = () => {
             }
 
             const response = await axios.post(
-                'https://mounassabat.ma/api/user-banned',
+                'http://127.0.0.1:8000/api/user-banned',
                 { id, is_banned },
                 {
                     headers: {

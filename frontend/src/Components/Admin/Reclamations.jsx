@@ -20,7 +20,7 @@ const Reclamations = () => {
                 return;
             }
 
-            const response = await fetch(`https://mounassabat.ma/api/getAllReclamations?page=${page}`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/getAllReclamations?page=${page}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const Reclamations = () => {
                 console.error('JWT token not found in local storage');
                 return;
             }
-            const response = await fetch(`https://mounassabat.ma/api/deleteReclamation/${id}`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/deleteReclamation/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

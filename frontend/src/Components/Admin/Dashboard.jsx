@@ -35,10 +35,10 @@ const Dashboard = () => {
             };
 
             const [prestatairesResponse, clientsResponse, annoncesResponse, reclamationsResponse] = await Promise.all([
-                axios.get('https://mounassabat.ma/api/countPrestataires', { headers }),
-                axios.get('https://mounassabat.ma/api/countClients', { headers }),
-                axios.get('https://mounassabat.ma/api/countAnnonces', { headers }),
-                axios.get('https://mounassabat.ma/api/countReclamations', { headers }),
+                axios.get('http://127.0.0.1:8000/api/countPrestataires', { headers }),
+                axios.get('http://127.0.0.1:8000/api/countClients', { headers }),
+                axios.get('http://127.0.0.1:8000/api/countAnnonces', { headers }),
+                axios.get('http://127.0.0.1:8000/api/countReclamations', { headers }),
             ]);
 
             setPrestatairesCount(prestatairesResponse.data.count);
@@ -63,10 +63,10 @@ const Dashboard = () => {
             };
 
             const [prestatairesResponse, clientsResponse, annoncesResponse, reclamationsResponse] = await Promise.all([
-                axios.get('https://mounassabat.ma/api/getLatestPrestataires', { headers }),
-                axios.get('https://mounassabat.ma/api/getLatestClients', { headers }),
-                axios.get('https://mounassabat.ma/api/getLatestAnnonces', { headers }),
-                axios.get('https://mounassabat.ma/api/getLatestReclamations', { headers }),
+                axios.get('http://127.0.0.1:8000/api/getLatestPrestataires', { headers }),
+                axios.get('http://127.0.0.1:8000/api/getLatestClients', { headers }),
+                axios.get('http://127.0.0.1:8000/api/getLatestAnnonces', { headers }),
+                axios.get('http://127.0.0.1:8000/api/getLatestReclamations', { headers }),
             ]);
 
             console.log(annoncesResponse.data);
