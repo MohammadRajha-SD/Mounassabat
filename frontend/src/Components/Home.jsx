@@ -44,7 +44,7 @@ const Home = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/getAllCategories',
+                const response = await axios.get('https://mounassabat.ma/api/getAllCategories',
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ const Home = () => {
         };
 
         // fetch categories with announces counted 
-        axios.get('http://127.0.0.1:8000/api/categoriesWithAnnoncesCounted')
+        axios.get('https://mounassabat.ma/api/categoriesWithAnnoncesCounted')
             .then(response => {
                 setCategoriesAnnoncesCounted(response.data);
                 setLoading(false);
@@ -143,7 +143,7 @@ const Home = () => {
             const url = token ? 'getAllAcceptedAnnonces' : 'getAllAcceptedAnnoncesHomePage';
 
 
-            const response = await axios.get(`http://127.0.0.1:8000/api/${url}`, {
+            const response = await axios.get(`https://mounassabat.ma/api/${url}`, {
                 params: { page },
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -199,7 +199,7 @@ const Home = () => {
                 return;
             }
 
-            const response = await axios.post('http://127.0.0.1:8000/api/favoris',
+            const response = await axios.post('https://mounassabat.ma/api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {
@@ -319,11 +319,6 @@ const Home = () => {
 
                             {/* Search Input */}
                             <div className="relative w-full">
-                                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
-                                        <path d="M9 9a3 3 0 011-2m0 12h4m0-3c0-4.1 4-4.9 4-9a6 6 0 10-12 0c0 4 4 5 4 9h4z"></path>
-                                    </svg>
-                                </span>
                                 <input
                                     type="text"
                                     placeholder="Que recherchez-vous ?"
@@ -352,10 +347,6 @@ const Home = () => {
                             {/* City Dropdown */}
                             <div onClick={() => setShowCities(true)} className="cursor-pointer flex items-center justify-between w-full px-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-md dark:text-gray-300 focus:border-yellow-500 dark:focus:border-yellow-500 focus:outline-none focus:ring">
                                 <div className="flex items-center">
-                                    <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
-                                        <path d="M12 13a3 3 0 100-6 3 3 0 000 6z"></path>
-                                        <path d="M17.8 13.938h-.011a7 7 0 11-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155z"></path>
-                                    </svg>
                                     <p className="mx-2 text-black font-semibold text-sm">{selectedCity || "Ville (Ex: Casablanca)"}</p>
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-chevron-down" viewBox="0 0 16 16">

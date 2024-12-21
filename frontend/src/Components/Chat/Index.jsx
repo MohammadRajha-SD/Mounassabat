@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Pusher from 'pusher-js';
-
+import NavBar from '../Navbar/NavBar';
 import {
     MainContainer,
     ChatContainer,
@@ -83,6 +83,7 @@ const Chat = () => {
 
     return (
         <div style={{ height: '100vh' }}>
+            <NavBar />
             <MainContainer>
                 <Sidebar position='left'>
                     <ConversationList>
