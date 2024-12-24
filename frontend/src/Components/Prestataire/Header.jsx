@@ -4,7 +4,7 @@ const Header = () => {
     return (
         <div className="fixed bg-white w-full flex flex-col md:flex-row justify-between items-center px-2 md:px-10 py-2 z-10 shadow-none md:shadow-md">
             <div className="text-center md:text-left mb-2 md:mb-0">
-                <h1 className='font-bold text-md text-yellow-500'>Information Général</h1>
+                <h1 className='font-bold text-md text-yellow-500'>Informations générales</h1>
                 <p className='text-yellow-500 text-sm sm'>Remplire les informations générales de votre annonce</p>
             </div>
             <div className="flex items-center space-x-2 md:mb-0 mb-2">

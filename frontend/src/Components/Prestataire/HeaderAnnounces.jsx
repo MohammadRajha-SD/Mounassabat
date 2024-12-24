@@ -59,10 +59,9 @@ const HeaderAnnounces = ({actived = 'Mes Annonces'}) => {
                 </div>
             </ul>
 
-
             <div className="hidden md:flex">
                 <div className="flex items-center">
-                    <Link to={'/support-us'}>
+                    <Link to={'http://wa.me/212663704955'}>
                         <img className="h-10 w-10 mr-2 rounded-full" src={SupportIcon} alt="" />
                     </Link>
                     

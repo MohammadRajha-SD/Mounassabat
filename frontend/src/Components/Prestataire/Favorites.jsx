@@ -10,7 +10,7 @@ const Favorites = () => {
                 <div className="py-16">
                     <div className="border-2 border-gray-400 rounded-lg ">
                         <div className="p-10 flex flex-col gap-8 justify-center items-center text-center">
-                            <h1 className="text-black text-3xl font-serif font-medium">You don't have favorite ads yet.</h1>
+                            <h1 className="text-black text-3xl font-serif font-medium">Vous n'avez pas encore de publications favorites.</h1>
 
                             <svg className="w-36 h-36 text-gray-400" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"

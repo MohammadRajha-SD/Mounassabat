@@ -72,7 +72,6 @@ const Chat = () => {
         try {
             const response = await axios.post(
                 'https://mounassabat.ma/api/send-message',
-                // 'https://mounassabat.ma/api/send-message',
                 payload,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -82,7 +81,7 @@ const Chat = () => {
     };
 
     return (
-        <>
+        <div style={{height: '100vh', msOverflowY:'none'}}>
             <NavBar />
             <div style={{ height: '90vh' }}>
                 <MainContainer>
@@ -124,10 +123,10 @@ const Chat = () => {
 
                             <MessageInput placeholder="Type a message..." onSend={sendMessage} attachButton={true} />
                         </ChatContainer>
-                    ) : <p className='text-gray-500 flex mx-auto items-center font-serif'>No Conversation found </p>}
+                    ) : <p className='text-gray-500 flex mx-auto items-center font-serif'>Aucune conversation trouvée.</p>}
                 </MainContainer>
             </div>
-        </>
+        </div>
     );
 };
 
