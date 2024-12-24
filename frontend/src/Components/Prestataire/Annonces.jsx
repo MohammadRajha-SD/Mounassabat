@@ -6,6 +6,7 @@ import Carousel from '../Carousel/Index.jsx';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { toast } from 'react-toastify';
+import { Link } from "react-router-dom";
 
 const Annonces = () => {
     const [annonces, setAnnonces] = useState([]);

@@ -62,7 +62,6 @@ const NavBar = () => {
     return (
         <div>
             <header className='gi-header gi-flex flex-row items-center justify-between bg-white relative  border-b border-solid  border-[#eee] shadow-md flex w-full '>
-
                 <Logo />
 
                 <CategoryMenu
