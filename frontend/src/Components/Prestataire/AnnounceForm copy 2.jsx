@@ -47,7 +47,7 @@ const AnnounceForm = () => {
                 return;
             }
 
-            const response = await axios.get('http://127.0.0.1:8000/api/checkIsAbleToAddAnnonce', {
+            const response = await axios.get('https://mounassabat.ma/api/checkIsAbleToAddAnnonce', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

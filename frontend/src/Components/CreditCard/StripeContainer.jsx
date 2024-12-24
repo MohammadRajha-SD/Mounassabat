@@ -16,7 +16,7 @@ const PayPalButton = () => {
         createOrder={async (data, actions) => {
           try {
             const response = await axios.post(
-              'http://127.0.0.1:8000/api/paypal/payment',
+              'https://mounassabat.ma/api/paypal/payment',
               { price: 100 },
               { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -37,7 +37,7 @@ const PayPalButton = () => {
         onApprove={async (data, actions) => {
           try {
             const response = await axios.get(
-              `http://127.0.0.1:8000/api/paypal/success`,
+              `https://mounassabat.ma/api/paypal/success`,
               {
                 params: { token: data.orderID }, // Pass token as query param
                 headers: { Authorization: `Bearer ${token}` },

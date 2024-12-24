@@ -25,7 +25,7 @@ const Posts = () => {
             }
 
             // Make the API call using axios
-            const response = await axios.get(`http://127.0.0.1:8000/api/getAllPosts?page=${page}`, {
+            const response = await axios.get(`https://mounassabat.ma/api/getAllPosts?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -74,7 +74,7 @@ const Posts = () => {
 
     const filteringAnnonces = async (category = null, city = null) => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/filter-all-annonces2', {
+            const response = await axios.get('https://mounassabat.ma/api/filter-all-annonces2', {
                 params: {
                     category,
                 },
@@ -82,7 +82,6 @@ const Posts = () => {
 
             if (response.data.status === 'success') {
                 setAnnonces(response.data.annonces);
-                // console.log(response.data)
             }
         } catch (error) {
             console.error('Error fetching filtered annonces:', error);

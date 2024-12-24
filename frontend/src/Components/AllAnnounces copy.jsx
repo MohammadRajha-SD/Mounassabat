@@ -39,7 +39,7 @@ const AllAnnounces = () => {
             const token = localStorage.getItem('token');
 
             if (token) {
-                const response = await axios.get('http://127.0.0.1:8000/api/getAnnonces', {
+                const response = await axios.get('https://mounassabat.ma/api/getAnnonces', {
                     params: { page },
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -52,7 +52,7 @@ const AllAnnounces = () => {
                     console.error('Failed to fetch annonces:', response.statusText);
                 }
             } else {
-                const response = await axios.get(`http://127.0.0.1:8000/api/getAllAnnoncesNoLogin`, {
+                const response = await axios.get(`https://mounassabat.ma/api/getAllAnnoncesNoLogin`, {
                     params: { page },
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -94,7 +94,7 @@ const AllAnnounces = () => {
                 return;
             }
 
-            const response = await axios.post('http://127.0.0.1:8000/api/favoris',
+            const response = await axios.post('https://mounassabat.ma/api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {
@@ -194,7 +194,7 @@ const AllAnnounces = () => {
     // useEffect(() => {
     //     const fetchLikeStatus = async () => {
     //         try {
-    //             const response = await axios.get(`http://127.0.0.1:8000/api/annonces/${annonceId}`);
+    //             const response = await axios.get(`https://mounassabat.ma/api/annonces/${annonceId}`);
     //             setLiked(response.data.liked);
     //             setLikeCount(response.data.likeCount);
     //         } catch (error) {
@@ -208,7 +208,7 @@ const AllAnnounces = () => {
     // Handle liking the post
     const likeAnnonce = async (id) => {
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/annonces/${id}/like`, {}, {
+            const response = await axios.post(`https://mounassabat.ma/api/annonces/${id}/like`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -224,7 +224,7 @@ const AllAnnounces = () => {
     // Handle unliking the post
     const unlikeAnnonce = async (id) => {
         try {
-            const response = await axios.delete(`http://127.0.0.1:8000/api/annonces/${id}/unlike`, {
+            const response = await axios.delete(`https://mounassabat.ma/api/annonces/${id}/unlike`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

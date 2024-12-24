@@ -18,7 +18,7 @@ const RegisterClientButtonGmail = () => {
 
       const decodedToken = jwtDecode(credentialResponse.credential);
 
-      const response = await axios.post("http://127.0.0.1:8000/api/auth/google-client-register", {
+      const response = await axios.post("https://mounassabat.ma/api/auth/google-client-register", {
         email: decodedToken.email,
         firstName: decodedToken.given_name,
         lastName: decodedToken.family_name,

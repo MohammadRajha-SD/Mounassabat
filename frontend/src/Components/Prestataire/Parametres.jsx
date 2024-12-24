@@ -17,7 +17,7 @@ const Parametres = () => {
             console.log('TOKEN is not exists');
             return;
         }
-        axios.get('http://127.0.0.1:8000/api/profile/user', {
+        axios.get('https://mounassabat.ma/api/profile/user', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -40,7 +40,7 @@ const Parametres = () => {
             return;
         }
         setLoading(true);
-        axios.put('http://127.0.0.1:8000/api/profile/user', formData, {
+        axios.put('https://mounassabat.ma/api/profile/user', formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -20,7 +20,7 @@ const AnnouncesDetails = () => {
                     // throw new Error('JWT token not found in local storage here');
                 // }
 
-                const response = await fetch(`http://127.0.0.1:8000/api/getAnnonceDetails/${id}`);
+                const response = await fetch(`https://mounassabat.ma/api/getAnnonceDetails/${id}`);
                 // {
                 //     headers: {
                 //         'Authorization': `Bearer ${token}`
@@ -62,7 +62,7 @@ const AnnouncesDetails = () => {
             if(token){
 
                 const response = await axios.post(
-                    'http://127.0.0.1:8000/api/new-conversation',
+                    'https://mounassabat.ma/api/new-conversation',
                     payload,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -99,7 +99,7 @@ const AnnouncesDetails = () => {
                             {annonce.image && annonce.image.length > 0 && (
                                 <div className="duration-700 ease-in-out h-full" data-carousel-item>
                                     <img
-                                        src={`http://127.0.0.1:8000/${annonce.image[currentIndex]}`}
+                                        src={`https://mounassabat.ma/${annonce.image[currentIndex]}`}
                                         className="object-cover w-full h-full"
                                         alt={`Slide ${currentIndex}`}
                                     />
