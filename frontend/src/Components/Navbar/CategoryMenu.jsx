@@ -39,7 +39,7 @@ const marriageSubCategories = [
     },
     { name: 'Serveur Freelance', slug: 'serveur-freelance' },
     { name: 'Femme de Menage Freelance', slug: 'femme-de-menage-freelance' },
-    { name: 'Agence de voyage (Lien de Miel)', slug: 'agence-de-voyage' },
+    { name: 'Agence de voyage (lune de Miel)', slug: 'agence-de-voyage' },
     { name: 'Patisserie / Wedding Cake', slug: 'patisserie-wedding-cake' },
     { name: 'Adoul / Cérémonie', slug: 'adoul-ceremonie' },
     { name: 'Locataire des Robes de mariée et tenues pour le marié', slug: 'locataire-robes' },

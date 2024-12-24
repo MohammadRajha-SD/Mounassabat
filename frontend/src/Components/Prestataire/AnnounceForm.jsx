@@ -47,7 +47,7 @@ const AnnounceForm = () => {
                 return;
             }
 
-            const response = await axios.get('http://127.0.0.1:8000/api/checkIsAbleToAddAnnonce', {
+            const response = await axios.get('https://mounassabat.ma/api/checkIsAbleToAddAnnonce', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -56,9 +56,9 @@ const AnnounceForm = () => {
 
             setCanAdd(response.data.canAdd);
 
-            if (response.data.candAdd === false) {
-                setSelectedTypeAnnonce('vip');
-            }
+            // if (response.data.candAdd == false) {
+            //     setSelectedTypeAnnonce('vip');
+            // }
             // console.log(response.data);
         } catch (error) {
             if (error.response) {
@@ -153,6 +153,7 @@ const AnnounceForm = () => {
             navigate('/AnnounceForm2');
         }
     };
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -297,7 +298,7 @@ const AnnounceForm = () => {
                                             id="normal"
                                             name="normal"
                                             value="normal"
-                                            checked={selectedTypeAnnonce === "normal"}
+                                            checked={selectedTypeAnnonce === "normal" && canAdd}
                                             onChange={handleChangeTypeAnnonce}
                                             disabled={!canAdd}
                                             className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
@@ -313,7 +314,7 @@ const AnnounceForm = () => {
                                             id="vip"
                                             name="vip"
                                             value="vip"
-                                            checked={selectedTypeAnnonce === "vip"}
+                                            checked={selectedTypeAnnonce === "vip" || !canAdd}
                                             onChange={handleChangeTypeAnnonce}
                                             className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                                         />

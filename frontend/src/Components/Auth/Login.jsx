@@ -42,7 +42,7 @@ const Login = () => {
         event.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/login', {
+            const response = await axios.post('https://mounassabat.ma/api/login', {
                 email,
                 password
             });
@@ -170,10 +170,14 @@ const Login = () => {
                                                 </button>
                                             </div>
 
-                                            <div className="flex justify-between lg:flex-row flex-col mb-6">
-                                                <Link to="/ClientRegister" className="font-serif font-medium text-black text-lg hover:underline cursor-pointer">Creer un nouveau compte</Link>
+                                            <div className="flex justify-between lg:flex-row flex-col mb-1">
+                                                <Link to="/PrestataireRegister" className="font-serif font-medium text-black text-lg hover:underline cursor-pointer">Créer un nouveau compte (prestataire)</Link>
                                                 <Link to="/ForgetPassword" className="font-serif font-medium text-[#e6cf8c] text-lg cursor-pointer hover:underline">Mot de passe oublie ?</Link>
                                             </div>
+                                            <div className="flex justify-between lg:flex-row flex-col mb-6">
+                                                <Link to="/ClientRegister" className="font-serif font-medium text-black text-lg hover:underline cursor-pointer">Créer un nouveau compte (client)</Link>
+                                            </div>
+
 
                                             {error && <p className="text-red-500 mb-4">{error}</p>}
 

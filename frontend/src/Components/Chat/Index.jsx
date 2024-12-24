@@ -82,50 +82,52 @@ const Chat = () => {
     };
 
     return (
-        <div style={{ height: '100vh' }}>
+        <>
             <NavBar />
-            <MainContainer>
-                <Sidebar position='left'>
-                    <ConversationList>
-                        {conversations.map(conv => (
-                            <Conversation key={conv.id} name={conv.receiver.id === user.id ? conv.sender.firstName : conv.receiver.firstName} lastSenderName={conv?.last_message_sender?.id === user.id ? 'You' : conv.last_message_sender?.firstName} info={conv?.latest_message} onClick={() => handleSelectedConversation(conv)}>
-                                <Avatar name={conv.receiver.firstName} src="/images/user-profile.png" />
-                            </Conversation>
-                        ))}
-                    </ConversationList>
-                </Sidebar>
+            <div style={{ height: '90vh' }}>
+                <MainContainer>
+                    <Sidebar position='left'>
+                        <ConversationList>
+                            {conversations.map(conv => (
+                                <Conversation key={conv.id} name={conv.receiver.id === user.id ? conv.sender.firstName : conv.receiver.firstName} lastSenderName={conv?.last_message_sender?.id === user.id ? 'You' : conv.last_message_sender?.firstName} info={conv?.latest_message} onClick={() => handleSelectedConversation(conv)}>
+                                    <Avatar name={conv.receiver.firstName} src="/images/user-profile.png" />
+                                </Conversation>
+                            ))}
+                        </ConversationList>
+                    </Sidebar>
 
-                {selectedConversation !== null ? (
-                    <ChatContainer>
-                        <ConversationHeader>
-                            <ConversationHeader.Back onClick={() => window.location.href = '/'} />
-                            <Avatar name={selectedConversation.receiver.id === user.id ? selectedConversation.sender.firstName : selectedConversation.receiver.firstName} src={"/images/user-profile.png"} />
-                            <ConversationHeader.Content userName={selectedConversation.receiver.id === user.id ? selectedConversation.sender.firstName : selectedConversation.receiver.firstName} />
-                        </ConversationHeader>
+                    {selectedConversation !== null ? (
+                        <ChatContainer>
+                            <ConversationHeader>
+                                <ConversationHeader.Back onClick={() => window.location.href = '/'} />
+                                <Avatar name={selectedConversation.receiver.id === user.id ? selectedConversation.sender.firstName : selectedConversation.receiver.firstName} src={"/images/user-profile.png"} />
+                                <ConversationHeader.Content userName={selectedConversation.receiver.id === user.id ? selectedConversation.sender.firstName : selectedConversation.receiver.firstName} />
+                            </ConversationHeader>
 
-                        <MessageList>
-                            {messages !== null && messages.length > 0 ? (
-                                messages.map((msg) => (
-                                    <Message key={msg.id} model={{
-                                        message: msg.message,
-                                        sender: msg.sender?.firstName,
-                                        sentTime: new Date(msg.created_at).toLocaleTimeString(),
-                                        direction: msg.sender_id === user.id ? 'outgoing' : 'incoming',
-                                        position: 'single',
-                                    }}>
-                                        <Avatar name={msg.sender?.firstName} src="/images/user-profile.png" />
-                                    </Message>
-                                ))
-                            ) : (
-                                <MessageSeparator as="h2" content='No messages found.' />
-                            )}
-                        </MessageList>
+                            <MessageList>
+                                {messages !== null && messages.length > 0 ? (
+                                    messages.map((msg) => (
+                                        <Message key={msg.id} model={{
+                                            message: msg.message,
+                                            sender: msg.sender?.firstName,
+                                            sentTime: new Date(msg.created_at).toLocaleTimeString(),
+                                            direction: msg.sender_id === user.id ? 'outgoing' : 'incoming',
+                                            position: 'single',
+                                        }}>
+                                            <Avatar name={msg.sender?.firstName} src="/images/user-profile.png" />
+                                        </Message>
+                                    ))
+                                ) : (
+                                    <MessageSeparator as="h2" content='No messages found.' />
+                                )}
+                            </MessageList>
 
-                        <MessageInput placeholder="Type a message..." onSend={sendMessage} attachButton={true} />
-                    </ChatContainer>
-                ) : <p className='text-gray-500 flex mx-auto items-center font-serif'>No Conversation found </p>}
-            </MainContainer>
-        </div>
+                            <MessageInput placeholder="Type a message..." onSend={sendMessage} attachButton={true} />
+                        </ChatContainer>
+                    ) : <p className='text-gray-500 flex mx-auto items-center font-serif'>No Conversation found </p>}
+                </MainContainer>
+            </div>
+        </>
     );
 };
 

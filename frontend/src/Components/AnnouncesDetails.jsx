@@ -182,7 +182,7 @@ const AnnouncesDetails = () => {
                                 onClick={() => handleNewConversation(annonce.user_id)}
                                 className="bg-indigo-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg"
                             >
-                                Send Message
+                               Envoyer un message
                             </button>
                         </div>
 
