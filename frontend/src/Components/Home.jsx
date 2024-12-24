@@ -315,10 +315,10 @@ const Home = () => {
 
                     {/* Categories */}
                     <div className="bg-white rounded-lg shadow-md md:m-12 p-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
 
                             {/* Search Input */}
-                            <div className="relative w-full">
+                            {/* <div className="relative w-full">
                                 <input
                                     type="text"
                                     placeholder="Que recherchez-vous ?"
@@ -326,7 +326,7 @@ const Home = () => {
                                     onChange={handleSearchCategory}
                                     className="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent text-sm"
                                 />
-                            </div>
+                            </div> */}
 
                             {/* Category Dropdown */}
                             <div className="relative w-full">
