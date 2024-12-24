@@ -185,9 +185,15 @@ class ClientController extends Controller
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
                 ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                ->where('categories.name', 'Conférence')
+                ->where('categories.name', 'Conference')
                 ->whereNotNull('annonces.accepted_at')
                 ->where('annonces.type', 'normal')->paginate(5);
+
+            // $annoncesConference = Annonce::with(['sub_Category.category'])
+            //     ->whereHas('sub_Category.category', function ($query) {
+            //         $query->where('name', 'Conference'); // Filter by category name
+            //     })
+            //     ->paginate(5);
 
             $annoncesFeteDeNaissance = Annonce::query()
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
@@ -261,6 +267,7 @@ class ClientController extends Controller
                 'price' => $annonce->price,
                 'type' => $annonce->type,
                 'sub_name' => $annonce->sub_Category->name,
+                'category' => $annonce->sub_Category->category->name,
                 'firstName' => $annonce->user->firstName,
                 'lastName' => $annonce->user->lastName,
                 'phone' => $annonce->user->phone,
@@ -479,14 +486,20 @@ class ClientController extends Controller
 
     public function getCategoriesWithAnnonces()
     {
-        $categories = Category::with(['Sub_Category' => function ($query) {
-            $query->withCount(['annonces' => function ($query) {
-                $query->whereNotNull('accepted_at');
-            }]);
-        }])
-            ->withCount(['annonces' => function ($query) {
-                $query->whereNotNull('accepted_at');
-            }])
+        $categories = Category::with([
+            'Sub_Category' => function ($query) {
+                $query->withCount([
+                    'annonces' => function ($query) {
+                        $query->whereNotNull('accepted_at');
+                    }
+                ]);
+            }
+        ])
+            ->withCount([
+                'annonces' => function ($query) {
+                    $query->whereNotNull('accepted_at');
+                }
+            ])
             ->get();
 
 

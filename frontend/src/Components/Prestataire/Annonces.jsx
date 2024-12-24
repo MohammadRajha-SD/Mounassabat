@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { Link } from "react-router-dom";
 
 const Annonces = () => {
-    const [annonces, setAnnonces] = useState([]);
+    const [annonces, setAnnonces] = useState([]);a
     const [currentSlides, setCurrentSlides] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedAnnonce, setSelectedAnnonce] = useState(null);

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { UserCircleIcon } from '@heroicons/react/24/solid'; // Solid style
+// import { UserCircleIcon } from '@heroicons/react/24/solid'; // Solid style
 import { useEffect, useState } from "react";
+import { UserCircleIcon } from '@heroicons/react/24/outline';
 
 const Logout = () => {
     const navigate = useNavigate();
