@@ -151,7 +151,6 @@ const Home = () => {
             });
 
             if (response.status === 200) {
-                console.log(response.data.conference);
                 setNormalAnnonces(response.data.normal);
                 setVipAnnonces(response.data.vip);
                 setMarriageAnnonces(response.data.marriage);

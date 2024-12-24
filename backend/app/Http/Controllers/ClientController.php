@@ -177,7 +177,7 @@ class ClientController extends Controller
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
                 ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                ->where('categories.name', 'Mariage')
+                ->where('categories.slug', 'mariage')
                 ->whereNotNull('annonces.accepted_at')
                 ->where('annonces.type', 'normal')->paginate(5);
 
@@ -185,21 +185,15 @@ class ClientController extends Controller
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
                 ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                ->where('categories.name', 'Conference')
+                ->where('categories.slug', 'conference')
                 ->whereNotNull('annonces.accepted_at')
                 ->where('annonces.type', 'normal')->paginate(5);
-
-            // $annoncesConference = Annonce::with(['sub_Category.category'])
-            //     ->whereHas('sub_Category.category', function ($query) {
-            //         $query->where('name', 'Conference'); // Filter by category name
-            //     })
-            //     ->paginate(5);
 
             $annoncesFeteDeNaissance = Annonce::query()
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
                 ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                ->where('categories.name', 'Fete De Naissance')
+                ->where('categories.slug', 'fete-de-naissance')
                 ->whereNotNull('annonces.accepted_at')
                 ->where('annonces.type', 'normal')->paginate(5);
 
@@ -207,7 +201,7 @@ class ClientController extends Controller
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
                 ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                ->where('categories.name', 'BabyShower')
+                ->where('categories.slug', 'babyshower')
                 ->whereNotNull('annonces.accepted_at')
                 ->where('annonces.type', 'normal')->paginate(5);
 
@@ -215,7 +209,7 @@ class ClientController extends Controller
                 ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
                 ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
                 ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                ->where('categories.name', 'Anniversaire')
+                ->where('categories.slug', 'anniversaire')
                 ->whereNotNull('annonces.accepted_at')
                 ->where('annonces.type', 'normal')->paginate(5);
 
@@ -458,6 +452,7 @@ class ClientController extends Controller
                 return [
                     'id' => $annonce->id,
                     'title' => $annonce->title,
+                    'created_at' => $annonce->created_at,
                     'description' => $annonce->description,
                     'price' => $annonce->price,
                     'type' => $annonce->type,

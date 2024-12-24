@@ -28,7 +28,6 @@ const Clients = () => {
                 },
             });
 
-            console.log(response.data);
             // Check if the response is successful
             if (response.status === 200) {
                 const data = response.data;
@@ -107,11 +106,10 @@ const Clients = () => {
                 <table className="w-full">
                     <thead className="text-white text-sm">
                         <tr>
-                            <th>ID</th>
-                            <th>FULL NAME</th>
-                            <th>ADDRESS EMAIL</th>
-                            <th>PHONE</th>
-                            <th>CREATED DATE</th>
+                            <th>NOM COMPLET</th>
+                            <th>ADRESSE E-MAIL</th>
+                            <th>TÉLÉPHONE</th>
+                            <th>DATE DE CRÉATION</th>
                             <th className="py-6">ACTION</th>
                         </tr>
                     </thead>
@@ -119,7 +117,6 @@ const Clients = () => {
                     <tbody className="text-white text-md text-center">
                         {clients.map((client) => (
                             <tr className="text-white" key={client.id}>
-                                <td className="text-white font-medium font-serif">{client.id}</td>
                                 <td className="text-white font-medium font-serif">{client.user.firstName} {client.user.lastName}</td>
                                 <td className="text-white font-medium font-serif">{client.user.email}</td>
                                 <td className="text-white font-medium font-serif">{client.user.phone}</td>

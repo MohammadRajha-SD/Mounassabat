@@ -207,26 +207,24 @@ const Posts = () => {
 
                 <table className="w-full">
                     <thead className="text-white text-sm">
-                        <tr>
-                            <th>ID</th>
-                            <th>TITLE</th>
-                            <th>DESCRIPTION</th>
-                            <th>FULL NAME</th>
-                            <th>PRICE</th>
-                            {/* <th>CREATED DATE</th> */}
-                            <th className="py-6">ACTION</th>
+                    <tr>
+                            <th>TITRE</th>
+                            <th>CATÉGORIE</th>
+                            <th>NOM COMPLET</th>
+                            <th>PRIX</th>
+                            <th>CRÉÉ</th>
+                            <th>ACTION</th>
                         </tr>
                     </thead>
 
-                    <tbody className="text-white text-md text-center">
+                    <tbody className="text-white">
                         {filteredAnnonces_.map((annonce, index) => (
                             <tr className="text-white" key={annonce.id}>
-                                <td className="text-white font-medium font-serif">{index + 1}</td>
                                 <td className="text-white font-medium font-serif">{annonce.title}</td>
-                                <td className="text-white font-medium font-serif">{annonce.description}</td>
+                                <td className="text-white font-medium font-serif">{annonce.category}</td>
                                 <td className="text-white font-medium font-serif">{annonce.user.firstName} {annonce.user.lastName}</td>
                                 <td className="text-white font-medium font-serif">{annonce.price} <span className="text-gray-500 font-serif font-bold">MAD</span></td>
-                                {/* <td className="text-white font-medium font-serif">{format(new Date(annonce.created_at), 'dd MMMM yyyy')}</td> */}
+                                <td className="text-white font-medium font-serif">{format(new Date(annonce.created_at), 'dd MMMM yyyy')}</td>
                                 <td>
                                     <div className='flex items-end gap-1'>
                                         <button id="accepte" onClick={() => acceptAnnonce(annonce.id)} className="bg-blue-500 hover:bg-blue-600 duration-500  px-2 py-2 rounded-full">

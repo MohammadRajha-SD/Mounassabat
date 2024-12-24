@@ -41,15 +41,19 @@ class AdminController extends Controller
         }
     }
 
-
     public function getAllPrestataires()
     {
-        $prestataires = Prestataire::with('user')->get();
-        return response()->json($prestataires);
+        $prestataires = Prestataire::with('user')->paginate(10);
+        return response()->json([
+            'prestataires' => $prestataires,
+            'current_page' => $prestataires->currentPage(),
+            'last_page' => $prestataires->lastPage(),
+            'total' => $prestataires->total(),
+        ],200);
     }
     public function getAllClients()
     {
-        $clients = Client::with('user')->paginate(4);
+        $clients = Client::with('user')->paginate(10);
         return response()->json([
             'clients' => $clients,
             'current_page' => $clients->currentPage(),
@@ -73,6 +77,7 @@ class AdminController extends Controller
             return [
                 'user' => $annonce->user,
                 'id' => $annonce->id,
+                'created_at' => $annonce->created_at,
                 'title' => $annonce->title,
                 'description' => $annonce->description,
                 'location' => $annonce->location,
@@ -98,7 +103,7 @@ class AdminController extends Controller
     public function getAllPosts()
     {
         $annonces = Annonce::with(['user', 'sub_Category.category'])
-            ->paginate(4);
+            ->paginate(6);
 
         $formattedAnnonces = $annonces->getCollection()->map(function ($annonce) {
             return [
@@ -113,6 +118,7 @@ class AdminController extends Controller
                 'price' => $annonce->price,
                 'accepted_at' => $annonce->accepted_at,
                 'sub_name' => $annonce->sub_Category->name,
+                'created_at' => $annonce->created_at,
                 'category' => optional($annonce->sub_Category->category)->name,
             ];
         });

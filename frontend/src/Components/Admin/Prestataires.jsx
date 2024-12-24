@@ -7,34 +7,51 @@ import { toast } from 'react-toastify';
 const Prestataires = () => {
     const [prestataires, setPrestataires] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
     useEffect(() => {
-        fetchAllPrestataires();
-    }, []);
-
-    const fetchAllPrestataires = async () => {
+        fetchAllPrestataires(currentPage);
+    }, [currentPage]);
+    const fetchAllPrestataires = async (page) => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
                 console.error('JWT token not found in local storage');
                 return;
             }
-            const response = await axios.get('https://mounassabat.ma/api/getAllPrestataires', {
+            const response = await axios.get(`https://mounassabat.ma/api/getAllPrestataires?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 }
             });
-
-            setPrestataires(response.data);
+            // Check if the response is successful
+            if (response.status === 200) {
+                const data = response.data;
+                setPrestataires(data.prestataires.data);
+                setTotalPages(data.last_page);
+            } else {
+                console.error('Failed to fetch clients:', response.statusText);
+            }
         } catch (error) {
             console.error('Error fetching Prestataires:', error);
         }
     };
+    // pagination 
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
 
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
     const handleBanned = async (id, is_banned) => {
         try {
             const token = localStorage.getItem('token');
@@ -88,17 +105,15 @@ const Prestataires = () => {
 
                 <table class="w-full">
                     <thead class="text-white text-sm">
-                        <th>ID</th>
-                        <th>FULL NAME</th>
-                        <th>ADRESS EMAIL</th>
-                        <th>PHONE</th>
-                        <th>CREATED DATE</th>
+                        <th>NOM COMPLET</th>
+                        <th>ADRESSE E-MAIL</th>
+                        <th>TÉLÉPHONE</th>
+                        <th>DATE DE CRÉATION</th>
                         <th class="py-6">ACTION</th>
                     </thead>
                     <tbody class="text-white text-md text-center">
-                        {prestataires.map((prestataire, index) => (
+                        {prestataires.map((prestataire) => (
                             <tr className="text-white" key={prestataire.id}>
-                                <td className="text-white font-medium font-serif">{index + 1}</td>
                                 <td className="text-white font-medium font-serif">{prestataire.user.firstName} {prestataire.user.lastName}</td>
                                 <td className="text-white font-medium font-serif">{prestataire.user.email}</td>
                                 <td className="text-white font-medium font-serif">{prestataire.user.phone}</td>
@@ -140,6 +155,24 @@ const Prestataires = () => {
                         ))}
                     </tbody>
                 </table>
+                {/* PAGINATION START */}
+                {prestataires.length > 0 && totalPages > 1 && (
+                    <div className="flex justify-between items-center mt-5">
+                        <button
+                            onClick={handlePrevPage}
+                            disabled={currentPage === 1}
+                            className={`px-8 py-3 mx-2 text-sm font-medium text-white bg-yellow-600 rounded-md ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}>
+                            Previous
+                        </button>
+                        <button
+                            onClick={handleNextPage}
+                            disabled={currentPage === totalPages}
+                            className={`px-8 py-3 mx-2 text-sm font-medium text-white bg-yellow-600 rounded-md ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-700'}`}>
+                            Next
+                        </button>
+                    </div>
+                )}
+                {/* PAGINATION END */}
             </section>
         </div>
     );
