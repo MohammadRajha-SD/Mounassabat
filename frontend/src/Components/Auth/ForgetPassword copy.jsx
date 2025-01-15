@@ -20,7 +20,7 @@ const ForgotPassword = () => {
             const token = localStorage.getItem("token");
 
             const response = await axios.post(
-                "https://mounassabat.ma/api/forgot-password",
+                "https://monassabatmaroc.online/api/forgot-password",
                 { email },
                 {
                     headers: {

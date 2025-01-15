@@ -75,7 +75,7 @@ const PrestataireRegister = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post('https://mounassabat.ma/api/register', formData, {
+            const response = await axios.post('https://monassabatmaroc.online/api/register', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

@@ -29,7 +29,7 @@ const Chat = () => {
 
         setUser(user);
 
-        axios.get(`https://mounassabat.ma/api/myConversations`, { headers: { Authorization: `Bearer ${token}` } })
+        axios.get(`https://monassabatmaroc.online/api/myConversations`, { headers: { Authorization: `Bearer ${token}` } })
             .then(response => {
                 setConversations(response.data);
             })
@@ -71,7 +71,7 @@ const Chat = () => {
 
         try {
             const response = await axios.post(
-                'https://mounassabat.ma/api/send-message',
+                'https://monassabatmaroc.online/api/send-message',
                 payload,
                 { headers: { Authorization: `Bearer ${token}` } }
             );

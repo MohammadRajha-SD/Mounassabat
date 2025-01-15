@@ -44,7 +44,7 @@ const Home = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('https://mounassabat.ma/api/getAllCategories',
+                const response = await axios.get('https://monassabatmaroc.online/api/getAllCategories',
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ const Home = () => {
         };
 
         // fetch categories with announces counted 
-        axios.get('https://mounassabat.ma/api/categoriesWithAnnoncesCounted')
+        axios.get('https://monassabatmaroc.online/api/categoriesWithAnnoncesCounted')
             .then(response => {
                 setCategoriesAnnoncesCounted(response.data);
                 setLoading(false);
@@ -143,7 +143,7 @@ const Home = () => {
             const url = token ? 'getAllAcceptedAnnonces' : 'getAllAcceptedAnnoncesHomePage';
 
 
-            const response = await axios.get(`https://mounassabat.ma/api/${url}`, {
+            const response = await axios.get(`https://monassabatmaroc.online/api/${url}`, {
                 params: { page },
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -199,7 +199,7 @@ const Home = () => {
                 return;
             }
 
-            const response = await axios.post('https://mounassabat.ma/api/favoris',
+            const response = await axios.post('https://monassabatmaroc.online/api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {

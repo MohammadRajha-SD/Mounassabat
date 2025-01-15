@@ -22,7 +22,7 @@ const ResetPassword = () => {
             return;
         }
         try {
-            const response = await axios.post('https://mounassabat.ma/api/reset-password', {
+            const response = await axios.post('https://monassabatmaroc.online/api/reset-password', {
                 email,
                 password,
                 password_confirmation: passwordConfirmation,

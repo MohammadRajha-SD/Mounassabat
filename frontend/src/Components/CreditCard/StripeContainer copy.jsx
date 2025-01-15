@@ -17,7 +17,7 @@ const PaymentForm = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.post('https://mounassabat.ma/api/pay-by-creditcard', { amount: 1000 }, { headers: { Authorization: `Bearer ${token}` } });
+      const { data } = await axios.post('https://monassabatmaroc.online/api/pay-by-creditcard', { amount: 1000 }, { headers: { Authorization: `Bearer ${token}` } });
       const { clientSecret } = data;
 
       if (!stripe || !elements) {

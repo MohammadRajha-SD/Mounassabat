@@ -42,7 +42,7 @@ const Login = () => {
         event.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('https://mounassabat.ma/api/login', {
+            const response = await axios.post('https://monassabatmaroc.online/api/login', {
                 email,
                 password
             });

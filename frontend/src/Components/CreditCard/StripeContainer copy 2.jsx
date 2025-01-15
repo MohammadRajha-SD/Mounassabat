@@ -20,7 +20,7 @@ const PaymentForm = () => {
       // Handle card payment
       try {
         const token = localStorage.getItem('token');
-        const { data } = await axios.post('https://mounassabat.ma/api/pay-by-creditcard', { amount: 1000 }, { headers: { Authorization: `Bearer ${token}` } });
+        const { data } = await axios.post('https://monassabatmaroc.online/api/pay-by-creditcard', { amount: 1000 }, { headers: { Authorization: `Bearer ${token}` } });
         const { clientSecret } = data;
 
         if (!stripe || !elements) {
@@ -48,7 +48,7 @@ const PaymentForm = () => {
       // Handle PayPal payment
       try {
         const token = localStorage.getItem('token');
-        const { data } = await axios.post('https://mounassabat.ma/api/create-paypal-checkout-session', { amount: 1000 }, { headers: { Authorization: `Bearer ${token}` } });
+        const { data } = await axios.post('https://monassabatmaroc.online/api/create-paypal-checkout-session', { amount: 1000 }, { headers: { Authorization: `Bearer ${token}` } });
         const { id } = data;
 
         const result = await stripe.redirectToCheckout({ sessionId: id });

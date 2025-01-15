@@ -31,7 +31,7 @@ const Annonces = () => {
                 return;
             }
 
-            const response = await axios.get('https://mounassabat.ma/api/getMyAnnonces', {
+            const response = await axios.get('https://monassabatmaroc.online/api/getMyAnnonces', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const Annonces = () => {
             }
 
             // Send DELETE request to Laravel API
-            const response = await axios.delete(`https://mounassabat.ma/api/annonces/${annonceToDelete}`, {
+            const response = await axios.delete(`https://monassabatmaroc.online/api/annonces/${annonceToDelete}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const Annonces = () => {
                     console.error('JWT token not found in local storage');
                     return;
                 }
-                const response = await axios.put(`https://mounassabat.ma/api/annonces/${id}`,
+                const response = await axios.put(`https://monassabatmaroc.online/api/annonces/${id}`,
                     {
                         title,
                         description,
@@ -231,7 +231,7 @@ const Annonces = () => {
                                     d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9"
                                 />
                             </svg>
-                            <Link to={'https://mounassabat.ma/AnnounceForm'} className="bg-[#e6cf8c] hover:bg-yellow-200 text-white px-5 py-3 rounded-md">
+                            <Link to={'https://monassabatmaroc.online/AnnounceForm'} className="bg-[#e6cf8c] hover:bg-yellow-200 text-white px-5 py-3 rounded-md">
                                 Publier votre annonce
                             </Link>
                         </div>

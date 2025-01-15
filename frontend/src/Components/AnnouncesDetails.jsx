@@ -20,7 +20,7 @@ const AnnouncesDetails = () => {
             try {
                 const user_ = JSON.parse(localStorage.getItem('user'));
                 setUser(user_);
-                const response = await fetch(`https://mounassabat.ma/api/getAnnonceDetails/${id}`);
+                const response = await fetch(`https://monassabatmaroc.online/api/getAnnonceDetails/${id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch announcement details');
                 }
@@ -59,7 +59,7 @@ const AnnouncesDetails = () => {
         try {
             if (token) {
                 const response = await axios.post(
-                    'https://mounassabat.ma/api/new-conversation',
+                    'https://monassabatmaroc.online/api/new-conversation',
                     payload,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -83,7 +83,7 @@ const AnnouncesDetails = () => {
         try {
             if (liked) {
                 const response = await axios.post(
-                    `https://mounassabat.ma/api/annonces/${id}/unlike`,
+                    `https://monassabatmaroc.online/api/annonces/${id}/unlike`,
                     {},
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -93,7 +93,7 @@ const AnnouncesDetails = () => {
                 }
             } else {
                 const response = await axios.post(
-                    `https://mounassabat.ma/api/annonces/${id}/like`,
+                    `https://monassabatmaroc.online/api/annonces/${id}/like`,
                     {},
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -130,7 +130,7 @@ const AnnouncesDetails = () => {
                             {annonce.image && annonce.image.length > 0 && (
                                 <div className="duration-700 ease-in-out h-full" data-carousel-item>
                                     <img
-                                        src={`https://mounassabat.ma/${annonce.image[currentIndex]}`}
+                                        src={`https://monassabatmaroc.online/${annonce.image[currentIndex]}`}
                                         className="object-cover w-full h-full"
                                         alt={`Slide ${currentIndex}`}
                                     />

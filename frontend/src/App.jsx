@@ -55,7 +55,7 @@ function App() {
             }
 
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/verify-token', {
+                const response = await axios.get('https://monassabatmaroc.online/api/verify-token', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

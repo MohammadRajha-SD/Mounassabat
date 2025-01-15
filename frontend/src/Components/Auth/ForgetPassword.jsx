@@ -15,7 +15,7 @@ const ForgotPassword = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post("https://mounassabat.ma/api/forgot-password", {
+            const response = await axios.post("https://monassabatmaroc.online/api/forgot-password", {
                 email,
             });
 

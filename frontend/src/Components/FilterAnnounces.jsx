@@ -41,7 +41,7 @@ const FilterAnnounces = () => {
                 return;
             }
 
-            const response = await axios.post('https://mounassabat.ma/api/favoris',
+            const response = await axios.post('https://monassabatmaroc.online/api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {

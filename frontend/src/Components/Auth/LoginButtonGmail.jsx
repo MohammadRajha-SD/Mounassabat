@@ -18,7 +18,7 @@ const LoginButtonGmail = () => {
 
       const decodedToken = jwtDecode(credentialResponse.credential);
 
-      const response = await axios.post("https://mounassabat.ma/api/auth/google-login", {
+      const response = await axios.post("https://monassabatmaroc.online/api/auth/google-login", {
         email: decodedToken.email,
         name: decodedToken.name,
         google_id: decodedToken.sub,

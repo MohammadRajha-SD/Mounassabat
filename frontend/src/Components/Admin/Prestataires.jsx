@@ -22,7 +22,7 @@ const Prestataires = () => {
                 console.error('JWT token not found in local storage');
                 return;
             }
-            const response = await axios.get(`https://mounassabat.ma/api/getAllPrestataires?page=${page}`, {
+            const response = await axios.get(`https://monassabatmaroc.online/api/getAllPrestataires?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -62,7 +62,7 @@ const Prestataires = () => {
             }
 
             const response = await axios.post(
-                'https://mounassabat.ma/api/user-banned',
+                'https://monassabatmaroc.online/api/user-banned',
                 { id, is_banned },
                 {
                     headers: {

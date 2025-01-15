@@ -17,7 +17,7 @@ const Parametres = () => {
             console.log('TOKEN is not exists');
             return;
         }
-        axios.get('https://mounassabat.ma/api/profile/user', {
+        axios.get('https://monassabatmaroc.online/api/profile/user', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -40,7 +40,7 @@ const Parametres = () => {
             return;
         }
         setLoading(true);
-        axios.put('https://mounassabat.ma/api/profile/user', formData, {
+        axios.put('https://monassabatmaroc.online/api/profile/user', formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

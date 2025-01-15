@@ -30,7 +30,7 @@ const Carousel = ({ images, isVip = false, width = '320px', height = '250px', id
                 <div className="w-full h-full">
                     {images.length > 0 && (
                         <img
-                            src={`https://mounassabat.ma/${images[currentSlide]}`}
+                            src={`https://monassabatmaroc.online/${images[currentSlide]}`}
                             className="w-full h-full object-cover cursor-pointer"
                             alt={`Slide ${currentSlide}`}
                             onClick={handleImageClick} // Add click event to the image

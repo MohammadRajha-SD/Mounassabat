@@ -23,7 +23,7 @@ const Posts = () => {
             }
 
             // Make the API call using axios
-            const response = await axios.get(`https://mounassabat.ma/api/getAllAnnonces?page=${page}`, {
+            const response = await axios.get(`https://monassabatmaroc.online/api/getAllAnnonces?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -55,7 +55,7 @@ const Posts = () => {
                 return;
             }
 
-            const response = await axios.delete(`https://mounassabat.ma/api/deleteAnnonces/${id}`, {
+            const response = await axios.delete(`https://monassabatmaroc.online/api/deleteAnnonces/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -83,7 +83,7 @@ const Posts = () => {
                 return;
             }
 
-            const response = await axios.post(`https://mounassabat.ma/api/acceptAnnonce/${id}`, {}, {
+            const response = await axios.post(`https://monassabatmaroc.online/api/acceptAnnonce/${id}`, {}, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`

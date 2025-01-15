@@ -15,7 +15,7 @@ const PayPalButton = () => {
       <PayPalButtons
         createOrder={async (data, actions) => {
           try {
-            const response = await axios.post('https://mounassabat.ma/api/paypal/payment', {
+            const response = await axios.post('https://monassabatmaroc.online/api/paypal/payment', {
               price: 100,
             }, {
               headers: {
@@ -30,7 +30,7 @@ const PayPalButton = () => {
         }}
         onApprove={async (data, actions) => {
           try {
-            const response = await axios.get(`https://mounassabat.ma/api/paypal/success?token=${data.orderID}`);
+            const response = await axios.get(`https://monassabatmaroc.online/api/paypal/success?token=${data.orderID}`);
             alert(response.data); // Handle the success message
           } catch (error) {
             console.error('Error capturing order:', error);
