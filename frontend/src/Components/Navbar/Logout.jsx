@@ -29,7 +29,7 @@ const [redirectTo, setRedirectTo] = useState('Chat');
                 </svg>
             </a>
 
-            <Link to={`https://monassabatmaroc.com/${redirectTo}`}>
+            <Link to={`https://mounassabat.ma/${redirectTo}`}>
                 <UserCircleIcon className="h-10 w-10" />
             </Link>
         </>
