@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Loader from './Loader/Index.jsx';
+import API from '../api.js';
 
 const PrivateRoute = ({ children, roles }) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +23,7 @@ const PrivateRoute = ({ children, roles }) => {
             }
 
             try {
-                const response = await axios.get('https://monassabatmaroc.online/api/verify-token', {
+                const response = await API.get('api/verify-token', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

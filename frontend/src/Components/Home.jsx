@@ -16,6 +16,7 @@ import Loader from './Loader/Index.jsx';
 import AnnouncementSection from './AnnouncementSection';
 import { Link } from "react-router-dom";
 import Footer from './Footer.jsx';
+import API from '../api.js';
 
 const Home = () => {
     const [showCities, setShowCities] = useState(false);
@@ -44,7 +45,7 @@ const Home = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('https://monassabatmaroc.online/api/getAllCategories',
+                const response = await API.get('api/getAllCategories',
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -110,7 +111,7 @@ const Home = () => {
         };
 
         // fetch categories with announces counted 
-        axios.get('https://monassabatmaroc.online/api/categoriesWithAnnoncesCounted')
+        API.get('api/categoriesWithAnnoncesCounted')
             .then(response => {
                 setCategoriesAnnoncesCounted(response.data);
                 setLoading(false);
@@ -143,7 +144,7 @@ const Home = () => {
             const url = token ? 'getAllAcceptedAnnonces' : 'getAllAcceptedAnnoncesHomePage';
 
 
-            const response = await axios.get(`https://monassabatmaroc.online/api/${url}`, {
+            const response = await API.get(`api/${url}`, {
                 params: { page },
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -199,7 +200,7 @@ const Home = () => {
                 return;
             }
 
-            const response = await axios.post('https://monassabatmaroc.online/api/favoris',
+            const response = await API.post('api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {

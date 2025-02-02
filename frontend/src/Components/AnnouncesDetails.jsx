@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import NavBar from "./Navbar/NavBar";
 import Loader from './Loader/Index.jsx';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import API from '../api.js';
 
 const AnnouncesDetails = () => {
     const { id } = useParams();
@@ -20,11 +20,9 @@ const AnnouncesDetails = () => {
             try {
                 const user_ = JSON.parse(localStorage.getItem('user'));
                 setUser(user_);
-                const response = await fetch(`https://monassabatmaroc.online/api/getAnnonceDetails/${id}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch announcement details');
-                }
-                const data = await response.json();
+
+                const response = await API.get(`api/getAnnonceDetails/${id}`);
+                const data = response.data;
 
                 setAnnonce(data.annonce);
                 setLiked(data.annonce.likes.includes(user_.id));
@@ -58,8 +56,8 @@ const AnnouncesDetails = () => {
 
         try {
             if (token) {
-                const response = await axios.post(
-                    'https://monassabatmaroc.online/api/new-conversation',
+                const response = await API.post(
+                    'api/new-conversation',
                     payload,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -82,8 +80,8 @@ const AnnouncesDetails = () => {
 
         try {
             if (liked) {
-                const response = await axios.post(
-                    `https://monassabatmaroc.online/api/annonces/${id}/unlike`,
+                const response = await API.post(
+                    `api/annonces/${id}/unlike`,
                     {},
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -92,8 +90,8 @@ const AnnouncesDetails = () => {
                     setLikesCount((prev) => prev > 0 ? prev - 1 : prev);
                 }
             } else {
-                const response = await axios.post(
-                    `https://monassabatmaroc.online/api/annonces/${id}/like`,
+                const response = await API.post(
+                    `api/annonces/${id}/like`,
                     {},
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -130,7 +128,7 @@ const AnnouncesDetails = () => {
                             {annonce.image && annonce.image.length > 0 && (
                                 <div className="duration-700 ease-in-out h-full" data-carousel-item>
                                     <img
-                                        src={`https://monassabatmaroc.online/${annonce.image[currentIndex]}`}
+                                        src={`https://monassabatmaroc.com/${annonce.image[currentIndex]}`}
                                         className="object-cover w-full h-full"
                                         alt={`Slide ${currentIndex}`}
                                     />
@@ -182,7 +180,7 @@ const AnnouncesDetails = () => {
                                 onClick={() => handleNewConversation(annonce.user_id)}
                                 className="bg-indigo-500 text-white px-5 font-semibold pt-1 pb-2 rounded-lg"
                             >
-                               Envoyer un message
+                                Envoyer un message
                             </button>
                         </div>
 

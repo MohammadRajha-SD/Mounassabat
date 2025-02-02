@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import NavBar from "./Navbar/NavBar";
 import Footer from "/src/Components/Footer.jsx";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Carousel from './Carousel/Index.jsx'
 import { Link } from 'react-router-dom';
 import Loader from './Loader/Index.jsx';
+import API from '../api.js';
 
 const AllAnnounces = () => {
     const [cities, setCities] = useState([]);
@@ -50,7 +50,7 @@ const AllAnnounces = () => {
             const token = localStorage.getItem('token');
 
             if (token) {
-                const response = await axios.get('https://monassabatmaroc.online/api/getAnnonces', {
+                const response = await API.get('api/getAnnonces', {
                     params: { page },
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -63,7 +63,7 @@ const AllAnnounces = () => {
                     console.error('Failed to fetch annonces:', response.statusText);
                 }
             } else {
-                const response = await axios.get(`https://monassabatmaroc.online/api/getAllAnnoncesNoLogin`, {
+                const response = await API.get(`api/getAllAnnoncesNoLogin`, {
                     params: { page },
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -107,7 +107,7 @@ const AllAnnounces = () => {
                 return;
             }
 
-            const response = await axios.post('https://monassabatmaroc.online/api/favoris',
+            const response = await API.post('api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {
@@ -176,7 +176,7 @@ const AllAnnounces = () => {
 
     const filteringAnnonces = async (category = null, city = null) => {
         try {
-            const response = await axios.get('https://monassabatmaroc.online/api/filter-all-annonces', {
+            const response = await API.get('api/filter-all-annonces', {
                 params: {
                     category,
                     city,

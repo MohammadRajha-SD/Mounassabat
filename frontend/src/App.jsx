@@ -38,6 +38,8 @@ import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+
+import API from './api.js';
 function App() {
     const [token, setToken] = useState(false);
     const [isValidToken, setIsValidToken] = useState(false);
@@ -55,7 +57,7 @@ function App() {
             }
 
             try {
-                const response = await axios.get('https://monassabatmaroc.online/api/verify-token', {
+                const response = await API.get('api/verify-token', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

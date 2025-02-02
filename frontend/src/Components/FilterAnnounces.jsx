@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Carousel from './Carousel/Index';
-import axios from 'axios';
 import { useAnnonces } from './AnnonceContext';
 import NavBar from "./Navbar/NavBar";
 import { toast } from 'react-toastify';
+import API from '../api.js';
 
 const FilterAnnounces = () => {
     const { annonces, filterAnnonces, setAnnonces } = useAnnonces();
@@ -41,7 +41,7 @@ const FilterAnnounces = () => {
                 return;
             }
 
-            const response = await axios.post('https://monassabatmaroc.online/api/favoris',
+            const response = await API.post('api/favoris',
                 { annonce_id: annonceId },
                 {
                     headers: {
