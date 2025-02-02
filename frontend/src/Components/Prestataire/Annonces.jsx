@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import API from '../../api.js';
 
 const Annonces = () => {
-    const [annonces, setAnnonces] = useState([]);a
+    const [annonces, setAnnonces] = useState([]);
     const [currentSlides, setCurrentSlides] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedAnnonce, setSelectedAnnonce] = useState(null);
