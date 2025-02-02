@@ -6,6 +6,7 @@ import axios from 'axios';
 import Loader from '../Loader/Index.jsx';
 import { toast } from 'react-toastify';
 import RegisterProviderButtonGmail from './RegisterPrestataireButtonGmail.jsx';
+import API from '../../api.js';
 
 const validate = (formData) => {
     let errors = {};
@@ -75,7 +76,7 @@ const PrestataireRegister = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post('https://monassabatmaroc.online/api/register', formData, {
+            const response = await API.post('api/register', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

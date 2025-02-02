@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
+import API from '../../api.js';
 
 const Posts = () => {
     const [annonces, setAnnonces] = useState([]);
@@ -25,7 +26,7 @@ const Posts = () => {
             }
 
             // Make the API call using axios
-            const response = await axios.get(`https://monassabatmaroc.online/api/getAllPosts?page=${page}`, {
+            const response = await API.get(`api/getAllPosts?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -74,7 +75,7 @@ const Posts = () => {
 
     const filteringAnnonces = async (category = null, city = null) => {
         try {
-            const response = await axios.get('https://monassabatmaroc.online/api/filter-all-annonces2', {
+            const response = await API.get('api/filter-all-annonces2', {
                 params: {
                     category,
                 },

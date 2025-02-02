@@ -6,6 +6,7 @@ import Footer from "../Footer.jsx";
 import NavBar from "../Navbar/NavBar";
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import API from '../../api.js';
 const Index = () => {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Index = () => {
             return;
         }
         try {
-            const response = await axios.post('https://monassabatmaroc.online/api/reclamation',
+            const response = await API.post('api/reclamation',
                 { message },
                 {
                     headers: {

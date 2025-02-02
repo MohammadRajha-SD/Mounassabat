@@ -16,7 +16,7 @@ import {
     MessageSeparator,
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-
+import API from '../../api.js';
 const Chat = () => {
     const [messages, setMessages] = useState(null);
     const [user, setUser] = useState(null);
@@ -29,7 +29,7 @@ const Chat = () => {
 
         setUser(user);
 
-        axios.get(`https://monassabatmaroc.online/api/myConversations`, { headers: { Authorization: `Bearer ${token}` } })
+        API.get(`api/myConversations`, { headers: { Authorization: `Bearer ${token}` } })
             .then(response => {
                 setConversations(response.data);
             })
@@ -70,8 +70,8 @@ const Chat = () => {
         };
 
         try {
-            const response = await axios.post(
-                'https://monassabatmaroc.online/api/send-message',
+            const response = await API.post(
+                'api/send-message',
                 payload,
                 { headers: { Authorization: `Bearer ${token}` } }
             );

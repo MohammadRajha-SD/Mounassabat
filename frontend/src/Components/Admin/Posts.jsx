@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
+import API from '../../api.js';
 
 const Posts = () => {
     const [annonces, setAnnonces] = useState([]);
@@ -25,7 +26,7 @@ const Posts = () => {
             }
 
             // Make the API call using axios
-            const response = await axios.get(`https://monassabatmaroc.online/api/getAllAnnonces?page=${page}`, {
+            const response = await API.get(`api/getAllAnnonces?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -56,7 +57,7 @@ const Posts = () => {
                 return;
             }
 
-            const response = await axios.delete(`https://monassabatmaroc.online/api/deleteAnnonces/${id}`, {
+            const response = await API.delete(`api/deleteAnnonces/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -84,7 +85,7 @@ const Posts = () => {
                 return;
             }
 
-            const response = await axios.post(`https://monassabatmaroc.online/api/acceptAnnonce/${id}`, {}, {
+            const response = await API.post(`api/acceptAnnonce/${id}`, {}, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`

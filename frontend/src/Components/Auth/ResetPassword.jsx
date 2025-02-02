@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import API from "../../api.js";
 
 const ResetPassword = () => {
     const location = useLocation();
@@ -22,7 +23,7 @@ const ResetPassword = () => {
             return;
         }
         try {
-            const response = await axios.post('https://monassabatmaroc.online/api/reset-password', {
+            const response = await API.post('api/reset-password', {
                 email,
                 password,
                 password_confirmation: passwordConfirmation,

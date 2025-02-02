@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Header from './Header.jsx';
 import RightSide from './RightSide.jsx';
-import axios from 'axios'
+import API from '../../api.js';
+
 const AnnounceForm = () => {
     const [selectedTypeAnnonce, setSelectedTypeAnnonce] = useState('normal');
     const [canAdd, setCanAdd] = useState(false);
@@ -47,7 +47,7 @@ const AnnounceForm = () => {
                 return;
             }
 
-            const response = await axios.get('https://monassabatmaroc.online/api/checkIsAbleToAddAnnonce', {
+            const response = await API.get('api/checkIsAbleToAddAnnonce', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

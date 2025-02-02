@@ -1,9 +1,9 @@
 import React from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import API from "../../api.js";
 
 const clientId = "185183656415-e7hnjo56pe6rjmr7fdqbgp2ci6qa73hn.apps.googleusercontent.com";
 
@@ -18,7 +18,7 @@ const LoginButtonGmail = () => {
 
       const decodedToken = jwtDecode(credentialResponse.credential);
 
-      const response = await axios.post("https://monassabatmaroc.online/api/auth/google-login", {
+      const response = await API.post("api/auth/google-login", {
         email: decodedToken.email,
         name: decodedToken.name,
         google_id: decodedToken.sub,

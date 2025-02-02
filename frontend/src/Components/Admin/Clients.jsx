@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import Sidebar from './Sidebar';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import API from '../../api.js';
 
 const Clients = () => {
     const [clients, setClients] = useState([]);
@@ -21,7 +21,7 @@ const Clients = () => {
                 return;
             }
 
-            const response = await axios.get(`https://monassabatmaroc.online/api/getAllClients?page=${page}`, {
+            const response = await API.get(`api/getAllClients?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -62,8 +62,8 @@ const Clients = () => {
                 return;
             }
 
-            const response = await axios.post(
-                'https://monassabatmaroc.online/api/user-banned',
+            const response = await API.post(
+                'api/user-banned',
                 { id, is_banned },
                 {
                     headers: {

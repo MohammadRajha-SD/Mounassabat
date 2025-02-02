@@ -6,6 +6,7 @@ import NavBar from "../Navbar/NavBar.jsx";
 import Loader from '../Loader/Index.jsx';
 import { toast } from 'react-toastify';
 import RegisterClientButtonGmail from './RegisterClientButtonGmail.jsx';
+import API from '../../api.js';
 const validate = (formData) => {
   let errors = {};
   const nameRegex = /^[A-Za-z]{1,30}$/;
@@ -73,7 +74,7 @@ const ClientRegister = () => {
     setLoading(true);
     try {
       // Use axios to send a POST request to the Laravel backend
-      const response = await axios.post('https://monassabatmaroc.online/api/register', formData);
+      const response = await API.post('api/register', formData);
 
       if (response.status === 201 || response.status === 200) {
         navigate('/login');

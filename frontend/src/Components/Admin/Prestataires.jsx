@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import Sidebar from './Sidebar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import API from '../../api.js';
 
 const Prestataires = () => {
     const [prestataires, setPrestataires] = useState([]);
@@ -22,7 +23,7 @@ const Prestataires = () => {
                 console.error('JWT token not found in local storage');
                 return;
             }
-            const response = await axios.get(`https://monassabatmaroc.online/api/getAllPrestataires?page=${page}`, {
+            const response = await API.get(`api/getAllPrestataires?page=${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -61,8 +62,8 @@ const Prestataires = () => {
                 return;
             }
 
-            const response = await axios.post(
-                'https://monassabatmaroc.online/api/user-banned',
+            const response = await API.post(
+                'api/user-banned',
                 { id, is_banned },
                 {
                     headers: {

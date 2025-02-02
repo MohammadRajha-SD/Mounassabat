@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import message from '/src/assets//message.png';
 import Sidebar from './Sidebar';
 import { toast } from 'react-toastify';
+import API from '../../api.js'
 
 const Reclamations = () => {
     const [reclamations, setReclamations] = useState([]);
@@ -20,7 +21,7 @@ const Reclamations = () => {
                 return;
             }
 
-            const response = await fetch(`https://monassabatmaroc.online/api/getAllReclamations?page=${page}`, {
+            const response = await fetch(`https://monassabatmaroc.com/api/getAllReclamations?page=${page}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ const Reclamations = () => {
                 console.error('JWT token not found in local storage');
                 return;
             }
-            const response = await fetch(`https://monassabatmaroc.online/api/deleteReclamation/${id}`, {
+            const response = await fetch(`https://monassabatmaroc.com/api/deleteReclamation/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

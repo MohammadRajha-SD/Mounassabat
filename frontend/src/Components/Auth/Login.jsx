@@ -4,11 +4,12 @@ import backgroundQuiSommesNous from "../../assets/QuiSommeNous1.jpg";
 // import facebook from "../../assets/facebook.png";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import LoginButtonGmail from './LoginButtonGmail.jsx';
 import Loader from '../Loader/Index.jsx';
+import API from '../../api.js';
 // import google from '../../assets/google.png';
+
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -42,7 +43,7 @@ const Login = () => {
         event.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('https://monassabatmaroc.online/api/login', {
+            const response = await API.post('api/login', {
                 email,
                 password
             });

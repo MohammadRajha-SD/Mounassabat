@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import HeaderAnnounces from './HeaderAnnounces.jsx';
 import axios from 'axios';
+import API from '../../api.js';
 const Parametres = () => {
     const [formData, setFormData] = useState({
         firstName: '',
@@ -17,7 +18,7 @@ const Parametres = () => {
             console.log('TOKEN is not exists');
             return;
         }
-        axios.get('https://monassabatmaroc.online/api/profile/user', {
+        API.get('api/profile/user', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -40,7 +41,7 @@ const Parametres = () => {
             return;
         }
         setLoading(true);
-        axios.put('https://monassabatmaroc.online/api/profile/user', formData, {
+        API.put('api/profile/user', formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

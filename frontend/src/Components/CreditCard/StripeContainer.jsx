@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import axios from 'axios';
+import API from '../../api.js';
 
 const PayPalButton = () => {
   const [token, setToken] = useState(null);
@@ -15,8 +16,8 @@ const PayPalButton = () => {
       <PayPalButtons
         createOrder={async (data, actions) => {
           try {
-            const response = await axios.post(
-              'https://monassabatmaroc.online/api/paypal/payment',
+            const response = await API.post(
+              'api/paypal/payment',
               { price: 100 },
               { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -36,8 +37,8 @@ const PayPalButton = () => {
 
         onApprove={async (data, actions) => {
           try {
-            const response = await axios.get(
-              `https://monassabatmaroc.online/api/paypal/success`,
+            const response = await API.get(
+              `api/paypal/success`,
               {
                 params: { token: data.orderID }, // Pass token as query param
                 headers: { Authorization: `Bearer ${token}` },
