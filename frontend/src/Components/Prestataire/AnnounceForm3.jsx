@@ -7,7 +7,7 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import { toast } from 'react-toastify';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import Loader from '../Loader/Index.jsx';
-import API from '../../api.js';
+import axios from 'axios';
 
 const AnnounceForm = () => {
     const [images, setImages] = useState([]);
@@ -63,8 +63,8 @@ const AnnounceForm = () => {
 
             images.forEach((image) => { formData.append('image[]', image.file); });
 
-            const response = await API.post(
-                'api/annonce/create',
+            const response = await axios.post(
+                'https://mounassabat.com/api/annonce/create',
                 formData,
                 {
                     headers: {
@@ -118,7 +118,7 @@ const AnnounceForm = () => {
 
                 if (token_) {
                     setIsLoading(true);
-                    API.post('api/annonce/create', formData, {
+                    axios.post('api/annonce/create', formData, {
                         headers: {
                             'Authorization': `Bearer ${token_}`,
                             'Content-Type': 'multipart/form-data',
@@ -241,7 +241,7 @@ const AnnounceForm = () => {
             if (paymentMethod === 'card') {
                 try {
                     const token = localStorage.getItem('token');
-                    const { data } = await API.post('api/pay-by-creditcard', {
+                    const { data } = await axios.post('https://mounassabat.com/api/pay-by-creditcard', {
                         amount: selectedOption.price,
                         payment_method: 'card'
                     }, { headers: { Authorization: `Bearer ${token}` } });
@@ -321,8 +321,8 @@ const AnnounceForm = () => {
                         <PayPalButtons
                             createOrder={async (data, actions) => {
                                 try {
-                                    const response = await API.post(
-                                        'api/paypal/payment',
+                                    const response = await axios.post(
+                                        'https://mounassabat.com/api/paypal/payment',
                                         { price: selectedOption.price },
                                         { headers: { Authorization: `Bearer ${token}` } }
                                     );
@@ -341,8 +341,8 @@ const AnnounceForm = () => {
 
                             onApprove={async (data, actions) => {
                                 try {
-                                    const response = await API.get(
-                                        `api/paypal/success`,
+                                    const response = await axios.get(
+                                        `https://mounassabat.com/api/paypal/success`,
                                         {
                                             params: { token: data.orderID },
                                             headers: { Authorization: `Bearer ${token}` },
