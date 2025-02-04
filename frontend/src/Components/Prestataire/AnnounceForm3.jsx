@@ -64,7 +64,7 @@ const AnnounceForm = () => {
             images.forEach((image) => { formData.append('image[]', image.file); });
 
             const response = await axios.post(
-                'https://mounassabat.com/api/annonce/create',
+                'https://monassabatmaroc.com/api/annonce/create',
                 formData,
                 {
                     headers: {
@@ -118,7 +118,7 @@ const AnnounceForm = () => {
 
                 if (token_) {
                     setIsLoading(true);
-                    axios.post('api/annonce/create', formData, {
+                    await axios.post('https://monassabatmaroc.com/api/annonce/create', formData, {
                         headers: {
                             'Authorization': `Bearer ${token_}`,
                             'Content-Type': 'multipart/form-data',
@@ -241,7 +241,7 @@ const AnnounceForm = () => {
             if (paymentMethod === 'card') {
                 try {
                     const token = localStorage.getItem('token');
-                    const { data } = await axios.post('https://mounassabat.com/api/pay-by-creditcard', {
+                    const { data } = await axios.post('https://monassabatmaroc.com/api/pay-by-creditcard', {
                         amount: selectedOption.price,
                         payment_method: 'card'
                     }, { headers: { Authorization: `Bearer ${token}` } });
@@ -322,7 +322,7 @@ const AnnounceForm = () => {
                             createOrder={async (data, actions) => {
                                 try {
                                     const response = await axios.post(
-                                        'https://mounassabat.com/api/paypal/payment',
+                                        'https://monassabatmaroc.com/api/paypal/payment',
                                         { price: selectedOption.price },
                                         { headers: { Authorization: `Bearer ${token}` } }
                                     );
@@ -342,7 +342,7 @@ const AnnounceForm = () => {
                             onApprove={async (data, actions) => {
                                 try {
                                     const response = await axios.get(
-                                        `https://mounassabat.com/api/paypal/success`,
+                                        `https://monassabatmaroc.com/api/paypal/success`,
                                         {
                                             params: { token: data.orderID },
                                             headers: { Authorization: `Bearer ${token}` },
@@ -395,7 +395,10 @@ const AnnounceForm = () => {
 
     return (
         <>
-            {isLoading && (<Loader />)}
+            {isLoading && (
+                <div className="flex items-center justify-center w-full h-[100vh]"><Loader /></div>
+            )}
+
             <div className='min-h-screen  bg-gray-100 '>
                 <Header3 />
                 <div className="flex flex-col md:flex-row pt-32 pb-20 md:py-20  gap-5 mx-2  lg:mx-10">
