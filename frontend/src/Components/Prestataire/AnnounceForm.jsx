@@ -153,7 +153,7 @@ const AnnounceForm = () => {
             navigate('/AnnounceForm2');
         }
     };
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -204,6 +204,32 @@ const AnnounceForm = () => {
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
+
+    const validatePhoneNumber = (phone) => {
+        const regex = /^(06|07|08)\d{7}$/; 
+        
+        if (regex.test(phone)){
+            return phone;
+        }else {
+            return null;
+        }
+    };
+
+    const handlePhoneNumberChange = (e) => {
+        let value = e.target.value;
+    
+        // Allow only digits
+        value = value.replace(/\D/g, "");
+    
+        // Limit to 10 digits
+        if (value.length > 10) return;
+    
+        // Update state only if it starts with 06, 07, or 08
+        if (/^(06|07|08)\d{0,8}$/.test(value) || value === "") {
+          setPhoneNumber(value);
+        }
+      };
+
     return (
         <>
             <div className='min-h-screen bg-gray-100 '>
@@ -280,7 +306,7 @@ const AnnounceForm = () => {
                                         id="phonenumber"
                                         type="number"
                                         value={phoneNumber}
-                                        onChange={(e) => setPhoneNumber(e.target.value)}
+                                        onChange={(e) => handlePhoneNumberChange(e.target.value)}
                                         className="block w-full h-14 font-bold text-md py-2 px-2 mt-2  bg-white border border-gray-300 rounded-md  focus:border-yellow-500  focus:outline-none focus:ring" required />
                                     {formIncomplete && (
                                         <div className="fixed bottom-24 left-0 z-10 w-full flex justify-center">

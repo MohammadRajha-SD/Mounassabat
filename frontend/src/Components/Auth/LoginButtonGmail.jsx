@@ -34,8 +34,7 @@ const LoginButtonGmail = () => {
         toast.error("L'utilisateur n'est pas inscrit.");
       }
     } catch (error) {
-      console.error("Login error:", error);
-      toast.error("Une erreur est survenue.");
+      toast.error("VOUS DEVEZ D'ABORD CRÉER UN COMPTE.");
     }
   };
 
