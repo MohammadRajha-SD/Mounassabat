@@ -35,4 +35,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+// use App\Http\Controllers\Auth\PasswordResetController;
+
+// Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])
+//     ->middleware('guest')
+//     ->name('password.reset');
+
+// Route::post('/reset-password', [PasswordResetController::class, 'reset'])
+//     ->middleware('guest')
+//     ->name('password.update');
+
+
 require __DIR__.'/auth.php';
