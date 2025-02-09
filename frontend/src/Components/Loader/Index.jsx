@@ -1,6 +1,6 @@
 import React from 'react';
 import './Index.css'; // Import the CSS for the loader
-import LoaderVideo from '../../assets/loader.mp4';
+// import LoaderVideo from '../../assets/loader.mp4';
 
 const Index = () => {
     

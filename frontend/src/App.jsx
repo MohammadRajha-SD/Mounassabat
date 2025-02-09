@@ -38,6 +38,7 @@ import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import Test from './Components/Test.jsx';
 
 import API from './api.js';
 function App() {

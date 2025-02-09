@@ -206,29 +206,33 @@ const AnnounceForm = () => {
     };
 
     const validatePhoneNumber = (phone) => {
-        const regex = /^(06|07|08)\d{7}$/; 
-        
-        if (regex.test(phone)){
+        const regex = /^(06|07|08)\d{7}$/;
+
+        if (regex.test(phone)) {
             return phone;
-        }else {
+        } else {
             return null;
         }
     };
 
     const handlePhoneNumberChange = (e) => {
         let value = e.target.value;
-    
+
         // Allow only digits
-        value = value.replace(/\D/g, "");
-    
+        // value = value.replace(/\D/g, "");
+
         // Limit to 10 digits
         if (value.length > 10) return;
-    
+
         // Update state only if it starts with 06, 07, or 08
-        if (/^(06|07|08)\d{0,8}$/.test(value) || value === "") {
-          setPhoneNumber(value);
+        // if (/^(06|07|08)\d{0,8}$/.test(value) || value === "") {
+        const regex = /^([06|07|08])\d{0,8}$/;
+
+        // /^([678])\d{0,8}$/
+        if (regex.test(value) || value === "") {
+            setPhoneNumber(value);
         }
-      };
+    };
 
     return (
         <>

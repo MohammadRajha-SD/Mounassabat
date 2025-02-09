@@ -13,7 +13,7 @@ import NavBar from './Navbar/NavBar.jsx';
 import axios from 'axios';
 import { gapi } from 'gapi-script'
 import Loader from './Loader/Index.jsx';
-import AnnouncementSection from './AnnouncementSection';
+import AnnouncementSection from './AnnouncementSection.jsx';
 import { Link } from "react-router-dom";
 import Footer from './Footer.jsx';
 import API from '../api.js';
