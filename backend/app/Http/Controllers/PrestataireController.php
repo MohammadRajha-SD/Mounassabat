@@ -130,8 +130,9 @@ class PrestataireController extends Controller
                 'sub_category_id' => 'required|integer',
                 'sous_category_id' => 'nullable',
                 'image' => 'nullable',
-                'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'price' => 'required|integer',
+                // 'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+                'image.*' => 'image',
+                'price' => 'nullable|integer',
                 'annonce_type' => 'required|in:normal,vip',
             ]);
 

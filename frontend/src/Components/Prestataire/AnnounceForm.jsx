@@ -226,7 +226,7 @@ const AnnounceForm = () => {
 
         // Update state only if it starts with 06, 07, or 08
         // if (/^(06|07|08)\d{0,8}$/.test(value) || value === "") {
-        const regex = /^([06|07|08])\d{0,8}$/;
+        const regex = /^([0678])\d{0,9}$/;
 
         // /^([678])\d{0,8}$/
         if (regex.test(value) || value === "") {
@@ -308,9 +308,9 @@ const AnnounceForm = () => {
                                     </div>
                                     <input
                                         id="phonenumber"
-                                        type="number"
+                                        type="text"
                                         value={phoneNumber}
-                                        onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                                        onChange={handlePhoneNumberChange}
                                         className="block w-full h-14 font-bold text-md py-2 px-2 mt-2  bg-white border border-gray-300 rounded-md  focus:border-yellow-500  focus:outline-none focus:ring" required />
                                     {formIncomplete && (
                                         <div className="fixed bottom-24 left-0 z-10 w-full flex justify-center">

@@ -11,17 +11,24 @@ const AnnounceForm = () => {
     const [price, setPrice] = useState('');
     const [title, setTitle] = useState('');
     const [formIncomplete, setFormIncomplete] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('Veuillez remplir tous les champs obligatoires.');
     const navigate = useNavigate();
 
     const handleContinueClick = () => {
         // Check if any required fields are empty
         if (!title || !description) {
             setFormIncomplete(true);
+            setErrorMsg('Veuillez remplir tous les champs obligatoires.');
+            setTimeout(() => {
+                setFormIncomplete(false);
+            }, 3000);
+        }else if(description.length > 365){
+            setFormIncomplete(true);
+            setErrorMsg('la limite de la description est de 365 caractères.');
             setTimeout(() => {
                 setFormIncomplete(false);
             }, 3000);
         } else {
-
             setFormIncomplete(false);
 
             localStorage.setItem("title", title);
@@ -112,14 +119,14 @@ const AnnounceForm = () => {
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
                                         className="block ml-2 w-full font-bold text-md py-2 px-2 mt-2 bg-white border border-gray-300 rounded-md focus:border-yellow-500 focus:outline-none focus:ring"
-                                        maxLength="350"
+                                        maxLength="365"
                                         rows="5"
                                     />
                                 </div>
                                 {formIncomplete && (
                                     <div className="fixed bottom-24 left-0 z-10 w-full flex justify-center">
                                         <div className="bg-red-500 text-white py-2 px-4 rounded-lg">
-                                            Veuillez remplir tous les champs obligatoires.
+                                            {errorMsg}
                                         </div>
                                     </div>
                                 )}
